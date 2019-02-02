@@ -16,6 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="cats-callers"
+run/main_scene="res://Actors/Player/Player.tscn"
 config/icon="res://icon.png"
 
 [rendering]
