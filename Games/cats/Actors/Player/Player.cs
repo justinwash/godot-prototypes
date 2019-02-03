@@ -34,7 +34,7 @@ public class Player : Area2D {
 		else if (velocity.x < 0 && _animationPlayer.CurrentAnimation != "left") _animationPlayer.Play("left");
 		else if (velocity.x < 0) _animationPlayer.CurrentAnimation = "left";
 
-		else _animationPlayer.Play("idle_right");
+		else _animationPlayer.Play("idle");
 
 		Position += velocity * delta;
 		Position = new Vector2(

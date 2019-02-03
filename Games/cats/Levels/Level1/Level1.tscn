@@ -29,15 +29,16 @@ position = Vector2( 27.1394, 284.318 )
 Speed = 180
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+offset = Vector2( 0, -34.31 )
 current = true
 limit_left = 0
 limit_right = 1400
 limit_smoothed = true
 smoothing_enabled = true
 drag_margin_left = 0.58
-drag_margin_top = 0.05
+drag_margin_top = 0.03
 drag_margin_right = 0.0
-drag_margin_bottom = 0.48
+drag_margin_bottom = 0.59
 editor_draw_limits = true
 editor_draw_drag_margin = true
 
