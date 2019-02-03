@@ -1,0 +1,19 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cats", "cats.csproj", "{7AF6F582-77CC-497A-9E96-6498ED8CAADB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+	Debug|Any CPU = Debug|Any CPU
+	Release|Any CPU = Release|Any CPU
+	Tools|Any CPU = Tools|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7AF6F582-77CC-497A-9E96-6498ED8CAADB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AF6F582-77CC-497A-9E96-6498ED8CAADB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AF6F582-77CC-497A-9E96-6498ED8CAADB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AF6F582-77CC-497A-9E96-6498ED8CAADB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AF6F582-77CC-497A-9E96-6498ED8CAADB}.Tools|Any CPU.ActiveCfg = Tools|Any CPU
+		{7AF6F582-77CC-497A-9E96-6498ED8CAADB}.Tools|Any CPU.Build.0 = Tools|Any CPU
+	EndGlobalSection
+EndGlobal

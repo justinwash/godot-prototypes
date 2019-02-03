@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/player.png-a19fa14ecd9be4767447453205ac7490.stex"
+path="res://.import/player.png-a602c5c081cd45a4f54daea6b9d1c8df.stex"
 
 [deps]
 
-source_file="res://Actors/Player/sprites/player.png"
-dest_files=[ "res://.import/player.png-a19fa14ecd9be4767447453205ac7490.stex" ]
+source_file="res://Actors/Player/player.png"
+dest_files=[ "res://.import/player.png-a602c5c081cd45a4f54daea6b9d1c8df.stex" ]
 
 [params]
 
@@ -19,7 +19,7 @@ compress/normal_map=0
 flags/repeat=0
 flags/filter=true
 flags/mipmaps=false
-flags/anisotropic=false
+flags/anisotropic=true
 flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false

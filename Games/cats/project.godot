@@ -15,13 +15,11 @@ _global_script_class_icons={
 
 [application]
 
-config/name="cats-callers"
-run/main_scene="res://Actors/Player/Player.tscn"
+config/name="cats"
+run/main_scene="res://Levels/Level1/Level1.tscn"
 config/icon="res://icon.png"
 
 [rendering]
 
 quality/driver/driver_name="GLES2"
-vram_compression/import_etc=true
-vram_compression/import_etc2=false
 environment/default_environment="res://default_env.tres"

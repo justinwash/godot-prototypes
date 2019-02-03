@@ -1,7 +1,0 @@
-[gd_scene format=2]
-
-[node name="Node2D" type="Node2D"]
-position = Vector2( 514.206, 298.957 )
-
-[node name="Camera2D" type="Camera2D" parent="."]
-
