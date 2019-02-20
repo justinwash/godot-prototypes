@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Levels/Level1/Level1.cs" type="Script" id=1]
 [ext_resource path="res://Levels/Level1/Images/background.jpg" type="Texture" id=2]
 [ext_resource path="res://Actors/Player/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://UI/Mood Meter/MoodMeter.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Actors/Enemies/Bro1/Bro1.tscn" type="PackedScene" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -30,7 +32,8 @@ position = Vector2( 744.612, 127.35 )
 shape = SubResource( 1 )
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
-position = Vector2( 34.317, 191.307 )
+position = Vector2( 34.317, 241.641 )
+z_index = 1
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 offset = Vector2( 0, -34.31 )
@@ -45,4 +48,15 @@ drag_margin_right = 0.0
 drag_margin_bottom = 0.05
 editor_draw_limits = true
 editor_draw_drag_margin = true
+
+[node name="MoodMeter" parent="Player/Camera2D" instance=ExtResource( 4 )]
+anchor_left = 1.0
+anchor_top = 1.0
+margin_left = -41.1189
+margin_top = -298.777
+margin_right = -41.1189
+margin_bottom = -298.777
+
+[node name="Bro1" parent="." instance=ExtResource( 5 )]
+position = Vector2( 711.323, 287.219 )
 

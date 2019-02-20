@@ -9,10 +9,10 @@ public class Player : Area2D {
 	public int Speed = 180;
 
 	[Export]
-	new public float Gravity = 3;
+	new public float Gravity = 2;
 
 	[Export]
-	public float JumpForce = -10f;
+	public float JumpForce = -7f;
 
 	private Vector2 _screenSize;
 	private Sprite _sprite;
@@ -36,10 +36,10 @@ public class Player : Area2D {
 
 		if (_jumping && JumpForce < -0.1) {
 			velocity.y = JumpForce;
-			JumpForce -= JumpForce * 0.10f;
+			JumpForce -= JumpForce * 0.1f;
 		} else {
 			_jumping = false;
-			JumpForce = -10f;
+			JumpForce = -7f;
 		}
 
 		if (Input.IsActionJustPressed("ui_up")) {

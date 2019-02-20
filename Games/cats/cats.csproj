@@ -49,6 +49,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actors\Enemies\Bro1\Bro1.cs" />
     <Compile Include="Actors\Player\Player.cs" />
     <Compile Include="Levels\Level1\Level1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
