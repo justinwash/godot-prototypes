@@ -23,9 +23,10 @@ custom_colors/default_color = Color( 1, 0, 0, 1 )
 text = "MOOD"
 
 [node name="Meter" type="Node2D" parent="."]
+position = Vector2( 32.3001, 40.8501 )
 
-[node name="Value" type="Polygon2D" parent="Meter"]
-position = Vector2( -1.89999, 4.75001 )
+[node name="Polygon2D" type="Polygon2D" parent="Meter"]
+position = Vector2( 2.85, 1.89999 )
 color = Color( 1, 0, 0, 1 )
-polygon = PoolVector2Array( 33.9001, 40.2719, 33.9001, 215.072, 52.9001, 214.122, 52.9001, 40.2719 )
+polygon = PoolVector2Array( -1.24994, 0.371933, -1.24994, 178.972, 15.8501, 178.972, 15.8501, -0.578064 )
 

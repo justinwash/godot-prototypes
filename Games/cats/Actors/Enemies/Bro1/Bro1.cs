@@ -24,7 +24,7 @@ public class Bro1 : Area2D
 		}
 		
 		if (Position.x - _player.Position.x < 100) {
-			_playerHealthBar.SetScale(_playerHealthBar.Scale * new Vector2(1f,0.95f));
+			_playerHealthBar.SetScale(_playerHealthBar.Scale * new Vector2(1f,0.99f));
 		}
 	}
 }
