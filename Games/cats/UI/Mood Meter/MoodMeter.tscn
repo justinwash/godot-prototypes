@@ -29,4 +29,3 @@ position = Vector2( 32.3001, 40.8501 )
 position = Vector2( 2.85, 1.89999 )
 color = Color( 1, 0, 0, 1 )
 polygon = PoolVector2Array( -1.24994, 0.371933, -1.24994, 178.972, 15.8501, 178.972, 15.8501, -0.578064 )
-
