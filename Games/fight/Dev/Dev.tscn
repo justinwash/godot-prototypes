@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Dev/Assets/Stage/background.png" type="Texture" id=1]
+[ext_resource path="res://Dev/Assets/Stage/background.jpg" type="Texture" id=2]
+[ext_resource path="res://Dev/Components/Player1.tscn" type="PackedScene" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 531.083, 42.5173 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 10, 345.894 )
+
+[node name="Stage" type="Node2D"]
+
+[node name="Background" type="TextureRect" parent="."]
+margin_left = -20.6482
+margin_top = -14.7562
+margin_right = 1088.35
+margin_bottom = 787.244
+texture = ExtResource( 1 )
+expand = true
+
+[node name="Floor" type="StaticBody2D" parent="."]
+
+[node name="ColorRect" type="TextureRect" parent="Floor"]
+margin_left = -13.0
+margin_top = 425.0
+margin_right = 1041.0
+margin_bottom = 610.0
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+position = Vector2( 513.892, 571.97 )
+shape = SubResource( 1 )
+
+[node name="Player 1" parent="." instance=ExtResource( 3 )]
+position = Vector2( 167.313, 201.662 )
+
+[node name="Walls" type="StaticBody2D" parent="."]
+
+[node name="LeftWall" type="CollisionShape2D" parent="Walls"]
+position = Vector2( -16.6205, 322.438 )
+shape = SubResource( 2 )
+
+[node name="RightWall" type="CollisionShape2D" parent="Walls"]
+position = Vector2( 1041.55, 303.601 )
+shape = SubResource( 2 )

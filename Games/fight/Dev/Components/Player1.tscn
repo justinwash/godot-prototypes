@@ -1,0 +1,51 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Dev/Components/Player1.gd" type="Script" id=1]
+[ext_resource path="res://Dev/Components/Attack N1.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 21.1133, 66.7516 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 123.387, 21.4684 )
+
+[node name="Player 1" type="KinematicBody2D"]
+position = Vector2( 1.05777, -317.335 )
+scale = Vector2( 1.6, 1.6 )
+script = ExtResource( 1 )
+MOVE_SPEED = 250
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+editor/display_folded = true
+position = Vector2( 30.0639, 98.9182 )
+scale = Vector2( 1.5, 1.5 )
+shape = SubResource( 1 )
+
+[node name="Outline" type="Node2D" parent="Collider"]
+editor/display_folded = true
+position = Vector2( -21.2577, -63.7998 )
+scale = Vector2( 0.933333, 0.933333 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Collider/Outline"]
+position = Vector2( -4.76657, -7.94429 )
+scale = Vector2( 1.3, 1.3 )
+color = Color( 0.627451, 0.627451, 0.627451, 1 )
+polygon = PoolVector2Array( 13.1509, 5.43229, 31.4227, 5.43229, 31.4227, 18.9376, 36.1893, 21.3209, 36.1893, 67.7949, 30.2311, 69.781, 30.2311, 113.077, 14.3425, 113.077, 14.3425, 73.7531, 6.00101, 70.5754, 6.00101, 19.732, 13.1509, 17.3487 )
+
+[node name="Attack N1" type="Area2D" parent="."]
+position = Vector2( -0.661106, 198.334 )
+scale = Vector2( 0.625, 0.625 )
+script = ExtResource( 2 )
+
+[node name="Hitbox" type="CollisionShape2D" parent="Attack N1"]
+position = Vector2( 125.235, -267.23 )
+scale = Vector2( 1, 1 )
+shape = SubResource( 2 )
+disabled = true
+
+[node name="ColorRect" type="ColorRect" parent="Attack N1/Hitbox"]
+margin_left = -120.0
+margin_top = -20.0
+margin_right = 122.0
+margin_bottom = 20.0
+color = Color( 1, 0, 0, 0.392157 )
