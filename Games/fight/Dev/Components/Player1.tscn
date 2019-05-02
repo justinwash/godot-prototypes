@@ -1,13 +1,13 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Dev/Components/Player1.gd" type="Script" id=1]
-[ext_resource path="res://Dev/Components/Attack N1.gd" type="Script" id=2]
+[ext_resource path="res://Dev/Components/Attacks/Attack N1.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 21.1133, 66.7516 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 123.387, 21.4684 )
+extents = Vector2( 100, 20 )
 
 [node name="Player 1" type="KinematicBody2D"]
 position = Vector2( 1.05777, -317.335 )
@@ -36,16 +36,9 @@ polygon = PoolVector2Array( 13.1509, 5.43229, 31.4227, 5.43229, 31.4227, 18.9376
 position = Vector2( -0.661106, 198.334 )
 scale = Vector2( 0.625, 0.625 )
 script = ExtResource( 2 )
+HITBOX_X = 80
+HITBOX_Y = 90
+HITBOX_H = 20
 
-[node name="Hitbox" type="CollisionShape2D" parent="Attack N1"]
-position = Vector2( 125.235, -267.23 )
-scale = Vector2( 1, 1 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Attack N1"]
 shape = SubResource( 2 )
-disabled = true
-
-[node name="ColorRect" type="ColorRect" parent="Attack N1/Hitbox"]
-margin_left = -120.0
-margin_top = -20.0
-margin_right = 122.0
-margin_bottom = 20.0
-color = Color( 1, 0, 0, 0.392157 )

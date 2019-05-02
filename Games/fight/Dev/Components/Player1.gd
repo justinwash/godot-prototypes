@@ -33,7 +33,7 @@ func _physics_process(delta):
 				move_dir -= 1
 	
 		y_velo += GRAVITY
-		if grounded and Input.is_action_just_pressed("pad1_up"):
+		if grounded && (dpad_input == 7 || dpad_input == 8 || dpad_input == 9):
 			y_velo = -JUMP_FORCE
 			momentum = JUMP_X_MOMENTUM
 		
@@ -50,6 +50,8 @@ func update_dpad():
 			dpad_input = 7
 		elif Input.is_action_pressed("pad1_down"):
 			dpad_input = 1
+		elif Input.is_action_pressed("pad1_right"):
+			dpad_input = 5
 		else:
 			dpad_input = 4
 	elif Input.is_action_pressed("pad1_right"):
@@ -60,6 +62,9 @@ func update_dpad():
 		else:
 			dpad_input = 6
 	elif Input.is_action_pressed("pad1_up"):
+		if Input.is_action_pressed("pad1_down"):
+			dpad_input = 5
+		else:
 			dpad_input = 8
 	elif Input.is_action_pressed("pad1_down"):
 			dpad_input = 2
