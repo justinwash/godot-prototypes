@@ -14,7 +14,7 @@ var dpad_input = 5
 var btn_input = 0
 
 var busy = false
-var action = "0"
+var hurtboxes = [get_node("Hurtbox")]
 
 func _physics_process(delta):
 	update_dpad()	
