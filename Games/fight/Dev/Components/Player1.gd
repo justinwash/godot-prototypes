@@ -14,7 +14,6 @@ var dpad_input = 5
 var btn_input = 0
 
 var busy = false
-var hurtboxes = [get_node("Hurtbox")]
 
 func _physics_process(delta):
 	update_dpad()	
@@ -72,7 +71,7 @@ func update_dpad():
 			dpad_input = 5	
 
 func update_btn():
-	if Input.is_action_pressed("pad1_btn1"):
+	if Input.is_action_just_pressed("pad1_btn1"):
 		if Input.is_action_pressed("pad1_btn2"):
 			btn_input = 12
 		elif Input.is_action_pressed("pad1_btn3"):
@@ -81,19 +80,21 @@ func update_btn():
 			btn_input = 14
 		else:
 			btn_input = 1
-	elif Input.is_action_pressed("pad1_btn2"):
+	elif Input.is_action_just_pressed("pad1_btn2"):
 		if Input.is_action_pressed("pad1_btn3"):
 			btn_input = 23
 		elif Input.is_action_pressed("pad1_btn4"):
 			btn_input = 24
 		else:
 			btn_input = 2
-	elif Input.is_action_pressed("pad1_btn3"):
+	elif Input.is_action_just_pressed("pad1_btn3"):
 		if Input.is_action_pressed("pad1_btn4"):
 			btn_input = 34
 		else:
 			btn_input = 3
-	elif Input.is_action_pressed("pad1_btn4"):
+	elif Input.is_action_just_pressed("pad1_btn4"):
 		if Input.is_action_pressed("pad1_up"):
 			btn_input = 4
+	else:
+		btn_input = 0
 
