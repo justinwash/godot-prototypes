@@ -4,7 +4,7 @@ extends Node2D
 export var STARTUP := 10
 export var ACTIVE := 3
 export var RECOVERY := 7
-export var BLOCKSTUN := 4
+export var BLOCKSTUN := 7
 export var HITSTUN := 12
 
 # properties
@@ -25,10 +25,12 @@ var current_frame := 0
 
 # instance
 onready var player := get_parent()
+onready var hitbox := get_node("Hitbox")
+onready var hurtbox := get_node("Hurtbox")
 
 func _physics_process(delta):	
-	get_node("Hitbox/Collider").visible = false
-	get_node("Hurtbox/Collider").visible = false
+	hitbox.deactivate()
+	hurtbox.deactivate()
 	# if the game is actually running
 	if should_activate():
 		player.busy = true
@@ -39,18 +41,18 @@ func _physics_process(delta):
 		
 		if current_frame <= STARTUP:
 			# startup anim
-			activate_hurtbox()
+			hurtbox.activate()
 			pass
 		elif current_frame <= STARTUP + ACTIVE:
 			# create and activate hitbox and hurtbox
-			activate_hitbox()
-			activate_hurtbox()
+			hitbox.activate()
+			hurtbox.activate()
 			# detect if we hit something
 			# deal damage
 			# deal pushback
 			# deal hit/blockstun
 		elif current_frame <= STARTUP + ACTIVE + RECOVERY:
-			activate_hurtbox()
+			hurtbox.activate()
 			# recovery animation
 			# cancel if able
 			pass
@@ -59,23 +61,10 @@ func _physics_process(delta):
 			player.busy = false
 
 func should_activate():
-	if player.dpad_input == activation_dir && player.btn_input == activation_btn && !player.busy:
+	if player.dpad_input == activation_dir && player.btn_input == activation_btn && !player.busy && player.is_on_floor():
 		return true
 	else:
 		return false
-	 
-func activate_hitbox():
-	get_node("Hitbox/Collider").visible = true
-	pass
-	
-func activate_hurtbox():
-	get_node("Hurtbox/Collider").visible = true
-	pass
-
-func did_hit():
-	# return whether we hit a thing or not
-	pass
-
 
 	
 	
