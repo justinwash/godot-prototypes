@@ -1,10 +1,20 @@
 extends Area2D
 
-onready var player := get_parent().get_parent()
+export(NodePath) var player_path
+onready var player = get_node(player_path)
 onready var collider := get_node("Collider")
 
+export var COLLISION_LAYER_BIT := 1 if PLAYER_ID == 1 else 2
+export var COLLISION_MASK_BIT := 2 if PLAYER_ID == 1 else 1
+
+export var VISIBLE_IN_GAME := true
+
 func activate():
-	collider.visible = true
+	set_collision_layer_bit(COLLISION_LAYER_BIT,true)
+	set_collision_mask_bit(COLLISION_MASK_BIT, true)
+	collider.visible = true if VISIBLE_IN_GAME else false
 	
 func deactivate():
+	set_collision_layer_bit(COLLISION_LAYER_BIT,false)
+	set_collision_mask_bit(COLLISION_MASK_BIT, false)
 	collider.visible = false
