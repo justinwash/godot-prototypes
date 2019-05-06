@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+export var PLAYER_ID = 1
+
 export var MOVE_SPEED = 500
 export var JUMP_X_MOMENTUM = 2
 const JUMP_FORCE = 1000

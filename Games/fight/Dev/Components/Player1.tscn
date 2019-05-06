@@ -1,20 +1,14 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Dev/Components/Player1.gd" type="Script" id=1]
-[ext_resource path="res://Dev/Components/Attacks/Attack N1.gd" type="Script" id=2]
-[ext_resource path="res://Dev/Components/Hitbox.gd" type="Script" id=3]
-[ext_resource path="res://Dev/Components/Hurtbox.gd" type="Script" id=4]
+[ext_resource path="res://Dev/Components/Attacks/Attack Base.tscn" type="PackedScene" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 21.1133, 66.7516 )
 
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 35.1311, 17.3329 )
-
-[sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 76.3423, 39.2901 )
-
-[node name="Player 1" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=[
+"Player",
+]]
 position = Vector2( 1.05777, -317.335 )
 scale = Vector2( 1.6, 1.6 )
 script = ExtResource( 1 )
@@ -37,23 +31,47 @@ scale = Vector2( 1.3, 1.3 )
 color = Color( 0.627451, 0.627451, 0.627451, 1 )
 polygon = PoolVector2Array( 13.1509, 5.43229, 31.4227, 5.43229, 31.4227, 18.9376, 36.1893, 21.3209, 36.1893, 67.7949, 30.2311, 69.781, 30.2311, 113.077, 14.3425, 113.077, 14.3425, 73.7531, 6.00101, 70.5754, 6.00101, 19.732, 13.1509, 17.3487 )
 
-[node name="Attack G-5-1" type="Node2D" parent="."]
-position = Vector2( -0.661106, 198.334 )
-scale = Vector2( 0.625, 0.625 )
-script = ExtResource( 2 )
+[node name="Attack G-5-1" parent="." instance=ExtResource( 2 )]
+player_path = NodePath("..")
 
-[node name="Hitbox" type="Area2D" parent="Attack G-5-1"]
-position = Vector2( 150, -300 )
-scale = Vector2( 1.6, 1.6 )
-script = ExtResource( 3 )
+[node name="Hitbox" parent="Attack G-5-1" index="0"]
+editor/display_folded = true
 
-[node name="Collider" type="CollisionShape2D" parent="Attack G-5-1/Hitbox"]
-position = Vector2( 5.98072, 35.03 )
-shape = SubResource( 2 )
+[node name="Hurtbox" parent="Attack G-5-1" index="1"]
+editor/display_folded = true
 
-[node name="Hurtbox" type="Area2D" parent="Attack G-5-1"]
-script = ExtResource( 4 )
+[node name="Next" parent="Attack G-5-1" instance=ExtResource( 2 )]
+position = Vector2( 0, 0 )
+scale = Vector2( 1, 1 )
+RECOVERY = 12
+BLOCKSTUN = 12
+DAMAGE = 15
+IS_STRING = false
+activation_dirs = [  ]
+activation_btns = [  ]
+next_string_btn = 0
+next_string_delay = 0
+player_path = NodePath("../..")
 
-[node name="Collider" type="CollisionShape2D" parent="Attack G-5-1/Hurtbox"]
-position = Vector2( 140.804, -243.331 )
-shape = SubResource( 3 )
+[node name="Collider" parent="Attack G-5-1/Next/Hitbox" index="0"]
+position = Vector2( 25.6317, 34.1756 )
+
+[node name="Collider" parent="Attack G-5-1/Next/Hurtbox" index="0"]
+position = Vector2( 143.538, -246.065 )
+
+[node name="Attack G-5-2" parent="." instance=ExtResource( 2 )]
+RECOVERY = 14
+activation_btns = [ 2 ]
+player_path = NodePath("..")
+
+[node name="Collider" parent="Attack G-5-2/Hitbox" index="0"]
+position = Vector2( 29.9037, 61.5161 )
+
+[node name="Collider" parent="Attack G-5-2/Hurtbox" index="0"]
+position = Vector2( 162.676, -198.219 )
+
+[editable path="Attack G-5-1"]
+
+[editable path="Attack G-5-1/Next"]
+
+[editable path="Attack G-5-2"]
