@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 export var PLAYER_ID := 1
+export var PLAYER_SIDE := 1
 
 # movement
 export var MOVE_SPEED := 500
@@ -22,16 +23,23 @@ var halt := false
 # animation
 onready var anim_player := $AnimationPlayer
 
+# properties
+export var PLAYER_HEALTH := 150
+var player_stun := 0
+
 # state
-var upd_func = "update60"
+var upd_func = "move"
+var upd_obj = null
 
 func _physics_process(delta):
-	call(upd_func)
-	
-func update60():
 	update_dpad()	
 	update_btn()
 
+	call(upd_func, upd_obj)
+
+	move_and_slide(Vector2(move_dir * MOVE_SPEED * momentum, y_velo), Vector2(0, -1))
+	
+func move():
 	if busy == false:
 		var grounded = is_on_floor()
 	
@@ -53,9 +61,21 @@ func update60():
 			y_velo = 5
 		if y_velo > MAX_FALL_SPEED:
 			y_velo = MAX_FALL_SPEED
-		
-		move_and_slide(Vector2(move_dir * MOVE_SPEED * momentum, y_velo), Vector2(0, -1))
 	
+func get_hit(attack):
+	PLAYER_HEALTH -= attack.DAMAGE
+	player_stun = attack.HITSTUN
+	player.upd_obj = attack
+	player.upd_func = "stun"
+
+func stun(attack):
+	if player_stun > 0:
+		move_dir -= attack.PUSHBACK_OPP * PLAYER_SIDE * player_stun
+		player_stun -= 1
+	else:
+		player.upd_obj = null
+		player.upd_func = "move"
+
 func update_dpad():
 	if Input.is_action_pressed("pad" + PLAYER_ID + "_left"):
 		if Input.is_action_pressed("pad" + PLAYER_ID + "_up"):
