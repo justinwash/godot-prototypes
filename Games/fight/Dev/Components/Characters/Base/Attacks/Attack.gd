@@ -94,11 +94,11 @@ func play_anim(anim_name):
 
 # this is just to get rid of the unused variable warning. remove me.
 func _init():
-	STARTUP = STARTUP
+	STARTUP := STARTUP
 	ACTIVE := ACTIVE
 	RECOVERY := RECOVERY
 	BLOCKSTUN := BLOCKSTUN
-	HITSTUN = HITSTUN
+	HITSTUN := HITSTUN
 	DAMAGE := DAMAGE
 	CANCEL := CANCEL
 	TYPE := TYPE
