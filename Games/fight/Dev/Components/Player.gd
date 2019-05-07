@@ -39,6 +39,9 @@ func _physics_process(delta):
 		call(upd_func, upd_obj)
 	else:
 		call(upd_func)
+		
+	if busy:
+		move_dir = 0
 
 	move_and_slide(Vector2(move_dir * MOVE_SPEED * momentum, y_velo), Vector2(0, -1))
 	

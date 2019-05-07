@@ -4,10 +4,10 @@
 [ext_resource path="res://Dev/Assets/Stage/background.jpg" type="Texture" id=2]
 [ext_resource path="res://Dev/Components/Player.tscn" type="PackedScene" id=3]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10, 345.894 )
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 531.083, 42.5173 )
 
 [node name="Stage" type="Node2D"]
@@ -21,20 +21,18 @@ texture = ExtResource( 1 )
 expand = true
 
 [node name="Walls" type="StaticBody2D" parent="."]
-editor/display_folded = true
 collision_layer = 32
 collision_mask = 32
 
 [node name="LeftWall" type="CollisionShape2D" parent="Walls"]
 position = Vector2( -16.6205, 322.438 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="RightWall" type="CollisionShape2D" parent="Walls"]
 position = Vector2( 1041.55, 303.601 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="Floor" type="StaticBody2D" parent="."]
-editor/display_folded = true
 collision_layer = 32
 collision_mask = 32
 
@@ -49,7 +47,7 @@ stretch_mode = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
 position = Vector2( 513.892, 571.97 )
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="Player 1" parent="." instance=ExtResource( 3 )]
 position = Vector2( 167.313, 201.662 )
