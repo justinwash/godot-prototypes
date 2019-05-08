@@ -3,7 +3,6 @@
 # delegating _physics_process, _input calls to the State nodes,
 # and changing the current/active state.
 # See the PlayerV2 scene for an example on how to use it
-
 extends Node
 
 signal state_changed(current_state)
@@ -12,7 +11,6 @@ signal state_changed(current_state)
 # the node that inherits from this state machine interface
 # If you don't the game will crash (on purpose, so you won't 
 # forget to initialize the state machine)
-
 export(NodePath) var START_STATE
 var states_map = {}
 
@@ -65,3 +63,4 @@ func _change_state(state_name):
 	
 	if state_name != "previous":
 		current_state.enter()
+

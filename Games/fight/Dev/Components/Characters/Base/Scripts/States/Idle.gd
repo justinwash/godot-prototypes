@@ -11,7 +11,6 @@ func enter():
 func handle_input(event):
 	return .handle_input(event)
 
-# warning-ignore:unused_argument
 func update(delta):
 	character.move_and_slide(Vector2(0, 1000), Vector2(0, -1))
 	

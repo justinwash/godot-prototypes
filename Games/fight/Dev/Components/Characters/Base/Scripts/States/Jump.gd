@@ -22,7 +22,6 @@ func enter():
 	jumped = false
 	print("Jumping")
 
-# warning-ignore:unused_argument
 func update(delta):
 	var grounded = character.is_on_floor()
 	

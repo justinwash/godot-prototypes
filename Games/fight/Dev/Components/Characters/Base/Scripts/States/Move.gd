@@ -13,11 +13,9 @@ func enter():
 	owner.get_node("AnimationPlayer").play("Move")
 	print("Moving")
 	
-# warning-ignore:unused_argument
 func handle_input(event):
 	pass
 
-# warning-ignore:unused_argument
 func update(delta):
 	var grounded = character.is_on_floor()
 	

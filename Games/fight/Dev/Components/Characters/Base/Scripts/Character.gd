@@ -6,7 +6,6 @@ export var PLAYER_ID := 1
 var dpad_input := 5
 var btn_input := 0
 
-# warning-ignore:unused_argument
 func _physics_process(delta):
 	update_dpad()
 	update_btn()

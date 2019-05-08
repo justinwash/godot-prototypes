@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Dev/Components/Characters/Base/Assets/character.png" type="Texture" id=1]
-[ext_resource path="res://Dev/Components/Characters/Base/Scripts/Character_State_Machine.gd" type="Script" id=2]
+[ext_resource path="res://Dev/Components/Characters/Base/Scripts/CharacterStateMachine.gd" type="Script" id=2]
 [ext_resource path="res://Dev/Components/Characters/Base/Scripts/States/Idle.gd" type="Script" id=3]
 [ext_resource path="res://Dev/Components/Characters/Base/Scripts/Character.gd" type="Script" id=4]
 [ext_resource path="res://Dev/Components/Characters/Base/Scripts/States/Move.gd" type="Script" id=5]

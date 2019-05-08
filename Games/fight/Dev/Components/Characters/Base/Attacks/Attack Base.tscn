@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=2]
-
-[ext_resource path="res://Dev/Components/Attacks/Attack.gd" type="Script" id=1]
-
-[node name="Attack G-5-1" type="Node2D"]
-position = Vector2( -0.661106, 198.334 )
-scale = Vector2( 0.625, 0.625 )
-script = ExtResource( 1 )

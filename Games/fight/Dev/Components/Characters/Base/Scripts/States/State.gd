@@ -1,11 +1,9 @@
-"""
-Base interface for all states: it doesn't do anything in itself
-but forces us to pass the right arguments to the methods below
-and makes sure every State object had all of these methods.
-"""
+# Base interface for all states: it doesn't do anything in itself
+# but forces us to pass the right arguments to the methods below
+# and makes sure every State object had all of these methods.
+
 extends Node
 
-# warning-ignore:unused_signal
 signal finished(next_state_name)
 
 # Initialize the state. E.g. change the animation
@@ -16,14 +14,11 @@ func enter():
 func exit():
 	return
 
-# warning-ignore:unused_argument
 func handle_input(event):
 	return
 
-# warning-ignore:unused_argument
 func update(delta):
 	return
 
-# warning-ignore:unused_argument
 func _on_animation_finished(anim_name):
 	return
