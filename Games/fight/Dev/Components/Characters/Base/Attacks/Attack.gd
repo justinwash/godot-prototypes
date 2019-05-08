@@ -63,19 +63,3 @@ func play_anim(anim_name):
 	if anim_player.is_playing() and anim_player.current_animation == anim_name:
 		return
 	anim_player.play(anim_name)
-
-# this is just to get rid of the unused variable warning. remove me.
-func _init():
-	STARTUP = STARTUP
-	ACTIVE = ACTIVE
-	RECOVERY = RECOVERY
-	BLOCKSTUN = BLOCKSTUN
-	HITSTUN = HITSTUN
-	DAMAGE = DAMAGE
-	CANCEL = CANCEL
-	TYPE = TYPE
-	TRAVEL = TRAVEL
-	PUSHBACK_SELF = PUSHBACK_SELF
-	PUSHBACK_OPP = PUSHBACK_OPP
-	ON_GROUND = ON_GROUND
-	IS_STRING = IS_STRING
