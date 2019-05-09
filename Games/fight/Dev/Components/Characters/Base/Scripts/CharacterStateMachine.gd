@@ -5,7 +5,8 @@ func _ready():
 		"idle": $Idle,
 		"move": $Move,
 		"crouch": $Crouch,
-		"jump": $Jump
+		"jump": $Jump,
+		"attack": $Attack
 	}
 
 func _change_state(state_name):

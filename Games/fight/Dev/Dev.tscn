@@ -20,21 +20,18 @@ margin_bottom = 787.244
 texture = ExtResource( 1 )
 expand = true
 
-[node name="Walls" type="StaticBody2D" parent="."]
-collision_layer = 32
-collision_mask = 32
+[node name="Walls2" type="StaticBody2D" parent="."]
+collision_mask = 0
 
-[node name="LeftWall" type="CollisionShape2D" parent="Walls"]
+[node name="LeftWall" type="CollisionShape2D" parent="Walls2"]
 position = Vector2( -16.6205, 322.438 )
 shape = SubResource( 1 )
 
-[node name="RightWall" type="CollisionShape2D" parent="Walls"]
+[node name="RightWall" type="CollisionShape2D" parent="Walls2"]
 position = Vector2( 1041.55, 303.601 )
 shape = SubResource( 1 )
 
 [node name="Floor" type="StaticBody2D" parent="."]
-collision_layer = 32
-collision_mask = 32
 
 [node name="ColorRect" type="TextureRect" parent="Floor"]
 margin_left = -13.0
@@ -46,19 +43,8 @@ expand = true
 stretch_mode = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
-visible = false
 position = Vector2( 513.892, 571.97 )
 shape = SubResource( 2 )
 
-[node name="Walls" type="StaticBody2D" parent="."]
-
-[node name="LeftWall" type="CollisionShape2D" parent="Walls"]
-position = Vector2( -16.6205, 322.438 )
-shape = SubResource( 2 )
-
-[node name="RightWall" type="CollisionShape2D" parent="Walls"]
-position = Vector2( 1041.55, 303.601 )
-shape = SubResource( 2 )
-
 [node name="Character" parent="." instance=ExtResource( 3 )]
-position = Vector2( 148.477, 374.515 )
+position = Vector2( 144.045, 371.191 )

@@ -24,24 +24,32 @@ func enter():
 
 func update(delta):
 	var grounded = character.is_on_floor()
-	
+
 	if grounded && !jumped:
 		move_dir = 0
 		momentum = 1
-		
+
 		if [9].has(character.dpad_input):
 			move_dir += 1
+			character.x_momentum = 1
 		elif [7].has(character.dpad_input):
 			move_dir -= 1
+			character.x_momentum = -1
 		y_velo = -JUMP_Y_FORCE
 
+	else:
+		move_dir = character.x_momentum
+		print(character.x_momentum)
+
 	y_velo += GRAVITY
-	
+
 	if y_velo > MAX_FALL_SPEED:
 		y_velo = MAX_FALL_SPEED
-		
+
 	character.move_and_slide(Vector2(move_dir * JUMP_X_FORCE * momentum, y_velo), Vector2(0, -1))
 	jumped = true
-	
+
+	if character.btn_input != 0:
+		emit_signal("finished", "attack")
 	if jumped && character.is_on_floor():
 		emit_signal("finished", "idle")

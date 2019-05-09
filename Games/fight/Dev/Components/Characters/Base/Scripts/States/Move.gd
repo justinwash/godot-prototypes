@@ -12,23 +12,25 @@ var momentum := 1
 func enter():
 	owner.get_node("AnimationPlayer").play("Move")
 	print("Moving")
-	
+
 func handle_input(event):
 	pass
 
 func update(delta):
 	var grounded = character.is_on_floor()
-	
+
 	if grounded:
 		move_dir = 0
 		momentum = 1
-		
+
 		if [6, 9].has(character.dpad_input):
 			move_dir += 1
 		elif [4, 7].has(character.dpad_input):
 			move_dir -= 1
-		
+
 	character.move_and_slide(Vector2(move_dir * MOVE_SPEED * momentum, 1000), Vector2(0, -1))
-	
+
+	if character.btn_input != 0:
+		emit_signal("finished", "attack")
 	if ![4, 6].has(character.dpad_input) && grounded:
 		emit_signal("finished", "idle")

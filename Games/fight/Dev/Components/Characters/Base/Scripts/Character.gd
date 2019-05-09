@@ -6,10 +6,13 @@ export var PLAYER_ID := 1
 var dpad_input := 5
 var btn_input := 0
 
+var x_momentum := 0
+
 func _physics_process(delta):
 	update_dpad()
 	update_btn()
-    
+	print(x_momentum)
+
 func update_dpad():
 	if Input.is_action_pressed("pad" + str(PLAYER_ID) + "_left"):
 		if Input.is_action_pressed("pad" + str(PLAYER_ID) + "_up"):
@@ -27,15 +30,15 @@ func update_dpad():
 			dpad_input = 3
 		else:
 			dpad_input = 6
-	elif Input.is_action_pressed("pad" + str(PLAYER_ID) + "_up"):
-		if Input.is_action_pressed("pad" + str(PLAYER_ID) + "_down"):
-			dpad_input = 5
-		else:
-			dpad_input = 8
 	elif Input.is_action_pressed("pad" + str(PLAYER_ID) + "_down"):
+		if Input.is_action_pressed("pad" + str(PLAYER_ID) + "_up"):
+			dpad_input = 8
+		else:
 			dpad_input = 2
+	elif Input.is_action_pressed("pad" + str(PLAYER_ID) + "_up"):
+			dpad_input = 8
 	else:
-			dpad_input = 5	
+			dpad_input = 5
 
 func update_btn():
 	if Input.is_action_just_pressed("pad" + str(PLAYER_ID) + "_btn1"):

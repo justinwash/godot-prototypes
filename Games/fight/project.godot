@@ -19,6 +19,18 @@ config/name="fight"
 run/main_scene="res://Dev/Dev.tscn"
 config/icon="res://icon.png"
 
+[debug]
+
+gdscript/warnings/unused_variable=false
+gdscript/warnings/unused_class_variable=false
+gdscript/warnings/unused_argument=false
+gdscript/warnings/unused_signal=false
+
+[global]
+
+error=false
+warning=false
+
 [input]
 
 pad1_left={
@@ -104,4 +116,5 @@ pad2_btn4={
 
 [rendering]
 
+quality/filters/anisotropic_filter_level=16
 environment/default_environment="res://default_env.tres"

@@ -2,6 +2,7 @@ extends Node
 
 # properties
 export var NAME := "Punch"
+export var ANIMATION := "Punch"
 export var DAMAGE := 10
 export var CANCEL := 0
 export var TYPE := 'high'
