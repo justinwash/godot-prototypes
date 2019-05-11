@@ -4,17 +4,6 @@ extends "State.gd"
 export(NodePath) var CHARACTER_PATH
 onready var character = get_node(CHARACTER_PATH)
 
-# Movement
-export var JUMP_X_FORCE := 600
-export var JUMP_Y_FORCE := 1000
-
-const GRAVITY := 50
-const MAX_FALL_SPEED := 1000
-
-var y_velo := 0
-var move_dir := 0
-var momentum := 1
-
 var jumped := false
 
 func enter():
@@ -26,30 +15,23 @@ func update(delta):
 	var grounded = character.is_on_floor()
 
 	if grounded && !jumped:
-		move_dir = 0
-		momentum = 1
+		character.move_dir = 0
 
 		if [9].has(character.dpad_input):
-			move_dir += 1
-			character.x_momentum = 1
+			character.move_dir += 1
 		elif [7].has(character.dpad_input):
-			move_dir -= 1
-			character.x_momentum = -1
-		y_velo = -JUMP_Y_FORCE
+			character.move_dir -= 1
+		character.y_velo = -character.JUMP_Y_FORCE
 
-	else:
-		move_dir = character.x_momentum
-		print(character.x_momentum)
+	character.y_velo += character.GRAVITY
 
-	y_velo += GRAVITY
+	if character.y_velo > character.MAX_FALL_SPEED:
+		character.y_velo = character.MAX_FALL_SPEED
 
-	if y_velo > MAX_FALL_SPEED:
-		y_velo = MAX_FALL_SPEED
-
-	character.move_and_slide(Vector2(move_dir * JUMP_X_FORCE * momentum, y_velo), Vector2(0, -1))
+	character.move_and_slide(Vector2(character.move_dir * character.JUMP_X_FORCE, character.y_velo), Vector2(0, -1))
 	jumped = true
 
 	if character.btn_input != 0:
 		emit_signal("finished", "attack")
-	if jumped && character.is_on_floor():
+	elif jumped && character.is_on_floor():
 		emit_signal("finished", "idle")

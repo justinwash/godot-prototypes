@@ -15,9 +15,20 @@ func handle_input(event):
 	return .handle_input(event)
 
 func update(delta):
+
+	if character.is_on_floor():
+		character.move_dir = 0
+
+	character.y_velo += character.GRAVITY
+
+	if character.y_velo > character.MAX_FALL_SPEED:
+		character.y_velo = character.MAX_FALL_SPEED
+
+	character.move_and_slide(Vector2(character.move_dir * character.JUMP_X_FORCE, character.y_velo), Vector2(0, -1))
+
 	if animation_finished && !character.is_on_floor():
-		emit_signal("finished", "jump")
-	if animation_finished:
+		emit_signal("finished", "land")
+	elif animation_finished:
 		emit_signal("finished", "idle")
 
 

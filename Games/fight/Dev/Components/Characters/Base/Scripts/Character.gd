@@ -1,17 +1,25 @@
 extends KinematicBody2D
 
 export var PLAYER_ID := 1
-# export var PLAYER_SIDE := 1
 
+# Movement Properties
+export var MAX_FALL_SPEED := 1000
+export var GRAVITY := 50
+export var JUMP_X_FORCE := 600
+export var JUMP_Y_FORCE := 1000
+
+# Movement Actuals (updated every frame)
+var y_velo := 0
+var move_dir := 0
+var x_momentum := 0
+
+# Button Inputs (updated every frame)
 var dpad_input := 5
 var btn_input := 0
-
-var x_momentum := 0
 
 func _physics_process(delta):
 	update_dpad()
 	update_btn()
-	print(x_momentum)
 
 func update_dpad():
 	if Input.is_action_pressed("pad" + str(PLAYER_ID) + "_left"):
