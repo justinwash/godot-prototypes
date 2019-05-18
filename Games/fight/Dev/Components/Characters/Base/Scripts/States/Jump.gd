@@ -7,14 +7,14 @@ onready var character = get_node(CHARACTER_PATH)
 var jumped := false
 
 func enter():
-	owner.get_node("AnimationPlayer").play("Jump")
 	jumped = false
-	print("Jumping")
 
 func update(delta):
-	var grounded = character.is_on_floor()
+	var grounded = character.time_on_floor > 3 && character.is_on_floor()
 
 	if grounded && !jumped:
+		print("Jumping")
+		owner.get_node("AnimationPlayer").play("Jump")
 		character.move_dir = 0
 
 		if [9].has(character.dpad_input):
@@ -32,6 +32,8 @@ func update(delta):
 	jumped = true
 
 	if character.btn_input != 0:
+		character.dpad_attack = character.dpad_input
+		character.btn_attack = character.btn_input
 		emit_signal("finished", "attack")
 	elif jumped && character.is_on_floor():
 		emit_signal("finished", "idle")

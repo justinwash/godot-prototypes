@@ -24,10 +24,12 @@ expand = true
 collision_mask = 0
 
 [node name="LeftWall" type="CollisionShape2D" parent="Walls2"]
+visible = false
 position = Vector2( -16.6205, 322.438 )
 shape = SubResource( 1 )
 
 [node name="RightWall" type="CollisionShape2D" parent="Walls2"]
+visible = false
 position = Vector2( 1041.55, 303.601 )
 shape = SubResource( 1 )
 
@@ -43,8 +45,19 @@ expand = true
 stretch_mode = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+visible = false
 position = Vector2( 513.892, 571.97 )
 shape = SubResource( 2 )
 
-[node name="Character" parent="." instance=ExtResource( 3 )]
+[node name="Character L" parent="." instance=ExtResource( 3 )]
 position = Vector2( 144.045, 371.191 )
+PLAYER_ID = 1
+
+[node name="Character R" parent="." instance=ExtResource( 3 )]
+position = Vector2( 835.458, 370.083 )
+scale = Vector2( -1, 1 )
+PLAYER_ID = 2
+
+[editable path="Character L"]
+
+[editable path="Character R"]

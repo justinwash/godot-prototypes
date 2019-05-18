@@ -1,12 +1,13 @@
 extends KinematicBody2D
 
-export var PLAYER_ID := 1
+export var PLAYER_ID := 0
 
 # Movement Properties
 export var MAX_FALL_SPEED := 1000
 export var GRAVITY := 50
 export var JUMP_X_FORCE := 600
 export var JUMP_Y_FORCE := 1000
+var time_on_floor := 0
 
 # Movement Actuals (updated every frame)
 var y_velo := 0
@@ -17,7 +18,12 @@ var x_momentum := 0
 var dpad_input := 5
 var btn_input := 0
 
+# recall buttons pressed to initiate attack
+var dpad_attack := 5
+var btn_attack := 0
+
 func _physics_process(delta):
+	time_on_floor = time_on_floor + 1 if is_on_floor() else 0
 	update_dpad()
 	update_btn()
 
@@ -71,7 +77,6 @@ func update_btn():
 		else:
 			btn_input = 3
 	elif Input.is_action_just_pressed("pad" + str(PLAYER_ID) + "_btn4"):
-		if Input.is_action_pressed("pad" + str(PLAYER_ID) + "_up"):
-			btn_input = 4
+		btn_input = 4
 	else:
 		btn_input = 0
