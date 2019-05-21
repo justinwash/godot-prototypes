@@ -12,9 +12,9 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	center_camera(c1, c2)
+	center_camera()
 
-func center_camera(c1, c2):
+func center_camera():
 	var x = 0
 	var c1_x = c1.position.x
 	var c2_x = c2.position.x
