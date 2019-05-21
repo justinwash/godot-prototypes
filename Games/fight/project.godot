@@ -26,6 +26,11 @@ gdscript/warnings/unused_class_variable=false
 gdscript/warnings/unused_argument=false
 gdscript/warnings/unused_signal=false
 
+[display]
+
+window/size/width=1280
+window/size/height=720
+
 [global]
 
 error=false

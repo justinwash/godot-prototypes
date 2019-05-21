@@ -1,63 +1,82 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Dev/Assets/Stage/background.png" type="Texture" id=1]
 [ext_resource path="res://Dev/Assets/Stage/background.jpg" type="Texture" id=2]
 [ext_resource path="res://Dev/Components/Characters/Base/Character.tscn" type="PackedScene" id=3]
-
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 10, 345.894 )
+[ext_resource path="res://Dev/Scripts/CameraAnchor.gd" type="Script" id=4]
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 531.083, 42.5173 )
+extents = Vector2( 1561.36, 42.5173 )
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 20.1573, 345.894 )
 
 [node name="Stage" type="Node2D"]
+scale = Vector2( 1.25, 1.25 )
 
 [node name="Background" type="TextureRect" parent="."]
-margin_left = -20.6482
-margin_top = -14.7562
-margin_right = 1088.35
-margin_bottom = 787.244
+margin_left = -17.3158
+margin_top = -13.0
+margin_right = 2145.68
+margin_bottom = 1551.0
 texture = ExtResource( 1 )
 expand = true
-
-[node name="Walls2" type="StaticBody2D" parent="."]
-collision_mask = 0
-
-[node name="LeftWall" type="CollisionShape2D" parent="Walls2"]
-visible = false
-position = Vector2( -16.6205, 322.438 )
-shape = SubResource( 1 )
-
-[node name="RightWall" type="CollisionShape2D" parent="Walls2"]
-visible = false
-position = Vector2( 1041.55, 303.601 )
-shape = SubResource( 1 )
 
 [node name="Floor" type="StaticBody2D" parent="."]
 
 [node name="ColorRect" type="TextureRect" parent="Floor"]
 margin_left = -13.0
 margin_top = 425.0
-margin_right = 1041.0
-margin_bottom = 610.0
+margin_right = 2070.0
+margin_bottom = 790.0
 texture = ExtResource( 2 )
 expand = true
 stretch_mode = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
-visible = false
 position = Vector2( 513.892, 571.97 )
 shape = SubResource( 2 )
 
+[node name="Walls2" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="LeftWall" type="CollisionShape2D" parent="Walls2"]
+position = Vector2( -16.6205, 322.438 )
+shape = SubResource( 1 )
+
+[node name="RightWall" type="CollisionShape2D" parent="Walls2"]
+position = Vector2( 2065.99, 333.041 )
+shape = SubResource( 1 )
+
 [node name="Character L" parent="." instance=ExtResource( 3 )]
-position = Vector2( 144.045, 371.191 )
+position = Vector2( 670.711, 378.098 )
 PLAYER_ID = 1
+OPPONENT = NodePath("../Character R")
 
 [node name="Character R" parent="." instance=ExtResource( 3 )]
-position = Vector2( 835.458, 370.083 )
-scale = Vector2( -1, 1 )
+position = Vector2( 1375.94, 378.717 )
+rotation = 3.14159
+scale = Vector2( 1, -1 )
 PLAYER_ID = 2
+OPPONENT = NodePath("../Character L")
 
-[editable path="Character L"]
+[node name="CameraAnchor" type="Node2D" parent="."]
+modulate = Color( 1, 0, 0, 1 )
+position = Vector2( 1024, 0 )
+script = ExtResource( 4 )
+CHARACTER_L = NodePath("../Character L")
+CHARACTER_R = NodePath("../Character R")
 
-[editable path="Character R"]
+[node name="Camera2D" type="Camera2D" parent="CameraAnchor"]
+show_behind_parent = true
+current = true
+limit_left = 0
+limit_top = 0
+limit_right = 2560
+limit_bottom = 720
+limit_smoothed = true
+drag_margin_h_enabled = false
+drag_margin_v_enabled = false
+smoothing_enabled = true
+editor_draw_limits = true
+editor_draw_drag_margin = true

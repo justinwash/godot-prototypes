@@ -1,6 +1,8 @@
 extends KinematicBody2D
 
 export var PLAYER_ID := 0
+export(NodePath) var OPPONENT
+onready var opponent = get_node(OPPONENT)
 
 # Movement Properties
 export var MAX_FALL_SPEED := 1000
