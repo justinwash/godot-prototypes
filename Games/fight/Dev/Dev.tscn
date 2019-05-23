@@ -5,10 +5,10 @@
 [ext_resource path="res://Dev/Components/Characters/Base/Character.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Dev/Scripts/CameraAnchor.gd" type="Script" id=4]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 1561.36, 42.5173 )
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 20.1573, 345.894 )
 
 [node name="Stage" type="Node2D"]
@@ -35,26 +35,26 @@ stretch_mode = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
 position = Vector2( 513.892, 571.97 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="Walls2" type="StaticBody2D" parent="."]
 collision_mask = 0
 
 [node name="LeftWall" type="CollisionShape2D" parent="Walls2"]
 position = Vector2( -16.6205, 322.438 )
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="RightWall" type="CollisionShape2D" parent="Walls2"]
 position = Vector2( 2065.99, 333.041 )
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="Character L" parent="." instance=ExtResource( 3 )]
-position = Vector2( 670.711, 378.098 )
+position = Vector2( 686.711, 341.045 )
 PLAYER_ID = 1
 OPPONENT = NodePath("../Character R")
 
 [node name="Character R" parent="." instance=ExtResource( 3 )]
-position = Vector2( 1375.94, 378.717 )
+position = Vector2( 1353.2, 334.928 )
 rotation = 3.14159
 scale = Vector2( 1, -1 )
 PLAYER_ID = 2
@@ -78,5 +78,6 @@ limit_smoothed = true
 drag_margin_h_enabled = false
 drag_margin_v_enabled = false
 smoothing_enabled = true
+smoothing_speed = 25.0
 editor_draw_limits = true
 editor_draw_drag_margin = true
