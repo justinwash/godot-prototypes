@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Dev/Assets/Stage/background.png" type="Texture" id=1]
 [ext_resource path="res://Dev/Assets/Stage/background.jpg" type="Texture" id=2]
@@ -10,6 +10,14 @@ extents = Vector2( 1561.36, 42.5173 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 20.1573, 345.894 )
+
+[sub_resource type="RectangleShape2D" id=3]
+resource_local_to_scene = true
+extents = Vector2( 40, 140 )
+
+[sub_resource type="RectangleShape2D" id=4]
+resource_local_to_scene = true
+extents = Vector2( 40, 140 )
 
 [node name="Stage" type="Node2D"]
 scale = Vector2( 1.25, 1.25 )
@@ -53,12 +61,26 @@ position = Vector2( 686.711, 341.045 )
 PLAYER_ID = 1
 OPPONENT = NodePath("../Character R")
 
+[node name="Collider" parent="Character L" index="2"]
+shape = SubResource( 3 )
+
+[node name="Hurtbox" parent="Character L" index="6"]
+collision_layer = 32
+collision_mask = 64
+
 [node name="Character R" parent="." instance=ExtResource( 3 )]
 position = Vector2( 1353.2, 334.928 )
 rotation = 3.14159
 scale = Vector2( 1, -1 )
 PLAYER_ID = 2
 OPPONENT = NodePath("../Character L")
+
+[node name="Collider" parent="Character R" index="2"]
+shape = SubResource( 4 )
+
+[node name="Hurtbox" parent="Character R" index="6"]
+collision_layer = 64
+collision_mask = 32
 
 [node name="CameraAnchor" type="Node2D" parent="."]
 modulate = Color( 1, 0, 0, 1 )
@@ -81,3 +103,7 @@ smoothing_enabled = true
 smoothing_speed = 25.0
 editor_draw_limits = true
 editor_draw_drag_margin = true
+
+[editable path="Character L"]
+
+[editable path="Character R"]

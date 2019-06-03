@@ -24,6 +24,10 @@ var btn_input := 0
 var dpad_attack := 5
 var btn_attack := 0
 
+# hitstun counter and hit-by move
+var hit_stun := 0
+var hit_by := ''
+
 func _physics_process(delta):
 	time_on_floor = time_on_floor + 1 if is_on_floor() else 0
 	update_dpad()

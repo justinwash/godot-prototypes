@@ -11,7 +11,6 @@ func _ready():
 	connect("area_entered", self, "collide")
 
 func collide(area):
-	# call get_hit with the attack that owns 
+	# call get_hit with the attack that owns
 	# the hitbox we collided with
 	player.get_hit(area.get_parent())
-	
