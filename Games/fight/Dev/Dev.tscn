@@ -42,6 +42,7 @@ expand = true
 stretch_mode = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+visible = false
 position = Vector2( 513.892, 571.97 )
 shape = SubResource( 1 )
 
@@ -77,6 +78,10 @@ OPPONENT = NodePath("../Character L")
 
 [node name="Collider" parent="Character R" index="2"]
 shape = SubResource( 4 )
+
+[node name="Hitbox" parent="Character R" index="3"]
+collision_layer = 64
+collision_mask = 32
 
 [node name="Hurtbox" parent="Character R" index="6"]
 collision_layer = 64

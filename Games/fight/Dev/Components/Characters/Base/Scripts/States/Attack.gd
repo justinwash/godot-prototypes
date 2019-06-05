@@ -3,6 +3,7 @@ extends "State.gd"
 # Instance
 export(NodePath) var CHARACTER_PATH
 onready var character = get_node(CHARACTER_PATH)
+onready var hitbox = owner.get_node("Hitbox")
 onready var animation_player = owner.get_node("AnimationPlayer")
 var animation_finished := false
 var attack
@@ -31,7 +32,7 @@ func find_attack(dpad, btn):
 			attack = character.get_node('Attacks/' + state + '/' + str(5) + '/' + str(btn)[1] + '/' + 'a')
 			btn = int(str(btn)[1])
 
-
+	hitbox.CURRENT_ATTACK = attack
 
 	print(' ')
 	print(attack)
@@ -42,7 +43,6 @@ func handle_input(event):
 	return .handle_input(event)
 
 func update(delta):
-
 	if character.is_on_floor():
 		character.move_dir = 0
 
@@ -54,8 +54,10 @@ func update(delta):
 	character.move_and_slide(Vector2(character.move_dir * character.JUMP_X_FORCE, character.y_velo), Vector2(0, -1))
 
 	if animation_finished && !character.is_on_floor():
+		hitbox.CURRENT_ATTACK = null
 		emit_signal("finished", "land")
 	elif animation_finished:
+		hitbox.CURRENT_ATTACK = null
 		emit_signal("finished", "idle")
 
 
