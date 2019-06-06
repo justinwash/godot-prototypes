@@ -20,6 +20,9 @@ var x_momentum := 0
 var dpad_input := 5
 var btn_input := 0
 
+var frame = 0
+var input_buffer = [InputBuffer.new()]
+
 # recall buttons pressed to initiate attack
 var dpad_attack := 5
 var btn_attack := 0
@@ -29,9 +32,11 @@ var hit_stun := 0
 var hit_by := ''
 
 func _physics_process(delta):
+	frame += 1
 	time_on_floor = time_on_floor + 1 if is_on_floor() else 0
 	update_dpad()
 	update_btn()
+	update_input_buffer(dpad_input, btn_input, frame)
 
 func update_dpad():
 	if Input.is_action_pressed("pad" + str(PLAYER_ID) + "_left"):
@@ -86,3 +91,23 @@ func update_btn():
 		btn_input = 4
 	else:
 		btn_input = 0
+
+func update_input_buffer(dpad, btn, frame):
+	for i in range(0, input_buffer.size()):
+		if input_buffer[i].frame <= frame - 60:
+			input_buffer.remove(i)
+		else:
+			break
+	
+	if dpad != 5 || btn != 0 || input_buffer[-1].dpad != dpad || input_buffer[-1].btn != btn:
+		input_buffer.append({"dpad": dpad, "btn": btn, "frame": frame})
+
+class InputState:
+	var dpad := 5
+	var btn := 0
+	var frame := 0
+
+	func _init(dpad, btn, frame):
+		dpad = dpad
+		btn = btn
+		frame = frame

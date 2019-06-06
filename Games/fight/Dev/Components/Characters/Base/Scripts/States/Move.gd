@@ -25,8 +25,14 @@ func update(delta):
 		move_dir = 0
 		momentum = 1
 
-		if [6, 9].has(character.dpad_input):
+		if [6, 9].has(character.input_buffer[-1].dpad):
+			for i in range(0, input_buffer.size() - 2):
+				if input_buffer[i].dpad == 6 && input_buffer[-1].frame - input_buffer[i].frame < 30:
+					momentum = 10
+					break
+
 			move_dir += 1
+
 		elif [4, 7].has(character.dpad_input):
 			move_dir -= 1
 
