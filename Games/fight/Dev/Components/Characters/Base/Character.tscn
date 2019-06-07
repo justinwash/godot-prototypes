@@ -2404,6 +2404,18 @@ tracks/36/keys = {
 "update": 1,
 "values": [ false ]
 }
+tracks/37/type = "value"
+tracks/37/path = NodePath("Hitbox/CollisionShape2D:disabled")
+tracks/37/interp = 1
+tracks/37/loop_wrap = true
+tracks/37/imported = false
+tracks/37/enabled = true
+tracks/37/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
 [sub_resource type="Animation" id=7]
 length = 0.550001
@@ -3705,7 +3717,7 @@ tracks/35/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=11]
 resource_name = "Reel Low"
 step = 0.0166667
 tracks/0/type = "value"
@@ -4141,7 +4153,7 @@ tracks/35/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=12]
 resource_name = "Reel Mid"
 step = 0.0166667
 tracks/0/type = "value"
@@ -4577,15 +4589,15 @@ tracks/35/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="RectangleShape2D" id=11]
+[sub_resource type="RectangleShape2D" id=13]
 resource_local_to_scene = true
 extents = Vector2( 40, 140 )
 
-[sub_resource type="RectangleShape2D" id=12]
+[sub_resource type="RectangleShape2D" id=14]
 extents = Vector2( 46.6308, 20.6319 )
 
-[sub_resource type="RectangleShape2D" id=13]
-extents = Vector2( 55.7215, 158.299 )
+[sub_resource type="RectangleShape2D" id=15]
+extents = Vector2( 37.1263, 134.9 )
 
 [node name="Character" type="KinematicBody2D"]
 position = Vector2( 0.590832, 11.5547 )
@@ -4603,8 +4615,8 @@ anims/Jump = SubResource( 7 )
 anims/Land = SubResource( 8 )
 anims/Move = SubResource( 9 )
 "anims/Reel High" = SubResource( 10 )
-"anims/Reel Low" = SubResource( 14 )
-"anims/Reel Mid" = SubResource( 15 )
+"anims/Reel Low" = SubResource( 11 )
+"anims/Reel Mid" = SubResource( 12 )
 
 [node name="DevSprite" parent="." instance=ExtResource( 1 )]
 position = Vector2( -8.036, -60.118 )
@@ -4620,8 +4632,7 @@ rotation = -2.06465
 rotation = -19.3154
 
 [node name="Collider" type="CollisionShape2D" parent="."]
-visible = false
-shape = SubResource( 11 )
+shape = SubResource( 13 )
 one_way_collision_margin = 0.0
 
 [node name="Hitbox" type="Area2D" parent="."]
@@ -4633,7 +4644,7 @@ script = ExtResource( 12 )
 visible = false
 position = Vector2( 139.244, 0 )
 scale = Vector2( 2, 1 )
-shape = SubResource( 12 )
+shape = SubResource( 14 )
 disabled = true
 
 [node name="StateMachine" type="Node" parent="."]
@@ -4709,15 +4720,15 @@ TYPE = "low"
 HITSTUN = 24
 
 [node name="Hurtbox" type="Area2D" parent="."]
-visible = false
 script = ExtResource( 13 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+visible = false
 position = Vector2( -1.29236, -1.29236 )
-shape = SubResource( 13 )
+shape = SubResource( 15 )
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Reel" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Attack" method="_on_animation_finished"]
-[connection signal="area_entered" from="Hurtbox" to="StateMachine" method="_on_Hurtbox_area_entered"]
 [connection signal="area_entered" from="Hurtbox" to="StateMachine/Reel" method="_on_Hurtbox_area_entered"]
+[connection signal="area_entered" from="Hurtbox" to="StateMachine" method="_on_Hurtbox_area_entered"]
 
 [editable path="DevSprite"]
