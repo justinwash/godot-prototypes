@@ -13,7 +13,8 @@ func _ready():
 		"jump": $Jump,
 		"land": $Land,
 		"attack": $Attack,
-		"reel": $Reel
+		"reel": $Reel,
+		"dash": $Dash
 	}
 
 func _change_state(state_name):

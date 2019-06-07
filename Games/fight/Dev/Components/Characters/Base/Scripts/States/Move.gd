@@ -25,11 +25,14 @@ func update(delta):
 		move_dir = 0
 		momentum = 1
 
-		if [6, 9].has(character.input_buffer[-1].dpad):
-			for i in range(0, input_buffer.size() - 2):
-				if input_buffer[i].dpad == 6 && input_buffer[-1].frame - input_buffer[i].frame < 30:
-					momentum = 10
-					break
+		if [6, 9].has(character.input_buffer.back().dpad_state):
+			if character.input_buffer.size() > 2:
+				if [5].has(character.input_buffer[-2].dpad_state):
+					for i in range(0, character.input_buffer.size() - 2):
+						if character.input_buffer[i].dpad_state == 6 && character.input_buffer.back().frame_state - character.input_buffer[i].frame_state < 10:
+							emit_signal("finished", "dash")
+			else:
+				momentum = 1
 
 			move_dir += 1
 

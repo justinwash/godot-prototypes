@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Dev/Components/Characters/Base/Rigs/DevSprite.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Dev/Components/Characters/Base/Scripts/CharacterStateMachine.gd" type="Script" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://Dev/Components/Characters/Base/Scripts/States/Reel.gd" type="Script" id=11]
 [ext_resource path="res://Dev/Components/Characters/Base/Scripts/Hitbox.gd" type="Script" id=12]
 [ext_resource path="res://Dev/Components/Characters/Base/Scripts/Hurtbox.gd" type="Script" id=13]
+[ext_resource path="res://Dev/Components/Characters/Base/Scripts/States/Dash.gd" type="Script" id=14]
 
 [sub_resource type="Animation" id=1]
 resource_name = "5-1-a"
@@ -4679,6 +4680,10 @@ CHARACTER_PATH = NodePath("../..")
 script = ExtResource( 11 )
 CHARACTER_PATH = NodePath("../..")
 
+[node name="Dash" type="Node" parent="StateMachine"]
+script = ExtResource( 14 )
+CHARACTER_PATH = NodePath("../..")
+
 [node name="Attacks" type="Node" parent="."]
 
 [node name="Standing" type="Node" parent="Attacks"]
@@ -4728,7 +4733,7 @@ position = Vector2( -1.29236, -1.29236 )
 shape = SubResource( 15 )
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Reel" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Attack" method="_on_animation_finished"]
-[connection signal="area_entered" from="Hurtbox" to="StateMachine/Reel" method="_on_Hurtbox_area_entered"]
 [connection signal="area_entered" from="Hurtbox" to="StateMachine" method="_on_Hurtbox_area_entered"]
+[connection signal="area_entered" from="Hurtbox" to="StateMachine/Reel" method="_on_Hurtbox_area_entered"]
 
 [editable path="DevSprite"]
