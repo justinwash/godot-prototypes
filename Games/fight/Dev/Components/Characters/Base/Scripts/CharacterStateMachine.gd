@@ -14,7 +14,8 @@ func _ready():
 		"land": $Land,
 		"attack": $Attack,
 		"reel": $Reel,
-		"dash": $Dash
+		"dash_forward": $DashForward,
+		"dash_backward": $DashBackward
 	}
 
 func _change_state(state_name):

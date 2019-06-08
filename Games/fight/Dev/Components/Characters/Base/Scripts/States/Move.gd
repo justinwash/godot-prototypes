@@ -25,18 +25,32 @@ func update(delta):
 		move_dir = 0
 		momentum = 1
 
-		if [6, 9].has(character.input_buffer.back().dpad_state):
-			if character.input_buffer.size() > 2:
-				if [5].has(character.input_buffer[-2].dpad_state):
-					for i in range(0, character.input_buffer.size() - 2):
-						if character.input_buffer[i].dpad_state == 6 && character.input_buffer.back().frame_state - character.input_buffer[i].frame_state < 10:
-							emit_signal("finished", "dash")
+		var temp_buffer = character.input_buffer
+
+		if [6].has(temp_buffer.back().dpad_state):
+			if temp_buffer.size() > 2:
+				if [5].has(temp_buffer[-2].dpad_state):
+					for i in range(0, temp_buffer.size() - 2):
+						if temp_buffer[i].dpad_state == 6 && temp_buffer.back().frame_state - temp_buffer[i].frame_state < 16:
+							if character.PLAYER_ID == 1:
+								emit_signal("finished", "dash_forward")
+							else:
+								emit_signal("finished", "dash_backward")
 			else:
 				momentum = 1
-
 			move_dir += 1
 
-		elif [4, 7].has(character.dpad_input):
+		elif [4].has(temp_buffer.back().dpad_state):
+			if temp_buffer.size() > 2:
+				if [5].has(temp_buffer[-2].dpad_state):
+					for i in range(0, temp_buffer.size() - 2):
+						if temp_buffer[i].dpad_state == 4 && temp_buffer.back().frame_state - temp_buffer[i].frame_state < 16:
+							if character.PLAYER_ID == 1:
+								emit_signal("finished", "dash_backward")
+							else:
+								emit_signal("finished", "dash_forward")
+			else:
+				momentum = 1
 			move_dir -= 1
 
 		var opponent_distance = character.position.x - character.opponent.position.x

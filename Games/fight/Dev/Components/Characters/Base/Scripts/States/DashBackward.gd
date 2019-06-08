@@ -7,14 +7,14 @@ onready var character = get_node(CHARACTER_PATH)
 # Movement
 export var MOVE_SPEED := 300
 var move_dir := 0
-var momentum := 10
+var momentum := 6
 var max_distance = 1280
 
 var has_dashed := false
 
 func enter():
-	momentum = 10
-	owner.get_node("AnimationPlayer").play("Dash")
+	momentum = 6
+	owner.get_node("AnimationPlayer").play("Dash Backward")
 	owner.flush_input_buffer()
 	print("Dashing")
 
@@ -35,9 +35,10 @@ func update(delta):
 #		if opponent_distance < 0 && move_dir < 0:
 #			if abs(opponent_distance + move_dir) > 900:
 #				move_dir = 0
-
-	character.move_and_slide(Vector2(1 * MOVE_SPEED * momentum, 1000), Vector2(0, -1))
+	if momentum <= 1:
+		momentum = 1
+	character.move_and_slide(Vector2(-1 * MOVE_SPEED * momentum, 1000), Vector2(0, -1))
 	momentum -= 1
 
-	if momentum <= 1:
-		emit_signal("finished", "idle")
+func _on_animation_finished(anim_name):
+	emit_signal("finished", "idle")
