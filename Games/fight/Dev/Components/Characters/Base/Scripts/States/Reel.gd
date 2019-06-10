@@ -28,8 +28,9 @@ func play_animation():
 		animation_player.play("Reel Low")
 
 func update(delta):
+	var temp_buffer = character.input_buffer
+
 	hitstun_remaining -= 1
-	print(hitstun_remaining)
 
 	if character.is_on_floor():
 		character.move_dir = 0
@@ -43,7 +44,13 @@ func update(delta):
 
 	if (animation_finished || hitstun_remaining <= 0) && !character.is_on_floor():
 		emit_signal("finished", "land")
-	elif (animation_finished || hitstun_remaining <= 0):
+	elif animation_finished || (character.input_is_buffered([1,2,3,4,5,6,7,8,9], [1,2,3,4,12,13,14,23,24,34], 60, false, true) && hitstun_remaining <= 0):
+		character.dpad_attack = character.input_buffer.back().dpad_state
+		character.btn_attack = character.input_buffer.back().btn_state
+		emit_signal("finished", "attack")
+	elif animation_finished || (temp_buffer.back().dpad_state != 5 && hitstun_remaining <= 0):
+		emit_signal("finished", "move")
+	elif animation_finished:
 		emit_signal("finished", "idle")
 
 

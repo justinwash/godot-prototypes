@@ -1959,7 +1959,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 0, 40 ) ]
 }
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=6]
 resource_name = "Dash Backward"
 length = 0.266667
 step = 0.0166667
@@ -2420,8 +2420,7 @@ tracks/37/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "Dash Forward"
+[sub_resource type="Animation" id=7]
 length = 0.333334
 step = 0.0166667
 tracks/0/type = "value"
@@ -2881,7 +2880,7 @@ tracks/37/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=8]
 loop = true
 step = 0.0166667
 tracks/0/type = "value"
@@ -3341,7 +3340,7 @@ tracks/37/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=9]
 length = 0.550001
 step = 0.0166667
 tracks/0/type = "value"
@@ -3765,7 +3764,7 @@ tracks/34/keys = {
 "values": [ 13.6942, 13.6942, -29.9108, 13.6942 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=10]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("Collider:shape:extents")
@@ -3792,7 +3791,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 0, 40 ) ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=11]
 length = 0.733335
 loop = true
 step = 0.0166667
@@ -4205,7 +4204,7 @@ tracks/33/keys = {
 "values": [ 0.0, 0.0, 0.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=12]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("Collider:shape:extents")
@@ -4640,7 +4639,7 @@ tracks/35/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=13]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("Collider:shape:extents")
@@ -5075,7 +5074,7 @@ tracks/35/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=14]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("Collider:shape:extents")
@@ -5510,14 +5509,14 @@ tracks/35/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="RectangleShape2D" id=14]
+[sub_resource type="RectangleShape2D" id=15]
 resource_local_to_scene = true
 extents = Vector2( 40, 140 )
 
-[sub_resource type="RectangleShape2D" id=15]
+[sub_resource type="RectangleShape2D" id=16]
 extents = Vector2( 46.6308, 20.6319 )
 
-[sub_resource type="RectangleShape2D" id=16]
+[sub_resource type="RectangleShape2D" id=17]
 extents = Vector2( 37.1263, 134.9 )
 
 [node name="Character" type="KinematicBody2D"]
@@ -5531,15 +5530,15 @@ anims/5-2-a = SubResource( 2 )
 anims/5-3-a = SubResource( 3 )
 anims/5-4-a = SubResource( 4 )
 anims/Crouch = SubResource( 5 )
-"anims/Dash Backward" = SubResource( 17 )
-"anims/Dash Forward" = SubResource( 6 )
-anims/Idle = SubResource( 7 )
-anims/Jump = SubResource( 8 )
-anims/Land = SubResource( 9 )
-anims/Move = SubResource( 10 )
-"anims/Reel High" = SubResource( 11 )
-"anims/Reel Low" = SubResource( 12 )
-"anims/Reel Mid" = SubResource( 13 )
+"anims/Dash Backward" = SubResource( 6 )
+"anims/Dash Forward" = SubResource( 7 )
+anims/Idle = SubResource( 8 )
+anims/Jump = SubResource( 9 )
+anims/Land = SubResource( 10 )
+anims/Move = SubResource( 11 )
+"anims/Reel High" = SubResource( 12 )
+"anims/Reel Low" = SubResource( 13 )
+"anims/Reel Mid" = SubResource( 14 )
 
 [node name="DevSprite" parent="." instance=ExtResource( 1 )]
 position = Vector2( -8.03595, -60.1184 )
@@ -5556,7 +5555,7 @@ rotation = -19.3154
 
 [node name="Collider" type="CollisionShape2D" parent="."]
 visible = false
-shape = SubResource( 14 )
+shape = SubResource( 15 )
 one_way_collision_margin = 0.0
 
 [node name="Hitbox" type="Area2D" parent="."]
@@ -5568,7 +5567,7 @@ script = ExtResource( 12 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 visible = false
 position = Vector2( 131.337, -118.173 )
-shape = SubResource( 15 )
+shape = SubResource( 16 )
 disabled = true
 
 [node name="StateMachine" type="Node" parent="."]
@@ -5657,10 +5656,10 @@ script = ExtResource( 13 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 visible = false
 position = Vector2( -1.29236, -1.29236 )
-shape = SubResource( 16 )
+shape = SubResource( 17 )
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/DashForward" method="_on_animation_finished"]
-[connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Reel" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Attack" method="_on_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Reel" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="area_entered" from="Hurtbox" to="StateMachine/Reel" method="_on_Hurtbox_area_entered"]
 [connection signal="area_entered" from="Hurtbox" to="StateMachine" method="_on_Hurtbox_area_entered"]
 

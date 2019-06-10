@@ -36,7 +36,9 @@ func _physics_process(delta):
 	time_on_floor = time_on_floor + 1 if is_on_floor() else 0
 	update_dpad()
 	update_btn()
-	update_input_buffer(update_dpad(), btn_input, frame)
+	update_input_buffer(update_dpad(), update_btn(), frame)
+	if PLAYER_ID != 1:
+		print(input_buffer.back())
 
 func update_dpad():
 	if Input.is_action_pressed("pad" + str(PLAYER_ID) + "_left"):
@@ -92,37 +94,70 @@ func update_btn():
 		btn_input = 4
 	else:
 		btn_input = 0
+	return btn_input
 
 func update_input_buffer(dpad, btn, frame_state):
-#	var should_delete = []
-	if input_buffer != []:
-		if dpad != input_buffer.back().dpad_state:
+	var temp_buffer = input_buffer
+
+	if temp_buffer.size() > 0:
+		for i in range(0, temp_buffer.size() - 1):
+			if frame - temp_buffer[i].frame_state >= 60:
+				input_buffer.remove(i)
+
+		if dpad != temp_buffer.back().dpad_state:
 			input_buffer.append(InputState.new(dpad, btn, frame_state))
 			print(input_buffer.back().dpad_state)
+
+		if btn != temp_buffer.back().btn_state:
+			input_buffer.append(InputState.new(dpad, btn, frame_state))
+			print(input_buffer.back().btn_state)
 	else:
 		input_buffer.append(InputState.new(dpad, btn, frame_state))
-
-
-	if input_buffer.size() > 60:
-		input_buffer.pop_front()
 
 func flush_input_buffer():
 	input_buffer = []
 
-#	for i in range(0, input_buffer.size()):
-#		if input_buffer[i].frame <= frame - 60:
-#			should_delete.append(i)
-#		else:
-#			break
+func input_is_buffered(dpad, btn, window, require_neutral, immediate):
+	var temp_buffer = input_buffer
 
-#	for index in should_delete:
-#		input_buffer.remove(index)
+#	if immediate && temp_buffer.size() > 0:
+#		if dpad != null && btn == null:
+#			for i in range(0, temp_buffer.size()):
+#				if dpad.has(temp_buffer[i].dpad_state) && frame - temp_buffer[i].frame_state <= window:
+#					return true
 #
-#	if input_buffer == []:
-#		input_buffer.append(InputState.new(5,0,frame))
+#		elif dpad == null && btn != null:
+#			for i in range(0, temp_buffer.size()):
+#				if btn.has(temp_buffer[i].btn_state) && frame - temp_buffer[i].frame_state <= window:
+#					return true
 #
-#	if dpad_input != 5 || btn_input != 0 || input_buffer.back().dpad != dpad || input_buffer.back().btn != btn:
-#		input_buffer.append(InputState.new(dpad_input, btn_input, frame))
+#		elif dpad != null && btn != null:
+#			for i in range(0, temp_buffer.size()):
+#				if dpad.has(temp_buffer[i].dpad_state) && btn.has(temp_buffer[i].btn_state) && frame - temp_buffer[i].frame_state <= window:
+#					return true
+
+	if temp_buffer.size() > 3:
+		if require_neutral && temp_buffer[-2].dpad_state != 5:
+			return false
+
+		if dpad != null && btn == null:
+			for i in range(0, temp_buffer.size() - 2):
+				if dpad.has(temp_buffer[i].dpad_state) && frame - temp_buffer[i].frame_state <= window:
+					return true
+
+		elif dpad == null && btn != null:
+			for i in range(0, temp_buffer.size() - 2):
+				if btn.has(temp_buffer[i].btn_state) && frame - temp_buffer[i].frame_state <= window:
+					return true
+
+		elif dpad != null && btn != null:
+			for i in range(0, temp_buffer.size() - 2):
+				if dpad.has(temp_buffer[i].dpad_state) && btn.has(temp_buffer[i].btn_state) && frame - temp_buffer[i].frame_state <= window:
+					return true
+	else:
+		return false
+
+	return false
 
 class InputState:
 	var dpad_state := 5
