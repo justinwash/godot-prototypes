@@ -5657,8 +5657,8 @@ script = ExtResource( 13 )
 visible = false
 position = Vector2( -1.29236, -1.29236 )
 shape = SubResource( 17 )
-[connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/DashForward" method="_on_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Attack" method="_on_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/DashForward" method="_on_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Reel" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="area_entered" from="Hurtbox" to="StateMachine/Reel" method="_on_Hurtbox_area_entered"]
 [connection signal="area_entered" from="Hurtbox" to="StateMachine" method="_on_Hurtbox_area_entered"]

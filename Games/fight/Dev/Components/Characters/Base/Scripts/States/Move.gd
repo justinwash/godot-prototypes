@@ -27,8 +27,9 @@ func update(delta):
 
 		var temp_buffer = character.input_buffer
 
-		if [6].has(temp_buffer.back().dpad_state):
-			if character.input_is_buffered([6], [0], 16, true, false):
+		if [6].has(character.dpad_input):
+			if character.find_buffered_dpad_sequence(temp_buffer, [6,5,6], 16):
+				character.flush_input_buffer()
 				if character.PLAYER_ID == 1:
 					emit_signal("finished", "dash_forward")
 				else:
@@ -37,8 +38,9 @@ func update(delta):
 				momentum = 1
 			move_dir += 1
 
-		elif [4].has(temp_buffer.back().dpad_state):
-			if character.input_is_buffered([4], [0], 16, true, false):
+		elif [4].has(character.dpad_input):
+			if character.find_buffered_dpad_sequence(temp_buffer, [4,5,4], 16):
+				character.flush_input_buffer()
 				if character.PLAYER_ID == 1:
 					emit_signal("finished", "dash_backward")
 				else:
