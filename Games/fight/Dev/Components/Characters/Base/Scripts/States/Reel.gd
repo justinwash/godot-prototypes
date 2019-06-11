@@ -42,11 +42,13 @@ func update(delta):
 
 	character.move_and_slide(Vector2(character.move_dir * character.JUMP_X_FORCE, character.y_velo), Vector2(0, -1))
 
+	var buffered_btn = character.find_buffered_btn(temp_buffer, [1,2,3,4,12,13,14,23,24,34], 8)
+
 	if (animation_finished || hitstun_remaining <= 0) && !character.is_on_floor():
 		emit_signal("finished", "land")
-	elif animation_finished || (character.find_buffered_btn(temp_buffer, [1,2,3,4,12,13,14,23,24,34], 30) && hitstun_remaining <= 0):
+	elif animation_finished || (buffered_btn != null && hitstun_remaining <= 0):
 		character.dpad_attack = character.dpad_input
-		character.btn_attack = character.btn_input
+		character.btn_attack = buffered_btn
 		emit_signal("finished", "attack")
 	elif animation_finished || (character.dpad_input != 5 && hitstun_remaining <= 0):
 		emit_signal("finished", "move")

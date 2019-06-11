@@ -97,7 +97,6 @@ func update_btn():
 func update_input_buffer(dpad, btn, frame_state):
 	var temp_buffer = input_buffer
 	var to_be_removed = []
-	var btn_buffer = ""
 
 	if temp_buffer.size() > 0:
 		if dpad != temp_buffer.back().dpad_state:
@@ -115,11 +114,6 @@ func update_input_buffer(dpad, btn, frame_state):
 
 	else:
 		input_buffer.append(InputState.new(dpad, btn, frame_state))
-
-	for i in range(0, input_buffer.size()):
-			btn_buffer += str(input_buffer[i].btn_state) + ", "
-	if(PLAYER_ID == 1):
-		print(btn_buffer)
 
 func flush_input_buffer():
 	input_buffer = []
@@ -146,35 +140,9 @@ func find_buffered_btn(buffer, btn, window):
 
 	for s in temp_buffer:
 		if btn.has(s.btn_state) && frame - s.frame_state <= window:
-			return true
+			return s.btn_state
 
-	return false
-
-func input_is_buffered(dpad, btn, window, require_neutral, immediate):
-	var temp_buffer = input_buffer
-
-	if temp_buffer.size() > 3:
-		if require_neutral && temp_buffer[-2].dpad_state != 5:
-			return false
-
-		if dpad != null && btn == null:
-			for i in range(0, temp_buffer.size() - 2):
-				if dpad.has(temp_buffer[i].dpad_state) && frame - temp_buffer[i].frame_state <= window:
-					return true
-
-		elif dpad == null && btn != null:
-			for i in range(0, temp_buffer.size() - 2):
-				if btn.has(temp_buffer[i].btn_state) && frame - temp_buffer[i].frame_state <= window:
-					return true
-
-		elif dpad != null && btn != null:
-			for i in range(0, temp_buffer.size() - 2):
-				if dpad.has(temp_buffer[i].dpad_state) && btn.has(temp_buffer[i].btn_state) && frame - temp_buffer[i].frame_state <= window:
-					return true
-	else:
-		return false
-
-	return false
+	return null
 
 class InputState:
 	var dpad_state := 5
