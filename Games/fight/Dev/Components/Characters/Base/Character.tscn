@@ -5622,6 +5622,17 @@ CHARACTER_PATH = NodePath("../..")
 script = ExtResource( 9 )
 NAME = "High Punch"
 ANIMATION = "5-1-a"
+CANCEL = 18
+
+[node name="1" type="Node" parent="Attacks/Standing/5/1/a"]
+script = ExtResource( 9 )
+NAME = "High Punch Followup"
+ANIMATION = "5-1-a"
+
+[node name="2" type="Node" parent="Attacks/Standing/5/1/a"]
+script = ExtResource( 9 )
+NAME = "High Punch Followup"
+ANIMATION = "5-2-a"
 
 [node name="2" type="Node" parent="Attacks/Standing/5"]
 

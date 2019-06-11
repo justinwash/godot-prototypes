@@ -11,7 +11,7 @@ export var PUSHBACK_SELF := 2
 export var PUSHBACK_OPP := 1
 export var IS_STRING := true
 export var STRING_TRIM := 5
-export var NEXT_BTN := 1
+export var FOLLOWUP_BTNS := [1, 2]
 
 # framedata
 export var BLOCKSTUN := 7
