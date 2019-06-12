@@ -16,8 +16,10 @@ func enter():
 		animation_finished = false
 		print("Attacking")
 		elapsed_frames = -1
+		character.state = "attack"
 	else:
 		print("attack not found")
+		emit_signal("finished", "idle")
 
 func find_attack(dpad, btn):
 	var state := ''
@@ -27,6 +29,9 @@ func find_attack(dpad, btn):
 		state = 'Jumping'
 
 	attack = character.get_node('Attacks/' + state + '/' + str(dpad) + '/' + str(btn) + '/' + 'a')
+	if attack == null && state == "Crouching":
+		state = "Standing"
+		attack = character.get_node('Attacks/' + state + '/' + str(dpad) + '/' + str(btn) + '/' + 'a')
 	if attack == null:
 		attack = character.get_node('Attacks/' + state + '/' + str(5) + '/' + str(btn) + '/' + 'a')
 		dpad = 5
@@ -77,4 +82,6 @@ func update(delta):
 
 
 func _on_animation_finished(anim_name):
-	animation_finished = true
+	if attack != null:
+		if anim_name == attack.ANIMATION:
+			animation_finished = true

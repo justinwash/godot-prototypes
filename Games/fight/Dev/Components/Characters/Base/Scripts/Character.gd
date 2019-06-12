@@ -30,6 +30,10 @@ var btn_attack := 0
 # hitstun counter and hit-by move
 var hit_stun := 0
 var hit_by := ''
+var hitstun_remaining = 0
+
+# which state are we in
+var state = "idle"
 
 func _physics_process(delta):
 	frame += 1

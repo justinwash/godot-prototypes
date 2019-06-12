@@ -6,6 +6,7 @@ onready var character = get_node(CHARACTER_PATH)
 
 func enter():
 	owner.get_node("AnimationPlayer").play("Land")
+	character.state = "land"
 	print("Landing")
 
 func update(delta):

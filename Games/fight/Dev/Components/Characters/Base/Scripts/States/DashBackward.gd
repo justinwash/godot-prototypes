@@ -15,6 +15,7 @@ func enter():
 	momentum = 6
 	owner.get_node("AnimationPlayer").play("Dash Backward")
 	owner.flush_input_buffer()
+	character.state = "dash"
 	print("Dashing")
 
 func handle_input(event):

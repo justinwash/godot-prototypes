@@ -13,6 +13,7 @@ var max_distance = 1280
 
 func enter():
 	owner.get_node("AnimationPlayer").play("Move")
+	character.state = "move"
 	print("Moving")
 
 func handle_input(event):

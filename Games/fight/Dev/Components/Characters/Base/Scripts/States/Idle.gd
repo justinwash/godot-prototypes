@@ -6,6 +6,7 @@ onready var character = get_node(CHARACTER_PATH)
 
 func enter():
 	owner.get_node("AnimationPlayer").play("Idle")
+	character.state = "idle"
 	print("Idling")
 
 func handle_input(event):

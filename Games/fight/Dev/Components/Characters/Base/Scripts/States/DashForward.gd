@@ -15,6 +15,7 @@ func enter():
 	momentum = 6
 	owner.get_node("AnimationPlayer").play("Dash Forward")
 	owner.flush_input_buffer()
+	character.state = "dash"
 	print("Dashing")
 
 func handle_input(event):
@@ -31,4 +32,5 @@ func update(delta):
 	momentum -= 1
 
 func _on_animation_finished(anim_name):
-	emit_signal("finished", "idle")
+	if anim_name.find("Dash",0) != -1:
+		emit_signal("finished", "idle")

@@ -14,6 +14,7 @@ func update(delta):
 
 	if grounded && !jumped:
 		print("Jumping")
+		character.state = "jump"
 		owner.get_node("AnimationPlayer").play("Jump")
 		character.move_dir = 0
 
