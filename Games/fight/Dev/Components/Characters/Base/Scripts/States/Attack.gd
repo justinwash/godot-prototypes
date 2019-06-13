@@ -28,15 +28,15 @@ func find_attack(dpad, btn):
 	else:
 		state = 'Jumping'
 
-	attack = character.get_node('Attacks/' + state + '/' + str(dpad) + '/' + str(btn) + '/' + 'a')
+	attack = character.get_node('Attacks/' + state + '/' + str(dpad) + '/' + str(btn))
 	if attack == null && state == "Crouching":
 		state = "Standing"
-		attack = character.get_node('Attacks/' + state + '/' + str(dpad) + '/' + str(btn) + '/' + 'a')
+		attack = character.get_node('Attacks/' + state + '/' + str(dpad) + '/' + str(btn))
 	if attack == null:
-		attack = character.get_node('Attacks/' + state + '/' + str(5) + '/' + str(btn) + '/' + 'a')
+		attack = character.get_node('Attacks/' + state + '/' + str(5) + '/' + str(btn))
 		dpad = 5
 		if attack == null && len(str(btn)) > 1:
-			attack = character.get_node('Attacks/' + state + '/' + str(5) + '/' + str(btn)[1] + '/' + 'a')
+			attack = character.get_node('Attacks/' + state + '/' + str(5) + '/' + str(btn)[1])
 			btn = int(str(btn)[1])
 
 	hitbox.CURRENT_ATTACK = attack
@@ -68,6 +68,7 @@ func update(delta):
 	var buffered_btn = character.find_buffered_btn(temp_buffer, attack.FOLLOWUP_BTNS, attack.CANCEL)
 
 	if buffered_btn != null && elapsed_frames >= attack.CANCEL && attack.CANCEL > 0:
+		elapsed_frames = 0
 		print(attack.get_node(str(buffered_btn)).NAME)
 		attack = attack.get_node(str(buffered_btn))
 		animation_player.stop()

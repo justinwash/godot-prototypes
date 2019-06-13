@@ -19,6 +19,7 @@
 [ext_resource path="res://Dev/Components/Characters/Base/Scripts/States/Block.gd" type="Script" id=17]
 
 [sub_resource type="Animation" id=1]
+resource_name = "5>1"
 length = 0.500001
 step = 0.0166667
 tracks/0/type = "value"
@@ -491,6 +492,7 @@ tracks/38/keys = {
 }
 
 [sub_resource type="Animation" id=2]
+resource_name = "5>2"
 length = 0.500001
 step = 0.0166667
 tracks/0/type = "value"
@@ -975,6 +977,7 @@ tracks/39/keys = {
 }
 
 [sub_resource type="Animation" id=3]
+resource_name = "5>3"
 length = 0.416667
 step = 0.0166667
 tracks/0/type = "value"
@@ -1459,6 +1462,7 @@ tracks/39/keys = {
 }
 
 [sub_resource type="Animation" id=4]
+resource_name = "5>4"
 length = 0.583334
 step = 0.0166667
 tracks/0/type = "value"
@@ -2403,7 +2407,7 @@ tracks/38/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=22]
+[sub_resource type="Animation" id=6]
 resource_name = "Block Low"
 length = 0.533334
 step = 0.0166667
@@ -7262,7 +7266,7 @@ tracks/35/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=21]
+[sub_resource type="Animation" id=18]
 resource_name = "Stand"
 length = 0.0666668
 step = 0.0166667
@@ -7675,15 +7679,15 @@ tracks/33/keys = {
 "values": [ 14.2371, 0.356812 ]
 }
 
-[sub_resource type="RectangleShape2D" id=18]
-resource_local_to_scene = true
-extents = Vector2( 40, 129.677 )
-
 [sub_resource type="RectangleShape2D" id=19]
-extents = Vector2( 46.6308, 20.6319 )
+resource_local_to_scene = true
+extents = Vector2( 40, 140 )
+
+[sub_resource type="RectangleShape2D" id=21]
+extents = Vector2( 37.1263, 134.9 )
 
 [sub_resource type="RectangleShape2D" id=20]
-extents = Vector2( 37.1263, 134.9 )
+extents = Vector2( 46.6308, 20.6319 )
 
 [node name="Character" type="KinematicBody2D"]
 position = Vector2( 0.590832, 11.5547 )
@@ -7691,12 +7695,12 @@ script = ExtResource( 4 )
 JUMP_X_FORCE = 500
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/5-1-a = SubResource( 1 )
-anims/5-2-a = SubResource( 2 )
-anims/5-3-a = SubResource( 3 )
-anims/5-4-a = SubResource( 4 )
+anims/5>1 = SubResource( 1 )
+anims/5>2 = SubResource( 2 )
+anims/5>3 = SubResource( 3 )
+anims/5>4 = SubResource( 4 )
 "anims/Block High" = SubResource( 5 )
-"anims/Block Low" = SubResource( 22 )
+"anims/Block Low" = SubResource( 6 )
 "anims/Block Mid" = SubResource( 7 )
 anims/Crouch = SubResource( 8 )
 "anims/Dash Backward" = SubResource( 9 )
@@ -7708,62 +7712,33 @@ anims/Move = SubResource( 14 )
 "anims/Reel High" = SubResource( 15 )
 "anims/Reel Low" = SubResource( 16 )
 "anims/Reel Mid" = SubResource( 17 )
-anims/Stand = SubResource( 21 )
+anims/Stand = SubResource( 18 )
 
 [node name="DevSprite" parent="." instance=ExtResource( 1 )]
-position = Vector2( -8.03597, -52.9657 )
+position = Vector2( -8.03595, -60.1184 )
 scale = Vector2( 0.37, 0.37 )
 
-[node name="hip" parent="DevSprite" index="0"]
-rotation = 0.695356
-
-[node name="torso" parent="DevSprite/hip" index="0"]
-rotation = -0.6483
-
-[node name="r_upperarm" parent="DevSprite/hip/torso" index="0"]
-rotation = 0.127161
-
-[node name="r_forearm" parent="DevSprite/hip/torso/r_upperarm" index="0"]
-rotation = -1.45735
-
-[node name="r_hand" parent="DevSprite/hip/torso/r_upperarm/r_forearm" index="0"]
-rotation = -0.190238
-
 [node name="l_upperarm" parent="DevSprite/hip/torso" index="1"]
-rotation = -0.326769
+rotation = -0.244042
 
 [node name="l_forearm" parent="DevSprite/hip/torso/l_upperarm" index="0"]
-rotation = -1.50352
+rotation = -2.06465
 
 [node name="l_hand" parent="DevSprite/hip/torso/l_upperarm/l_forearm" index="0"]
-rotation = -19.7847
-
-[node name="head" parent="DevSprite/hip/torso" index="2"]
-rotation = 0.0687452
-
-[node name="l_thigh" parent="DevSprite/hip/torso" index="3"]
-rotation = 0.0630449
-
-[node name="l_shin" parent="DevSprite/hip/torso/l_thigh" index="0"]
-rotation = 0.477789
-
-[node name="l_foot" parent="DevSprite/hip/torso/l_thigh/l_shin" index="0"]
-rotation = -0.022113
-
-[node name="r_thigh" parent="DevSprite/hip/torso" index="4"]
-rotation = -0.661756
-
-[node name="r_shin" parent="DevSprite/hip/torso/r_thigh" index="0"]
-rotation = 0.73137
-
-[node name="r_foot" parent="DevSprite/hip/torso/r_thigh/r_shin" index="0"]
-rotation = 0.092899
+rotation = -19.3154
 
 [node name="Collider" type="CollisionShape2D" parent="."]
 visible = false
-position = Vector2( 0, 10.3225 )
-shape = SubResource( 18 )
+shape = SubResource( 19 )
 one_way_collision_margin = 0.0
+
+[node name="Hurtbox" type="Area2D" parent="."]
+visible = false
+script = ExtResource( 13 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2( -1.29236, -1.29236 )
+shape = SubResource( 21 )
 
 [node name="Hitbox" type="Area2D" parent="."]
 visible = false
@@ -7774,7 +7749,7 @@ script = ExtResource( 12 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 visible = false
 position = Vector2( 131.337, -118.173 )
-shape = SubResource( 19 )
+shape = SubResource( 20 )
 disabled = true
 
 [node name="StateMachine" type="Node" parent="."]
@@ -7833,62 +7808,71 @@ CHARACTER_PATH = NodePath("../..")
 [node name="5" type="Node" parent="Attacks/Standing"]
 
 [node name="1" type="Node" parent="Attacks/Standing/5"]
-
-[node name="a" type="Node" parent="Attacks/Standing/5/1"]
 script = ExtResource( 9 )
-NAME = "High Punch"
-ANIMATION = "5-1-a"
+ANIMATION = "5>1"
 CANCEL = 18
-BLOCKSTUN = 12
+FOLLOWUP_BTNS = [ 2 ]
+BLOCKSTUN = 14
+HITSTUN = 22
 
-[node name="1" type="Node" parent="Attacks/Standing/5/1/a"]
+[node name="2" type="Node" parent="Attacks/Standing/5/1"]
 script = ExtResource( 9 )
-NAME = "High Punch Followup"
-ANIMATION = "5-1-a"
+NAME = "Punch Followup"
+ANIMATION = "5>1"
+CANCEL = 18
+FOLLOWUP_BTNS = [ 3 ]
+BLOCKSTUN = 10
+HITSTUN = 13
 
-[node name="2" type="Node" parent="Attacks/Standing/5/1/a"]
+[node name="3" type="Node" parent="Attacks/Standing/5/1/2"]
 script = ExtResource( 9 )
-NAME = "High Punch Followup"
-ANIMATION = "5-2-a"
+NAME = "Kick Followup"
+ANIMATION = "5>3"
 TYPE = "mid"
+BLOCKSTUN = 14
+HITSTUN = 17
 
 [node name="2" type="Node" parent="Attacks/Standing/5"]
-
-[node name="a" type="Node" parent="Attacks/Standing/5/2"]
 script = ExtResource( 9 )
 NAME = "Mid Punch"
-ANIMATION = "5-2-a"
-TYPE = "mid"
-HITSTUN = 16
+ANIMATION = "5>2"
+CANCEL = 18
+FOLLOWUP_BTNS = [ 2 ]
+BLOCKSTUN = 10
+HITSTUN = 21
 
 [node name="3" type="Node" parent="Attacks/Standing/5"]
-
-[node name="a" type="Node" parent="Attacks/Standing/5/3"]
 script = ExtResource( 9 )
 NAME = "Mid Kick"
-ANIMATION = "5-3-a"
+ANIMATION = "5>3"
 TYPE = "mid"
 HITSTUN = 14
 
 [node name="4" type="Node" parent="Attacks/Standing/5"]
-
-[node name="a" type="Node" parent="Attacks/Standing/5/4"]
 script = ExtResource( 9 )
 NAME = "Low Kick"
-ANIMATION = "5-4-a"
+ANIMATION = "5>4"
 TYPE = "low"
 HITSTUN = 24
 
-[node name="Hurtbox" type="Area2D" parent="."]
-visible = false
-script = ExtResource( 13 )
+[node name="6" type="Node" parent="Attacks/Standing"]
+script = ExtResource( 9 )
+NAME = "High Punch Followup"
+ANIMATION = "5-1-a"
+CANCEL = 17
+FOLLOWUP_BTNS = [ 3 ]
+BLOCKSTUN = 9
+HITSTUN = 13
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
-position = Vector2( -1.29236, -1.29236 )
-shape = SubResource( 20 )
-[connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/DashForward" method="_on_animation_finished"]
-[connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Attack" method="_on_animation_finished"]
+[node name="2" type="Node" parent="Attacks/Standing/6"]
+script = ExtResource( 9 )
+NAME = "Mid Punch"
+ANIMATION = "5>2"
+TYPE = "mid"
+HITSTUN = 16
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Stand" method="_on_AnimationPlayer_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Attack" method="_on_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/DashForward" method="_on_animation_finished"]
 [connection signal="area_entered" from="Hurtbox" to="StateMachine" method="_on_Hurtbox_area_entered"]
 
 [editable path="DevSprite"]
