@@ -3,6 +3,8 @@ extends KinematicBody2D
 export var PLAYER_ID := 0
 export(NodePath) var OPPONENT
 onready var opponent = get_node(OPPONENT)
+export(NodePath) onready var HEALTHBAR
+onready var healthbar = get_node(HEALTHBAR)
 
 # Movement Properties
 export var MAX_FALL_SPEED := 1000
@@ -31,6 +33,7 @@ var btn_attack := 0
 var hit_stun := 0
 var hit_by := ''
 var hitstun_remaining = 0
+var health := 150
 
 # which state are we in
 var state = "idle"
@@ -38,6 +41,7 @@ var state = "idle"
 func _physics_process(delta):
 	frame += 1
 	time_on_floor = time_on_floor + 1 if is_on_floor() else 0
+	healthbar.value = health
 	update_dpad()
 	update_btn()
 	update_input_buffer(update_dpad(), update_btn(), frame)

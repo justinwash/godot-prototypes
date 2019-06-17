@@ -69,6 +69,7 @@ shape = SubResource( 2 )
 position = Vector2( 686.711, 341.045 )
 PLAYER_ID = 1
 OPPONENT = NodePath("../Character R")
+HEALTHBAR = NodePath("../CameraAnchor/Camera2D/P1Health")
 
 [node name="Collider" parent="Character L" index="2"]
 shape = SubResource( 3 )
@@ -83,6 +84,7 @@ rotation = 3.14159
 scale = Vector2( 1, -1 )
 PLAYER_ID = 2
 OPPONENT = NodePath("../Character L")
+HEALTHBAR = NodePath("../CameraAnchor/Camera2D/P2Health")
 
 [node name="Collider" parent="Character R" index="2"]
 shape = SubResource( 4 )

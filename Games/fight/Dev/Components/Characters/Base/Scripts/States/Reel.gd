@@ -10,6 +10,7 @@ var animation_finished := false
 func enter():
 	animation_finished = false
 	character.hitstun_remaining = hurtbox.HIT_BY.HITSTUN
+	character.health -= hurtbox.HIT_BY.DAMAGE
 	print(character.hitstun_remaining)
 	character.state = "reel"
 	play_animation()
