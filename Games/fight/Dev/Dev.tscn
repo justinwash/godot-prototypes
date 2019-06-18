@@ -69,7 +69,7 @@ shape = SubResource( 2 )
 position = Vector2( 686.711, 341.045 )
 PLAYER_ID = 1
 OPPONENT = NodePath("../Character R")
-HEALTHBAR = NodePath("../CameraAnchor/Camera2D/P1Health")
+HEALTHBAR = NodePath("../UI/P1Health")
 
 [node name="Collider" parent="Character L" index="2"]
 shape = SubResource( 3 )
@@ -78,13 +78,17 @@ shape = SubResource( 3 )
 collision_layer = 32
 collision_mask = 64
 
+[node name="3" parent="Character L/Attacks/Standing/5/1/2" index="0"]
+IS_STRING = false
+FOLLOWUP_BTNS = [  ]
+
 [node name="Character R" parent="." instance=ExtResource( 3 )]
 position = Vector2( 1353.2, 334.928 )
 rotation = 3.14159
 scale = Vector2( 1, -1 )
 PLAYER_ID = 2
 OPPONENT = NodePath("../Character L")
-HEALTHBAR = NodePath("../CameraAnchor/Camera2D/P2Health")
+HEALTHBAR = NodePath("../UI/P2Health")
 
 [node name="Collider" parent="Character R" index="2"]
 shape = SubResource( 4 )
@@ -114,16 +118,19 @@ limit_bottom = 720
 limit_smoothed = true
 drag_margin_h_enabled = false
 drag_margin_v_enabled = false
-smoothing_enabled = true
 smoothing_speed = 25.0
 editor_draw_limits = true
 editor_draw_drag_margin = true
 
-[node name="P1Health" type="ProgressBar" parent="CameraAnchor/Camera2D"]
-margin_left = 82.9343
-margin_top = 32.4315
-margin_right = 421.934
-margin_bottom = 46.4315
+[node name="UI" type="CanvasLayer" parent="."]
+offset = Vector2( -640, 0 )
+transform = Transform2D( 1, 0, 0, 1, -640, 0 )
+
+[node name="P2Health" type="ProgressBar" parent="UI"]
+margin_left = 1383.67
+margin_top = 40.5394
+margin_right = 1722.67
+margin_bottom = 54.5394
 custom_styles/fg = SubResource( 5 )
 custom_styles/bg = SubResource( 6 )
 max_value = 150.0
@@ -131,11 +138,11 @@ step = 1.0
 value = 150.0
 percent_visible = false
 
-[node name="P2Health" type="ProgressBar" parent="CameraAnchor/Camera2D"]
-margin_left = -79.9999
-margin_top = 32.0
-margin_right = 259.0
-margin_bottom = 46.0
+[node name="P1Health" type="ProgressBar" parent="UI"]
+margin_left = 1180.0
+margin_top = 40.0
+margin_right = 1519.0
+margin_bottom = 54.0
 rect_scale = Vector2( -1, 1 )
 custom_styles/fg = SubResource( 5 )
 custom_styles/bg = SubResource( 6 )
