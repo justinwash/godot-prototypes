@@ -1,9 +1,11 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Dev/Assets/Stage/background.png" type="Texture" id=1]
 [ext_resource path="res://Dev/Assets/Stage/background.jpg" type="Texture" id=2]
 [ext_resource path="res://Dev/Components/Characters/Base/Character.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Dev/Scripts/CameraAnchor.gd" type="Script" id=4]
+[ext_resource path="res://Dev/Scripts/Timer.gd" type="Script" id=5]
+[ext_resource path="res://Dev/Assets/UI/Fonts/FiraCode-Bold.ttf" type="DynamicFontData" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 1561.36, 42.5173 )
@@ -19,6 +21,16 @@ extents = Vector2( 40, 140 )
 resource_local_to_scene = true
 extents = Vector2( 40, 140 )
 
+[sub_resource type="DynamicFont" id=7]
+size = 69
+outline_size = 1
+outline_color = Color( 1, 0, 0, 1 )
+use_mipmaps = true
+font_data = ExtResource( 6 )
+
+[sub_resource type="Theme" id=8]
+default_font = SubResource( 7 )
+
 [sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 1, 0, 0, 1 )
 
@@ -29,6 +41,8 @@ shadow_size = 1
 
 [node name="Stage" type="Node2D"]
 scale = Vector2( 1.25, 1.25 )
+script = ExtResource( 5 )
+TIMER = NodePath("UI/Timer/Time")
 
 [node name="Background" type="TextureRect" parent="."]
 margin_left = -16.5938
@@ -69,7 +83,7 @@ shape = SubResource( 2 )
 position = Vector2( 686.711, 341.045 )
 PLAYER_ID = 1
 OPPONENT = NodePath("../Character R")
-HEALTHBAR = NodePath("../UI/P1Health")
+HEALTHBAR = NodePath("../UI/HealthBars/P1_Health")
 
 [node name="Collider" parent="Character L" index="2"]
 shape = SubResource( 3 )
@@ -88,7 +102,7 @@ rotation = 3.14159
 scale = Vector2( 1, -1 )
 PLAYER_ID = 2
 OPPONENT = NodePath("../Character L")
-HEALTHBAR = NodePath("../UI/P2Health")
+HEALTHBAR = NodePath("../UI/HealthBars/P2_Health")
 
 [node name="Collider" parent="Character R" index="2"]
 shape = SubResource( 4 )
@@ -126,11 +140,49 @@ editor_draw_drag_margin = true
 offset = Vector2( -640, 0 )
 transform = Transform2D( 1, 0, 0, 1, -640, 0 )
 
-[node name="P2Health" type="ProgressBar" parent="UI"]
-margin_left = 1383.67
-margin_top = 40.5394
-margin_right = 1722.67
-margin_bottom = 54.5394
+[node name="Timer" type="Node" parent="UI"]
+
+[node name="Background" type="ColorRect" parent="UI/Timer"]
+margin_left = 1236.02
+margin_top = 17.4534
+margin_right = 1276.02
+margin_bottom = 57.4534
+rect_scale = Vector2( 2.32, 1.6 )
+color = Color( 0.466667, 0.552941, 0.784314, 1 )
+
+[node name="Time" type="RichTextLabel" parent="UI/Timer"]
+margin_left = 1241.25
+margin_top = 8.5911
+margin_right = 1361.25
+margin_bottom = 128.591
+theme = SubResource( 8 )
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+text = "99"
+
+[node name="HealthBars" type="Node" parent="UI"]
+
+[node name="P1_Health_B" type="ColorRect" parent="UI/HealthBars"]
+margin_left = 836.0
+margin_top = 34.0
+margin_right = 876.0
+margin_bottom = 74.0001
+rect_scale = Vector2( 8.72, 0.65 )
+color = Color( 0.466667, 0.552941, 0.784314, 1 )
+
+[node name="P1_Health_M" type="ColorRect" parent="UI/HealthBars"]
+margin_left = 840.01
+margin_top = 39.0
+margin_right = 880.01
+margin_bottom = 79.0001
+rect_scale = Vector2( 8.49, 0.4 )
+color = Color( 0.678431, 0.678431, 0.678431, 1 )
+
+[node name="P1_Health" type="ProgressBar" parent="UI/HealthBars"]
+margin_left = 1180.0
+margin_top = 40.0
+margin_right = 1519.0
+margin_bottom = 54.0
+rect_scale = Vector2( -1, 1 )
 custom_styles/fg = SubResource( 5 )
 custom_styles/bg = SubResource( 6 )
 max_value = 150.0
@@ -138,12 +190,27 @@ step = 1.0
 value = 150.0
 percent_visible = false
 
-[node name="P1Health" type="ProgressBar" parent="UI"]
-margin_left = 1180.0
-margin_top = 40.0
-margin_right = 1519.0
-margin_bottom = 54.0
-rect_scale = Vector2( -1, 1 )
+[node name="P2_Health_B" type="ColorRect" parent="UI/HealthBars"]
+margin_left = 1378.88
+margin_top = 34.0
+margin_right = 1418.88
+margin_bottom = 74.0001
+rect_scale = Vector2( 8.72, 0.65 )
+color = Color( 0.466667, 0.552941, 0.784314, 1 )
+
+[node name="P2_Health_M" type="ColorRect" parent="UI/HealthBars"]
+margin_left = 1384.0
+margin_top = 39.0
+margin_right = 1424.0
+margin_bottom = 79.0001
+rect_scale = Vector2( 8.49, 0.4 )
+color = Color( 0.678431, 0.678431, 0.678431, 1 )
+
+[node name="P2_Health" type="ProgressBar" parent="UI/HealthBars"]
+margin_left = 1383.67
+margin_top = 39.609
+margin_right = 1722.67
+margin_bottom = 53.609
 custom_styles/fg = SubResource( 5 )
 custom_styles/bg = SubResource( 6 )
 max_value = 150.0

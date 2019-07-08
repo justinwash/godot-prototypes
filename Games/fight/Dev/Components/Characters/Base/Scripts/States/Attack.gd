@@ -69,9 +69,9 @@ func update(delta):
 
 	if buffered_btn != null && attack.FOLLOWUP_BTNS.has(buffered_btn) && elapsed_frames >= attack.CANCEL && attack.CANCEL > 0:
 		elapsed_frames = 0
-		print(attack.get_node(str(buffered_btn)).NAME)
-		attack = attack.get_node(str(buffered_btn))
-		if attack != null:
+		var attack_was = attack
+		attack = attack.get_node(str(buffered_btn)) if attack.get_node(str(buffered_btn)) != null else attack
+		if attack != null && attack != attack_was:
 			animation_player.stop()
 			animation_player.play(attack.ANIMATION)
 

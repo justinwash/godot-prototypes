@@ -7683,10 +7683,10 @@ tracks/33/keys = {
 resource_local_to_scene = true
 extents = Vector2( 40, 140 )
 
-[sub_resource type="RectangleShape2D" id=21]
+[sub_resource type="RectangleShape2D" id=20]
 extents = Vector2( 37.1263, 134.9 )
 
-[sub_resource type="RectangleShape2D" id=20]
+[sub_resource type="RectangleShape2D" id=21]
 extents = Vector2( 46.6308, 20.6319 )
 
 [node name="Character" type="KinematicBody2D"]
@@ -7738,7 +7738,7 @@ script = ExtResource( 13 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2( -1.29236, -1.29236 )
-shape = SubResource( 21 )
+shape = SubResource( 20 )
 
 [node name="Hitbox" type="Area2D" parent="."]
 visible = false
@@ -7749,7 +7749,7 @@ script = ExtResource( 12 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 visible = false
 position = Vector2( 131.337, -118.173 )
-shape = SubResource( 20 )
+shape = SubResource( 21 )
 disabled = true
 
 [node name="StateMachine" type="Node" parent="."]
@@ -7870,8 +7870,8 @@ NAME = "Mid Punch"
 ANIMATION = "5>2"
 TYPE = "mid"
 HITSTUN = 16
-[connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Stand" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Attack" method="_on_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Stand" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/DashForward" method="_on_animation_finished"]
 [connection signal="area_entered" from="Hurtbox" to="StateMachine" method="_on_Hurtbox_area_entered"]
 
