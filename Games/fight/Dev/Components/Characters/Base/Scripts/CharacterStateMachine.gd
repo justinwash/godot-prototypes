@@ -30,6 +30,13 @@ func _change_state(state_name):
 func _on_Hurtbox_area_entered(area):
 	if character.state == "crouch" && area.CURRENT_ATTACK.TYPE == "high":
 		return
+	
+		# get rid of the above that's some lazy shit dude
+
+	elif character.attack_state == "startup":
+		hurtbox.COUNTERHIT_BY = area.CURRENT_ATTACK
+		print("Counterhit by " + str(hurtbox.COUNTERHIT_BY))
+		_change_state("reel")
 
 	elif no_block_states.has(character.state):
 		hurtbox.HIT_BY = area.CURRENT_ATTACK

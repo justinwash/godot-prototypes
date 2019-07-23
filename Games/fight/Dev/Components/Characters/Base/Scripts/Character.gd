@@ -37,6 +37,7 @@ var health := 150
 
 # which state are we in
 var state = "idle"
+var attack_state = null
 
 func _physics_process(delta):
 	frame += 1
