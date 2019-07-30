@@ -21,20 +21,20 @@ extents = Vector2( 40, 140 )
 resource_local_to_scene = true
 extents = Vector2( 40, 140 )
 
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="DynamicFont" id=5]
 size = 69
 outline_size = 1
 outline_color = Color( 1, 0, 0, 1 )
 use_mipmaps = true
 font_data = ExtResource( 6 )
 
-[sub_resource type="Theme" id=8]
-default_font = SubResource( 7 )
+[sub_resource type="Theme" id=6]
+default_font = SubResource( 5 )
 
-[sub_resource type="StyleBoxFlat" id=5]
+[sub_resource type="StyleBoxFlat" id=7]
 bg_color = Color( 1, 0, 0, 1 )
 
-[sub_resource type="StyleBoxFlat" id=6]
+[sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 0, 0, 0, 1 )
 draw_center = false
 shadow_size = 1
@@ -155,7 +155,7 @@ margin_left = 1241.25
 margin_top = 8.5911
 margin_right = 1361.25
 margin_bottom = 128.591
-theme = SubResource( 8 )
+theme = SubResource( 6 )
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 text = "99"
 
@@ -183,8 +183,8 @@ margin_top = 40.0
 margin_right = 1519.0
 margin_bottom = 54.0
 rect_scale = Vector2( -1, 1 )
-custom_styles/fg = SubResource( 5 )
-custom_styles/bg = SubResource( 6 )
+custom_styles/fg = SubResource( 7 )
+custom_styles/bg = SubResource( 8 )
 max_value = 150.0
 step = 1.0
 value = 150.0
@@ -211,8 +211,8 @@ margin_left = 1383.67
 margin_top = 39.609
 margin_right = 1722.67
 margin_bottom = 53.609
-custom_styles/fg = SubResource( 5 )
-custom_styles/bg = SubResource( 6 )
+custom_styles/fg = SubResource( 7 )
+custom_styles/bg = SubResource( 8 )
 max_value = 150.0
 step = 1.0
 value = 150.0

@@ -30,7 +30,7 @@ func _change_state(state_name):
 func _on_Hurtbox_area_entered(area):
 	if character.state == "crouch" && area.CURRENT_ATTACK.TYPE == "high":
 		return
-	
+
 		# get rid of the above that's some lazy shit dude
 
 	elif character.attack_state == "startup":

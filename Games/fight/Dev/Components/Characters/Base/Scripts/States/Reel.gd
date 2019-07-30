@@ -7,17 +7,21 @@ onready var hurtbox = character.get_node("Hurtbox")
 onready var animation_player = owner.get_node("AnimationPlayer")
 var animation_finished := false
 
+var hit_by_local = null
+
 func enter():
 	animation_finished = false
 
 	if hurtbox.HIT_BY != null:
 		character.hitstun_remaining = hurtbox.HIT_BY.HITSTUN
 		character.health -= hurtbox.HIT_BY.DAMAGE
-	
+		hit_by_local = hurtbox.HIT_BY
+
 	elif hurtbox.COUNTERHIT_BY != null:
 		character.hitstun_remaining = hurtbox.COUNTERHIT_BY.HITSTUN + hurtbox.COUNTERHIT_BY.COUNTER_HITSTUN
-		character.health -= hurtbox.COUNTERHIT_BY.DAMAGE	
-	
+		character.health -= hurtbox.COUNTERHIT_BY.DAMAGE
+		hit_by_local = hurtbox.COUNTERHIT_BY
+
 		print(character.hitstun_remaining)
 	character.state = "reel"
 	play_animation()
@@ -27,11 +31,11 @@ func handle_input(event):
 
 func play_animation():
 	animation_player.play("Idle")
-	if hurtbox.HIT_BY.TYPE == "high":
+	if hit_by_local.TYPE == "high":
 		animation_player.play("Reel High")
-	elif hurtbox.HIT_BY.TYPE == "mid":
+	elif hit_by_local.TYPE == "mid":
 		animation_player.play("Reel Mid")
-	elif hurtbox.HIT_BY.TYPE == "low":
+	elif hit_by_local.TYPE == "low":
 		animation_player.play("Reel Low")
 
 func update(delta):
@@ -40,8 +44,9 @@ func update(delta):
 	character.hitstun_remaining -= 1
 
 	if (character.hitstun_remaining <= 0):
+		hit_by_local = null
 		hurtbox.HIT_BY = null
-		hurtbox.COUNTHIT_BY = null
+		hurtbox.COUNTERHIT_BY = null
 
 	if character.is_on_floor():
 		character.move_dir = 0

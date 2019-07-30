@@ -7870,8 +7870,8 @@ NAME = "Mid Punch"
 ANIMATION = "5>2"
 TYPE = "mid"
 HITSTUN = 16
-[connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Attack" method="_on_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Stand" method="_on_AnimationPlayer_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Attack" method="_on_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/DashForward" method="_on_animation_finished"]
 [connection signal="area_entered" from="Hurtbox" to="StateMachine" method="_on_Hurtbox_area_entered"]
 
