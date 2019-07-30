@@ -9,9 +9,16 @@ var animation_finished := false
 
 func enter():
 	animation_finished = false
-	character.hitstun_remaining = hurtbox.HIT_BY.HITSTUN
-	character.health -= hurtbox.HIT_BY.DAMAGE
-	print(character.hitstun_remaining)
+
+	if hurtbox.HIT_BY != null:
+		character.hitstun_remaining = hurtbox.HIT_BY.HITSTUN
+		character.health -= hurtbox.HIT_BY.DAMAGE
+	
+	elif hurtbox.COUNTERHIT_BY != null:
+		character.hitstun_remaining = hurtbox.COUNTERHIT_BY.HITSTUN + hurtbox.COUNTERHIT_BY.COUNTER_HITSTUN
+		character.health -= hurtbox.COUNTERHIT_BY.DAMAGE	
+	
+		print(character.hitstun_remaining)
 	character.state = "reel"
 	play_animation()
 
@@ -31,6 +38,10 @@ func update(delta):
 	var temp_buffer = character.input_buffer
 
 	character.hitstun_remaining -= 1
+
+	if (character.hitstun_remaining <= 0):
+		hurtbox.HIT_BY = null
+		hurtbox.COUNTHIT_BY = null
 
 	if character.is_on_floor():
 		character.move_dir = 0
