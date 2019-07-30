@@ -162,3 +162,6 @@ class InputState:
 		dpad_state = dpad
 		btn_state = btn
 		frame_state = frame
+
+func set_attack_state(new_state):
+	attack_state = new_state

@@ -17,7 +17,6 @@ func enter():
 		print("Attacking")
 		elapsed_frames = -1
 		character.state = "attack"
-		character.attack_state = "startup"
 	else:
 		print("attack not found")
 		emit_signal("finished", "idle")
@@ -78,11 +77,9 @@ func update(delta):
 
 	if animation_finished && !character.is_on_floor():
 		hitbox.CURRENT_ATTACK = null
-		character.attack_state = null
 		emit_signal("finished", "land")
 	elif animation_finished:
 		hitbox.CURRENT_ATTACK = null
-		character.attack_state = null
 		emit_signal("finished", "idle")
 
 

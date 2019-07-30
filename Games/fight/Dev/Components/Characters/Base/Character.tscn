@@ -490,6 +490,29 @@ tracks/38/keys = {
 "update": 0,
 "values": [ 0.0 ]
 }
+tracks/39/type = "method"
+tracks/39/path = NodePath(".")
+tracks/39/interp = 1
+tracks/39/loop_wrap = true
+tracks/39/imported = false
+tracks/39/enabled = true
+tracks/39/keys = {
+"times": PoolRealArray( 0, 0.166667, 0.216667, 0.500001 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"values": [ {
+"args": [ "startup" ],
+"method": "set_attack_state"
+}, {
+"args": [ "active" ],
+"method": "set_attack_state"
+}, {
+"args": [ "recovery" ],
+"method": "set_attack_state"
+}, {
+"args": [ null ],
+"method": "set_attack_state"
+} ]
+}
 
 [sub_resource type="Animation" id=2]
 resource_name = "5>2"
@@ -974,6 +997,29 @@ tracks/39/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ 0.0, 0.0 ]
+}
+tracks/40/type = "method"
+tracks/40/path = NodePath(".")
+tracks/40/interp = 1
+tracks/40/loop_wrap = true
+tracks/40/imported = false
+tracks/40/enabled = true
+tracks/40/keys = {
+"times": PoolRealArray( 0, 0.2, 0.283333, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"values": [ {
+"args": [ "startup" ],
+"method": "set_attack_state"
+}, {
+"args": [ "active" ],
+"method": "set_attack_state"
+}, {
+"args": [ "recovery" ],
+"method": "set_attack_state"
+}, {
+"args": [ null ],
+"method": "set_attack_state"
+} ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -1460,6 +1506,29 @@ tracks/39/keys = {
 "update": 0,
 "values": [ 0.0 ]
 }
+tracks/40/type = "method"
+tracks/40/path = NodePath(".")
+tracks/40/interp = 1
+tracks/40/loop_wrap = true
+tracks/40/imported = false
+tracks/40/enabled = true
+tracks/40/keys = {
+"times": PoolRealArray( 0, 0.2, 0.25, 0.416667 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"values": [ {
+"args": [ "startup" ],
+"method": "set_attack_state"
+}, {
+"args": [ "active" ],
+"method": "set_attack_state"
+}, {
+"args": [ "recovery" ],
+"method": "set_attack_state"
+}, {
+"args": [ null ],
+"method": "set_attack_state"
+} ]
+}
 
 [sub_resource type="Animation" id=4]
 resource_name = "5>4"
@@ -1496,7 +1565,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.233333, 0.333333, 0.566668 ),
+"times": PoolRealArray( 0, 0.25, 0.333333, 0.566668 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
 "values": [ true, false, true, true ]
@@ -1532,7 +1601,7 @@ tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0, 0.233333, 0.333333, 0.566668 ),
+"times": PoolRealArray( 0, 0.25, 0.333333, 0.566668 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
 "values": [ false, true, false, false ]
@@ -1932,6 +2001,29 @@ tracks/38/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ 0.0, 0.0 ]
+}
+tracks/39/type = "method"
+tracks/39/path = NodePath(".")
+tracks/39/interp = 1
+tracks/39/loop_wrap = true
+tracks/39/imported = false
+tracks/39/enabled = true
+tracks/39/keys = {
+"times": PoolRealArray( 0, 0.25, 0.333333, 0.566667 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"values": [ {
+"args": [ "startup" ],
+"method": "set_attack_state"
+}, {
+"args": [ "active" ],
+"method": "set_attack_state"
+}, {
+"args": [ "recovery" ],
+"method": "set_attack_state"
+}, {
+"args": [ null ],
+"method": "set_attack_state"
+} ]
 }
 
 [sub_resource type="Animation" id=5]
@@ -7715,17 +7807,44 @@ anims/Move = SubResource( 14 )
 anims/Stand = SubResource( 18 )
 
 [node name="DevSprite" parent="." instance=ExtResource( 1 )]
-position = Vector2( -8.03595, -60.1184 )
+position = Vector2( 18.1734, 48.7547 )
 scale = Vector2( 0.37, 0.37 )
 
+[node name="r_upperarm" parent="DevSprite/hip/torso" index="0"]
+rotation = 1.09516
+
+[node name="r_forearm" parent="DevSprite/hip/torso/r_upperarm" index="0"]
+rotation = -1.30815
+
+[node name="r_hand" parent="DevSprite/hip/torso/r_upperarm/r_forearm" index="0"]
+rotation = -1.29021
+
 [node name="l_upperarm" parent="DevSprite/hip/torso" index="1"]
-rotation = -0.244042
+rotation = -0.308436
 
 [node name="l_forearm" parent="DevSprite/hip/torso/l_upperarm" index="0"]
-rotation = -2.06465
+rotation = -1.13449
 
 [node name="l_hand" parent="DevSprite/hip/torso/l_upperarm/l_forearm" index="0"]
-rotation = -19.3154
+rotation = -1.32255
+
+[node name="l_thigh" parent="DevSprite/hip/torso" index="3"]
+rotation = -0.827946
+
+[node name="l_shin" parent="DevSprite/hip/torso/l_thigh" index="0"]
+rotation = 2.05696
+
+[node name="l_foot" parent="DevSprite/hip/torso/l_thigh/l_shin" index="0"]
+rotation = -0.70727
+
+[node name="r_thigh" parent="DevSprite/hip/torso" index="4"]
+rotation = -1.12511
+
+[node name="r_shin" parent="DevSprite/hip/torso/r_thigh" index="0"]
+rotation = 0.0935633
+
+[node name="r_foot" parent="DevSprite/hip/torso/r_thigh/r_shin" index="0"]
+rotation = 1.18548
 
 [node name="Collider" type="CollisionShape2D" parent="."]
 visible = false
@@ -7748,7 +7867,8 @@ script = ExtResource( 12 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 visible = false
-position = Vector2( 131.337, -118.173 )
+position = Vector2( 165.106, 129.724 )
+scale = Vector2( 2, 1 )
 shape = SubResource( 21 )
 disabled = true
 
@@ -7870,8 +7990,8 @@ NAME = "Mid Punch"
 ANIMATION = "5>2"
 TYPE = "mid"
 HITSTUN = 16
-[connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Stand" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Attack" method="_on_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Stand" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/DashForward" method="_on_animation_finished"]
 [connection signal="area_entered" from="Hurtbox" to="StateMachine" method="_on_Hurtbox_area_entered"]
 

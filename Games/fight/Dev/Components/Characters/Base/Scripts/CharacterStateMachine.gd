@@ -35,6 +35,7 @@ func _on_Hurtbox_area_entered(area):
 
 	elif character.attack_state == "startup":
 		hurtbox.COUNTERHIT_BY = area.CURRENT_ATTACK
+		character.set_attack_state(null)
 		print("Counterhit by " + str(hurtbox.COUNTERHIT_BY))
 		_change_state("reel")
 
