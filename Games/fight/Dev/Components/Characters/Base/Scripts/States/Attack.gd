@@ -9,6 +9,10 @@ var animation_finished := false
 var attack
 var elapsed_frames = -1
 
+var travel := 0
+var travel_dir := 0
+var travel_speed := 0.0
+
 func enter():
 	find_attack(character.dpad_attack, character.btn_attack)
 	if attack != null:
@@ -17,6 +21,9 @@ func enter():
 		print("Attacking")
 		elapsed_frames = -1
 		character.state = "attack"
+		travel = attack.TRAVEL
+		travel_dir = attack.TRAVEL_DIR * 1 if character.PLAYER_ID == 1 else -1
+		travel_speed = attack.TRAVEL_SPEED
 	else:
 		print("attack not found")
 		emit_signal("finished", "idle")
@@ -56,14 +63,17 @@ func update(delta):
 	hitbox.CURRENT_ATTACK = attack
 
 	if character.is_on_floor():
-		character.move_dir = 0
+		character.move_dir = travel_dir
 
 	character.y_velo += character.GRAVITY
 
 	if character.y_velo > character.MAX_FALL_SPEED:
 		character.y_velo = character.MAX_FALL_SPEED
 
-	character.move_and_slide(Vector2(character.move_dir * character.JUMP_X_FORCE, character.y_velo), Vector2(0, -1))
+	character.move_and_slide(Vector2(character.move_dir * travel * travel_speed * character.JUMP_X_FORCE, character.y_velo), Vector2(0, -1))
+
+	if travel > 0:
+		travel -= 1
 
 	var buffered_btn = character.find_buffered_btn(temp_buffer, attack.FOLLOWUP_BTNS, attack.CANCEL)
 
@@ -72,6 +82,9 @@ func update(delta):
 		var attack_was = attack
 		attack = attack.get_node(str(buffered_btn)) if attack.get_node(str(buffered_btn)) != null else attack
 		if attack != null && attack != attack_was:
+			travel = attack.TRAVEL
+			travel_dir = attack.TRAVEL_DIR * 1 if character.PLAYER_ID == 1 else -1
+			travel_speed = attack.TRAVEL_SPEED
 			animation_player.stop()
 			animation_player.play(attack.ANIMATION)
 

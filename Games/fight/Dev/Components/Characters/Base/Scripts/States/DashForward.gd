@@ -28,6 +28,7 @@ func update(delta):
 
 	if momentum <= 1:
 		momentum = 1
+
 	character.move_and_slide(Vector2(move_dir * MOVE_SPEED * momentum, 1000), Vector2(0, -1))
 	momentum -= 1
 

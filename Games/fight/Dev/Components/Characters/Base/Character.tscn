@@ -7807,44 +7807,17 @@ anims/Move = SubResource( 14 )
 anims/Stand = SubResource( 18 )
 
 [node name="DevSprite" parent="." instance=ExtResource( 1 )]
-position = Vector2( 18.1734, 48.7547 )
+position = Vector2( -8.036, -60.118 )
 scale = Vector2( 0.37, 0.37 )
 
-[node name="r_upperarm" parent="DevSprite/hip/torso" index="0"]
-rotation = 1.09516
-
-[node name="r_forearm" parent="DevSprite/hip/torso/r_upperarm" index="0"]
-rotation = -1.30815
-
-[node name="r_hand" parent="DevSprite/hip/torso/r_upperarm/r_forearm" index="0"]
-rotation = -1.29021
-
 [node name="l_upperarm" parent="DevSprite/hip/torso" index="1"]
-rotation = -0.308436
+rotation = -0.244042
 
 [node name="l_forearm" parent="DevSprite/hip/torso/l_upperarm" index="0"]
-rotation = -1.13449
+rotation = -2.06465
 
 [node name="l_hand" parent="DevSprite/hip/torso/l_upperarm/l_forearm" index="0"]
-rotation = -1.32255
-
-[node name="l_thigh" parent="DevSprite/hip/torso" index="3"]
-rotation = -0.827946
-
-[node name="l_shin" parent="DevSprite/hip/torso/l_thigh" index="0"]
-rotation = 2.05696
-
-[node name="l_foot" parent="DevSprite/hip/torso/l_thigh/l_shin" index="0"]
-rotation = -0.70727
-
-[node name="r_thigh" parent="DevSprite/hip/torso" index="4"]
-rotation = -1.12511
-
-[node name="r_shin" parent="DevSprite/hip/torso/r_thigh" index="0"]
-rotation = 0.0935633
-
-[node name="r_foot" parent="DevSprite/hip/torso/r_thigh/r_shin" index="0"]
-rotation = 1.18548
+rotation = -19.3154
 
 [node name="Collider" type="CollisionShape2D" parent="."]
 visible = false
@@ -7867,7 +7840,7 @@ script = ExtResource( 12 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 visible = false
-position = Vector2( 165.106, 129.724 )
+position = Vector2( 139.244, 0 )
 scale = Vector2( 2, 1 )
 shape = SubResource( 21 )
 disabled = true
@@ -7931,6 +7904,8 @@ CHARACTER_PATH = NodePath("../..")
 script = ExtResource( 9 )
 ANIMATION = "5>1"
 CANCEL = 18
+TRAVEL = 2
+TRAVEL_DIR = 1
 FOLLOWUP_BTNS = [ 2 ]
 BLOCKSTUN = 14
 HITSTUN = 22
@@ -7940,6 +7915,9 @@ script = ExtResource( 9 )
 NAME = "Punch Followup"
 ANIMATION = "5>1"
 CANCEL = 18
+TRAVEL = 2
+TRAVEL_DIR = 1
+TRAVEL_SPEED = 0.75
 FOLLOWUP_BTNS = [ 3 ]
 BLOCKSTUN = 10
 HITSTUN = 13
@@ -7949,6 +7927,9 @@ script = ExtResource( 9 )
 NAME = "Kick Followup"
 ANIMATION = "5>3"
 TYPE = "mid"
+TRAVEL = 4
+TRAVEL_DIR = 1
+TRAVEL_SPEED = 0.66
 BLOCKSTUN = 14
 HITSTUN = 17
 
@@ -7957,6 +7938,9 @@ script = ExtResource( 9 )
 NAME = "Mid Punch"
 ANIMATION = "5>2"
 CANCEL = 18
+TRAVEL = 3
+TRAVEL_DIR = 1
+TRAVEL_SPEED = 0.85
 FOLLOWUP_BTNS = [ 2 ]
 BLOCKSTUN = 10
 HITSTUN = 21
@@ -7966,6 +7950,9 @@ script = ExtResource( 9 )
 NAME = "Mid Kick"
 ANIMATION = "5>3"
 TYPE = "mid"
+TRAVEL = 4
+TRAVEL_DIR = 1
+TRAVEL_SPEED = 1.0
 HITSTUN = 14
 
 [node name="4" type="Node" parent="Attacks/Standing/5"]
