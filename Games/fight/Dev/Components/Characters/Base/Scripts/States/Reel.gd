@@ -9,6 +9,10 @@ var animation_finished := false
 
 var hit_by_local = null
 
+var pushback := 0
+var pushback_dir := 0
+var pushback_speed := 0.0
+
 func enter():
 	animation_finished = false
 
@@ -16,11 +20,17 @@ func enter():
 		character.hitstun_remaining = hurtbox.HIT_BY.HITSTUN
 		character.health -= hurtbox.HIT_BY.DAMAGE
 		hit_by_local = hurtbox.HIT_BY
+		pushback = hit_by_local.PUSHBACK_OPP
+		pushback_dir = hit_by_local.PUSHBACK_OPP_DIR * -1 if character.PLAYER_ID == 1 else 1
+		pushback_speed = hit_by_local.PUSHBACK_OPP_SPEED
 
 	elif hurtbox.COUNTERHIT_BY != null:
 		character.hitstun_remaining = hurtbox.COUNTERHIT_BY.HITSTUN + hurtbox.COUNTERHIT_BY.COUNTER_HITSTUN
 		character.health -= hurtbox.COUNTERHIT_BY.DAMAGE
 		hit_by_local = hurtbox.COUNTERHIT_BY
+		pushback = hit_by_local.PUSHBACK_OPP
+		pushback_dir = -1 if character.PLAYER_ID == 1 else 1
+		pushback_speed = hit_by_local.PUSHBACK_OPP_SPEED
 
 		print(character.hitstun_remaining)
 	character.state = "reel"
@@ -49,14 +59,17 @@ func update(delta):
 		hurtbox.COUNTERHIT_BY = null
 
 	if character.is_on_floor():
-		character.move_dir = 0
+		character.move_dir = pushback_dir
 
 	character.y_velo += character.GRAVITY
 
 	if character.y_velo > character.MAX_FALL_SPEED:
 		character.y_velo = character.MAX_FALL_SPEED
 
-	character.move_and_slide(Vector2(character.move_dir * character.JUMP_X_FORCE, character.y_velo), Vector2(0, -1))
+	character.move_and_slide(Vector2(character.move_dir * pushback * pushback_speed * character.JUMP_X_FORCE, character.y_velo), Vector2(0, -1))
+
+	if pushback > 0:
+		pushback -= 1
 
 	var buffered_btn = character.find_buffered_btn(temp_buffer, [1,2,3,4,12,13,14,23,24,34], 8)
 
