@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/platformer_char_spritesheet.png-2a3e26d4503e00da4b192200b04c88c4.stex"
+path="res://.import/tree-top.png-6d0d4f73702dd29a01f66338f9937880.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://platformer_char_spritesheet.png"
-dest_files=[ "res://.import/platformer_char_spritesheet.png-2a3e26d4503e00da4b192200b04c88c4.stex" ]
+source_file="res://tree-top.png"
+dest_files=[ "res://.import/tree-top.png-6d0d4f73702dd29a01f66338f9937880.stex" ]
 
 [params]
 

@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://tree.tscn" type="PackedScene" id=2]
+
+[node name="level1" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 251.65, 99.2682 )
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="tree" parent="." instance=ExtResource( 2 )]
+position = Vector2( 346.124, 102.767 )
+[connection signal="body_entered" from="Area2D" to="player" method="_on_Area2D_body_entered"]

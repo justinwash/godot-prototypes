@@ -3,6 +3,9 @@
 importer="texture"
 type="StreamTexture"
 path="res://.import/platformer_tiles.png-5b02e4b22d1e0344f1f9cc701a62a4c4.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 

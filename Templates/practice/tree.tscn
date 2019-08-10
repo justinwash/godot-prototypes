@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://tree-top.tscn" type="PackedScene" id=1]
+[ext_resource path="res://tree-trunk.tscn" type="PackedScene" id=2]
+[ext_resource path="res://tree.gd" type="Script" id=3]
+
+[node name="tree" type="RigidBody2D"]
+mass = 3.54
+gravity_scale = 0.0
+linear_damp = 6.12
+angular_damp = 2.56
+script = ExtResource( 3 )
+
+[node name="tree-top" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0.0579834, 1.46777 )
+collision_layer = 3
+mass = 16.44
+gravity_scale = 1.0
+linear_damp = -1.0
+angular_damp = 2.0
+
+[node name="tree-trunk" parent="." instance=ExtResource( 2 )]
+position = Vector2( -0.287605, 38.0998 )
+collision_layer = 3
