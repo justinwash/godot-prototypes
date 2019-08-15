@@ -21,7 +21,8 @@ func _ready():
 		"reel": $Reel,
 		"block": $Block,
 		"dash_forward": $DashForward,
-		"dash_backward": $DashBackward
+		"dash_backward": $DashBackward,
+		"grab": $Grab
 	}
 
 func _change_state(state_name):

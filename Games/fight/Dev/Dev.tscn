@@ -92,6 +92,9 @@ shape = SubResource( 3 )
 collision_layer = 32
 collision_mask = 64
 
+[node name="Grab" parent="Character L/StateMachine" index="11"]
+OPPONENT_PATH = NodePath("../../../Character R")
+
 [node name="3" parent="Character L/Attacks/Standing/5/1/2" index="0"]
 IS_STRING = false
 FOLLOWUP_BTNS = [  ]
@@ -114,6 +117,9 @@ collision_mask = 32
 [node name="Hitbox" parent="Character R" index="4"]
 collision_layer = 64
 collision_mask = 32
+
+[node name="Grab" parent="Character R/StateMachine" index="11"]
+OPPONENT_PATH = NodePath("../../../Character L")
 
 [node name="CameraAnchor" type="Node2D" parent="."]
 modulate = Color( 1, 0, 0, 1 )

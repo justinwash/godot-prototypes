@@ -17,12 +17,19 @@ func enter():
 	animation_finished = false
 
 	if hurtbox.HIT_BY != null:
-		character.hitstun_remaining = hurtbox.HIT_BY.HITSTUN
-		character.health -= hurtbox.HIT_BY.DAMAGE
 		hit_by_local = hurtbox.HIT_BY
-		pushback = hit_by_local.PUSHBACK_OPP
-		pushback_dir = hit_by_local.PUSHBACK_OPP_DIR * -1 if character.PLAYER_ID == 1 else 1
-		pushback_speed = hit_by_local.PUSHBACK_OPP_SPEED
+		if hurtbox.HIT_BY.IS_THROW:
+			character.state = "grabbed"
+			play_animation()
+		else:
+			character.hitstun_remaining = hurtbox.HIT_BY.HITSTUN
+			character.health -= hurtbox.HIT_BY.DAMAGE
+			hit_by_local = hurtbox.HIT_BY
+			pushback = hit_by_local.PUSHBACK_OPP
+			pushback_dir = hit_by_local.PUSHBACK_OPP_DIR * -1 if character.PLAYER_ID == 1 else 1
+			pushback_speed = hit_by_local.PUSHBACK_OPP_SPEED
+			character.state = "reel"
+			play_animation()
 
 	elif hurtbox.COUNTERHIT_BY != null:
 		character.hitstun_remaining = hurtbox.COUNTERHIT_BY.HITSTUN + hurtbox.COUNTERHIT_BY.COUNTER_HITSTUN
@@ -31,17 +38,17 @@ func enter():
 		pushback = hit_by_local.PUSHBACK_OPP
 		pushback_dir = -1 if character.PLAYER_ID == 1 else 1
 		pushback_speed = hit_by_local.PUSHBACK_OPP_SPEED
-
-		print(character.hitstun_remaining)
-	character.state = "reel"
-	play_animation()
+		character.state = "reel"
+		play_animation()
 
 func handle_input(event):
 	return .handle_input(event)
 
 func play_animation():
 	animation_player.play("Idle")
-	if hit_by_local.TYPE == "high":
+	if hit_by_local.IS_THROW:
+		animation_player.play("Grabbed")
+	elif hit_by_local.TYPE == "high":
 		animation_player.play("Reel High")
 	elif hit_by_local.TYPE == "mid":
 		animation_player.play("Reel Mid")
@@ -88,5 +95,6 @@ func update(delta):
 
 
 func _on_AnimationPlayer_animation_finished(anim_name):
+	character.state = "idle"
 	if anim_name.find("Reel", 0) != -1:
 		animation_finished = true
