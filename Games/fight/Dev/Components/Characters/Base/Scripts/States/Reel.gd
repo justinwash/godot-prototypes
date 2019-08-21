@@ -20,6 +20,7 @@ func enter():
 		hit_by_local = hurtbox.HIT_BY
 		if hurtbox.HIT_BY.IS_THROW:
 			character.state = "grabbed"
+			character.health -= hurtbox.HIT_BY.DAMAGE
 			play_animation()
 		else:
 			character.hitstun_remaining = hurtbox.HIT_BY.HITSTUN
@@ -80,7 +81,11 @@ func update(delta):
 
 	var buffered_btn = character.find_buffered_btn(temp_buffer, [1,2,3,4,12,13,14,23,24,34], 8)
 
-	if (animation_finished || character.hitstun_remaining <= 0) && !character.is_on_floor():
+	if (character.state == "grabbed"):
+		if (animation_finished):
+			emit_signal("finished", "on_the_ground")
+
+	elif (animation_finished || character.hitstun_remaining <= 0) && !character.is_on_floor():
 		emit_signal("finished", "land")
 	elif animation_finished || (buffered_btn != null && character.hitstun_remaining <= 0):
 		character.dpad_attack = character.dpad_input

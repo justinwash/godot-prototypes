@@ -8,6 +8,7 @@ onready var hurtbox = owner.get_node("Hurtbox")
 onready var high_mid_block_dpad = [4] if character.PLAYER_ID == 1 else [6]
 onready var low_block_dpad = [1] if character.PLAYER_ID == 1 else [3]
 onready var no_block_states = ["jump", "attack", "land", "dash"]
+onready var no_hit_states = ["on_the_ground", "grabbed"]
 
 func _ready():
 	states_map = {
@@ -22,7 +23,8 @@ func _ready():
 		"block": $Block,
 		"dash_forward": $DashForward,
 		"dash_backward": $DashBackward,
-		"grab": $Grab
+		"grab": $Grab,
+		"on_the_ground": $OnTheGround
 	}
 
 func _change_state(state_name):
@@ -30,6 +32,8 @@ func _change_state(state_name):
 
 func _on_Hurtbox_area_entered(area):
 	if character.state == "crouch" && area.CURRENT_ATTACK.TYPE == "high":
+		return
+	if no_hit_states.has(character.state):
 		return
 
 		# get rid of the above that's some lazy shit dude

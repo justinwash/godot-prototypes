@@ -86,6 +86,7 @@ OPPONENT = NodePath("../Character R")
 HEALTHBAR = NodePath("../UI/HealthBars/P1_Health")
 
 [node name="Collider" parent="Character L" index="2"]
+visible = true
 shape = SubResource( 3 )
 
 [node name="Hurtbox" parent="Character L" index="3"]
