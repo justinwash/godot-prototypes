@@ -11,7 +11,7 @@ var enemy_types = [
 	load("res://Scenes/YellowEnemy.tscn")
 ]
 	
-var sides = ["left", "top", "right", "bottom"]
+var sides = ["top_right", "bottom_right", "bottom_left", "top_left"]
 
 func _ready():
 	pass # Replace with function body.

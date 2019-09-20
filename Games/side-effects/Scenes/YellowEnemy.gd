@@ -11,10 +11,10 @@ var type = "YellowEnemy"
 
 func _ready():
 	spawn_points = {
-		"right": Vector2(box_reference.position.x + 1000, box_reference.position.y),
-		"bottom": Vector2(box_reference.position.x + 1, box_reference.position.y + 1000),
-		"left": Vector2(box_reference.position.x - 1000, box_reference.position.y + 1),
-		"top": Vector2(box_reference.position.x + 1, box_reference.position.y - 1000),
+		"top_right": Vector2(box_reference.position.x + 1000, box_reference.position.y + 1000),
+		"bottom_right": Vector2(box_reference.position.x + 1000, box_reference.position.y - 1000),
+		"bottom_left": Vector2(box_reference.position.x - 1000, box_reference.position.y - 1000),
+		"top_left": Vector2(box_reference.position.x - 1000, box_reference.position.y + 1000),
 	}
 	
 	self.position = spawn_points[spawn_side]
