@@ -9,3 +9,8 @@ box_path = NodePath("Box")
 
 [node name="Box" parent="." instance=ExtResource( 2 )]
 position = Vector2( 500, 290 )
+
+[node name="Camera2D" type="Camera2D" parent="Box"]
+current = true
+zoom = Vector2( 1.5, 1.5 )
+process_mode = 0

@@ -19,7 +19,7 @@ func _ready():
 func _physics_process(delta):
 	frame += 1
 	
-	if frame % 45 == 0:
+	if frame % 60 == 0:
 		var enemy = enemy_types[get_random_number(4)].instance()
 		enemy.spawn_side = sides[get_random_number(4)]
 		enemy.box_reference = get_node(box_path)

@@ -9,10 +9,10 @@ var orientations
 
 func _ready():
 	orientations = [
-		Vector2(self.position.x + 1000, self.position.y + 1000),
 		Vector2(self.position.x + 1000, self.position.y - 1000),
-		Vector2(self.position.x - 1000, self.position.y - 1000),
+		Vector2(self.position.x + 1000, self.position.y + 1000),
 		Vector2(self.position.x - 1000, self.position.y + 1000),
+		Vector2(self.position.x - 1000, self.position.y - 1000),
 	]
 
 func _physics_process(delta):
