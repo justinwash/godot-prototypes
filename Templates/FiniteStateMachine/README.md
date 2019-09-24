@@ -7,7 +7,8 @@
 3) Add a Node as a child to your StateMachine Node.
 4) Attach an empty script to the child Node and extend ```State.gd```.
 5) Override the ```enter(), exit(),``` and ```update(delta)``` methods with your behaviors.
-6) Repeat for as many Nodes as you have states.
+6) Add the state to the ```states``` object on the StateMachine Node e.g. ```"example_state": $ExampleState```.
+7) Repeat for as many Nodes as you have states.
 
 ### State Switching:
 
