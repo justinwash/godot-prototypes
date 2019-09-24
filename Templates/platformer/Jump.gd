@@ -3,7 +3,7 @@ extends "res://State.gd"
 func enter():
 	.enter()
 	actor.y_velo = -actor.JUMP_FORCE
-
+	actor.play_anim("jump")
 	print("jump")
 
 func update(delta):
@@ -12,3 +12,5 @@ func update(delta):
 		emit_signal("change_state", "idle")
 	if actor.y_velo > actor.MAX_FALL_SPEED:
 		actor.y_velo = actor.MAX_FALL_SPEED
+
+	actor.move_and_slide(Vector2(0, actor.y_velo), Vector2(0,-1))
