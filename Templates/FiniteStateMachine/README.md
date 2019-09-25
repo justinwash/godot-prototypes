@@ -3,7 +3,7 @@
 ### To Use:
 
 1) Create a StateMachine Node on your character/item/enemy/whatever.
-2) Attach an empty script to the StateMachine Node and extend ```FiniteSateMachine.gd```.
+2) Attach an empty script to the StateMachine Node and extend ```FiniteSateMachine.gd```. Assign the ```ACTOR``` property exposed in the editor to the Node the StateMachine should control e.g. ```Player```.
 3) Add a Node as a child to your StateMachine Node.
 4) Attach an empty script to the child Node and extend ```State.gd```.
 5) Override the ```enter(), exit(),``` and ```update(delta)``` methods with your behaviors.
