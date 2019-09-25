@@ -1,11 +1,12 @@
 extends "res://State.gd"
 
 func update(delta):
-	var move_dir = 0
-	if Input.is_action_pressed("move_right"):
-		actor.move_dir += 1
-	if Input.is_action_pressed("move_left"):
-		actor.move_dir -= 1
+	if Input.is_action_pressed("move_right") && !Input.is_action_pressed("move_left"):
+		actor.move_dir = 1
+	if Input.is_action_pressed("move_left") && !Input.is_action_pressed("move_right"):
+		actor.move_dir = -1
+	else:
+		actor.move_dir = 0
 
 	actor.move_and_slide(Vector2(actor.move_dir * actor.MOVE_SPEED, actor.y_velo), Vector2(0, -1))
 
@@ -20,9 +21,8 @@ func update(delta):
 	if !actor.facing_right and actor.move_dir > 0:
 		actor.flip()
 
-	if grounded:
-		if move_dir == 0:
-			emit_signal("change_state", "idle")
+	if actor.move_dir == 0:
+		emit_signal("change_state", "idle")
 
 	print("walk")
 
