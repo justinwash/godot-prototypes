@@ -1,17 +1,17 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://platformer_char_spritesheet.png" type="Texture" id=2]
+[ext_resource path="res://StateMachine.gd" type="Script" id=3]
+[ext_resource path="res://Idle.gd" type="Script" id=4]
+[ext_resource path="res://Walk.gd" type="Script" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
-
 extents = Vector2( 10, 24 )
 
 [sub_resource type="CircleShape2D" id=2]
 
-
 [sub_resource type="Animation" id=3]
-
 resource_name = "idle"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:region_rect")
@@ -27,7 +27,6 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=4]
-
 resource_name = "jump"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:region_rect")
@@ -43,7 +42,6 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=5]
-
 resource_name = "walk"
 length = 0.4
 loop = true
@@ -81,3 +79,13 @@ anims/idle = SubResource( 3 )
 anims/jump = SubResource( 4 )
 anims/walk = SubResource( 5 )
 
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource( 3 )
+ACTOR = NodePath("..")
+START_STATE = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource( 4 )
+
+[node name="Walk" type="Node" parent="StateMachine"]
+script = ExtResource( 5 )
