@@ -13,4 +13,11 @@ func update(delta):
 	if actor.y_velo > actor.MAX_FALL_SPEED:
 		actor.y_velo = actor.MAX_FALL_SPEED
 
-	actor.move_and_slide(Vector2(0, actor.y_velo), Vector2(0,-1))
+	if Input.is_action_pressed("move_right") && !Input.is_action_pressed("move_left"):
+		actor.move_dir = 1
+	elif Input.is_action_pressed("move_left") && !Input.is_action_pressed("move_right"):
+		actor.move_dir = -1
+	else:
+		actor.move_dir = 0
+
+	actor.move_and_slide(Vector2(actor.move_dir * actor.MOVE_SPEED, actor.y_velo), Vector2(0,-1))
