@@ -24,4 +24,5 @@ func _physics_process(delta):
 
 func _change_state(state_name):
 	current_state.exit()
-	current_state = get_node(states[state_name])
+	current_state = states[state_name]
+	current_state.enter()
