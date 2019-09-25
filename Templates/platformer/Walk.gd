@@ -3,7 +3,7 @@ extends "res://State.gd"
 func update(delta):
 	if Input.is_action_pressed("move_right") && !Input.is_action_pressed("move_left"):
 		actor.move_dir = 1
-	if Input.is_action_pressed("move_left") && !Input.is_action_pressed("move_right"):
+	elif Input.is_action_pressed("move_left") && !Input.is_action_pressed("move_right"):
 		actor.move_dir = -1
 	else:
 		actor.move_dir = 0
@@ -24,8 +24,9 @@ func update(delta):
 	if actor.move_dir == 0:
 		emit_signal("change_state", "idle")
 
-	print("walk")
+	
 
 func enter():
 	.enter()
+	print("walk")
 	actor.play_anim("walk")
