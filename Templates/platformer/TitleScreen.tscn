@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Button.gd" type="Script" id=1]
+
+[node name="TitleScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_left = 410.331
+margin_top = 254.896
+margin_right = 699.331
+margin_bottom = 294.896
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+text = "CLICKY THA BUTTON PLAY THA GAME"
+
+[node name="Button" type="Button" parent="."]
+margin_left = 469.927
+margin_top = 304.507
+margin_right = 589.927
+margin_bottom = 345.507
+text = "CLICK ME PLEASE"
+script = ExtResource( 1 )
+[connection signal="button_up" from="Button" to="Button" method="_on_Button_button_up"]

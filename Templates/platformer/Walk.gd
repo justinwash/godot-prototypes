@@ -24,7 +24,7 @@ func update(delta):
 	if actor.move_dir == 0:
 		emit_signal("change_state", "idle")
 
-	
+
 
 func enter():
 	.enter()

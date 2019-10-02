@@ -12,5 +12,5 @@ func update(delta):
 		emit_signal("change_state", "jump")
 	if Input.is_action_pressed("move_right") || Input.is_action_pressed("move_left"):
 		emit_signal("change_state", "walk")
-		
-	
+
+
