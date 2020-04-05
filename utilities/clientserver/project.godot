@@ -15,10 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Pong Multiplayer"
-config/description="A multiplayer demo of the classical pong game.
-One of the players should press 'host', while the
-other should select the address and press 'join'."
+config/name="clientserver"
 run/main_scene="res://lobby/lobby.tscn"
 
 [debug]

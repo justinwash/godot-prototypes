@@ -121,7 +121,7 @@ margin_left = 10.0
 margin_top = 32.0
 margin_right = 216.0
 margin_bottom = 48.0
-text = "Player 1: you dummy :D"
+text = "You"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -131,6 +131,5 @@ margin_left = 10.0
 margin_top = 64.0
 margin_right = 216.0
 margin_bottom = 80.0
-text = "Player 2: "
 [connection signal="pressed" from="LobbyPanel/HostButton" to="LobbyPanel" method="_on_host_pressed"]
 [connection signal="pressed" from="LobbyPanel/JoinButton" to="LobbyPanel" method="_on_join_pressed"]
