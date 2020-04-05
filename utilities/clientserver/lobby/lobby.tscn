@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://lobby/lobby.gd" type="Script" id=1]
 [ext_resource path="res://lobby/PlayerPanel.gd" type="Script" id=2]
-[ext_resource path="res://mover/mover.tscn" type="PackedScene" id=3]
 [ext_resource path="res://lobby/testarea.gd" type="Script" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -181,10 +180,12 @@ position = Vector2( 632, 176 )
 position = Vector2( 0, 88 )
 shape = SubResource( 4 )
 
-[node name="TestMover1" parent="TestArea" instance=ExtResource( 3 )]
-position = Vector2( 88, 216 )
+[node name="SpawnPoints" type="Node2D" parent="TestArea"]
 
-[node name="TestMover2" parent="TestArea" instance=ExtResource( 3 )]
-position = Vector2( 472, 216 )
+[node name="Spawn" type="Node2D" parent="TestArea/SpawnPoints"]
+position = Vector2( 96, 256 )
+
+[node name="Spawn2" type="Node2D" parent="TestArea/SpawnPoints"]
+position = Vector2( 544, 256 )
 [connection signal="pressed" from="LobbyPanel/HostButton" to="LobbyPanel" method="_on_host_pressed"]
 [connection signal="pressed" from="LobbyPanel/JoinButton" to="LobbyPanel" method="_on_join_pressed"]
