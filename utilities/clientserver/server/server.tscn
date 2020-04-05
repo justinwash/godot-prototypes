@@ -2,5 +2,5 @@
 
 [ext_resource path="res://server/server.gd" type="Script" id=1]
 
-[node name="game" type="Node2D"]
+[node name="server" type="Node"]
 script = ExtResource( 1 )

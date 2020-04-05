@@ -6,12 +6,14 @@ const MAX_PLAYERS = 8
 const connections = []
 
 func _ready():
+	print("Starting server...")
+	
 	var server = NetworkedMultiplayerENet.new()
 	server.create_server(PORT, MAX_PLAYERS)
 	get_tree().set_network_peer(server)
 	
-	get_tree().connect("network_peer_connected", self, "_client_connected")
-	get_tree().connect("network_peer_disconnected", self, "_client_disconnected")
+	print(get_tree().connect("network_peer_connected", self, "_client_connected"))
+	print(get_tree().connect("network_peer_disconnected", self, "_client_disconnected"))
 	
 	print("Server runnng on " + str(PORT))
 
