@@ -17,6 +17,11 @@ func get_input():
 	velocity = velocity.normalized() * speed
 
 func _physics_process(_delta):
-	if is_network_master():
+	if get_tree().has_network_peer() and is_network_master():
 		get_input()
 		move_and_slide(velocity)
+		rpc_unreliable("set_pos", position)
+		
+puppet func set_pos(p_pos):
+	position = p_pos
+	

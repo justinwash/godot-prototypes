@@ -16,3 +16,12 @@ shape = SubResource( 1 )
 [node name="icon" type="Sprite" parent="."]
 position = Vector2( 40, 42 )
 texture = ExtResource( 2 )
+
+[node name="Name" type="Label" parent="."]
+margin_left = 7.02926
+margin_top = -4.67646
+margin_right = 47.0293
+margin_bottom = 9.32354
+__meta__ = {
+"_edit_use_anchors_": false
+}

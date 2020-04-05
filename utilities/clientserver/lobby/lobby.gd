@@ -19,6 +19,9 @@ func _player_connected(_id):
 	_set_status("Player joined: id " + str(_id), true)
 
 func _player_disconnected(_id):
+	host_button.set_disabled(false)
+	join_button.set_disabled(false)
+	
 	_set_status("Player " + str(_id) + " disconnected", false)
 
 func _connected_ok():
