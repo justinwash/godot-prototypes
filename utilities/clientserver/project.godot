@@ -8,33 +8,15 @@
 
 config_version=4
 
-_global_script_classes=[ {
-"base": "KinematicBody",
-"class": "BasePlayer",
-"language": "GDScript",
-"path": "res://shared/scripts/player/base_player.gd"
-}, {
-"base": "BasePlayer",
-"class": "Player",
-"language": "GDScript",
-"path": "res://shared/scripts/player/player.gd"
-}, {
-"base": "BasePlayer",
-"class": "Puppet",
-"language": "GDScript",
-"path": "res://client/scripts/puppet.gd"
-} ]
+_global_script_classes=[  ]
 _global_script_class_icons={
-"BasePlayer": "",
-"Player": "",
-"Puppet": ""
+
 }
 
 [application]
 
 config/name="clientserver"
-run/main_scene="res://client/scenes/main.tscn"
-config/icon="res://client/icon.png"
+run/main_scene="res://server/server.tscn"
 
 [autoload]
 
@@ -93,4 +75,3 @@ name_casing=2
 quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
-environment/default_environment="res://client/default_env.tres"
