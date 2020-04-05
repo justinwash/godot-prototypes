@@ -17,5 +17,6 @@ func get_input():
 	velocity = velocity.normalized() * speed
 
 func _physics_process(_delta):
-	get_input()
-	move_and_slide(velocity)
+	if is_network_master():
+		get_input()
+		move_and_slide(velocity)
