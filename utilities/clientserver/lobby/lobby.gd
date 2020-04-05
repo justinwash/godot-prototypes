@@ -1,6 +1,6 @@
 extends Control
 
-const DEFAULT_PORT = 8910 # An arbitrary number.
+const DEFAULT_PORT = 42069 # An arbitrary number.
 
 onready var address = $Address
 onready var host_button = $HostButton
@@ -20,14 +20,7 @@ func _ready():
 
 # Callback from SceneTree.
 func _player_connected(_id):
-	# Someone connected, start the game!
-	var pong = load("res://pong.tscn").instance()
-	# Connect deferred so we can safely erase it from the callback.
-	pong.connect("game_finished", self, "_end_game", [], CONNECT_DEFERRED)
-	
-	get_tree().get_root().add_child(pong)
-	hide()
-
+	_set_status("Player joined: id " + str(_id), true)
 
 func _player_disconnected(_id):
 	if get_tree().is_network_server():
@@ -35,11 +28,9 @@ func _player_disconnected(_id):
 	else:
 		_end_game("Server disconnected")
 
-
 # Callback from SceneTree, only for clients (not server).
 func _connected_ok():
-	pass # We don't need this function.
-
+	_set_status("Connected", true)
 
 # Callback from SceneTree, only for clients (not server).
 func _connected_fail():
@@ -50,12 +41,10 @@ func _connected_fail():
 	host_button.set_disabled(false)
 	join_button.set_disabled(false)
 
-
 func _server_disconnected():
 	_end_game("Server disconnected")
 
 ##### Game creation functions ######
-
 func _end_game(with_error = ""):
 	if has_node("/root/Pong"):
 		# Erase immediately, otherwise network might show errors (this is why we connected deferred above).
@@ -67,7 +56,6 @@ func _end_game(with_error = ""):
 	join_button.set_disabled(false)
 	
 	_set_status(with_error, false)
-
 
 func _set_status(text, isok):
 	# Simple way to show status.
@@ -92,7 +80,6 @@ func _on_host_pressed():
 	host_button.set_disabled(true)
 	join_button.set_disabled(true)
 	_set_status("Waiting for player...", true)
-
 
 func _on_join_pressed():
 	var ip = address.get_text()

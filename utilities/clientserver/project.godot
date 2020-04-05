@@ -19,8 +19,7 @@ config/name="Pong Multiplayer"
 config/description="A multiplayer demo of the classical pong game.
 One of the players should press 'host', while the
 other should select the address and press 'join'."
-run/main_scene="res://lobby.tscn"
-config/icon="res://icon.png"
+run/main_scene="res://lobby/lobby.tscn"
 
 [debug]
 
