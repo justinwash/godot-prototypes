@@ -1,7 +1,21 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://lobby/lobby.gd" type="Script" id=1]
 [ext_resource path="res://lobby/PlayerPanel.gd" type="Script" id=2]
+[ext_resource path="res://mover/mover.tscn" type="PackedScene" id=3]
+[ext_resource path="res://lobby/testarea.gd" type="Script" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 320, 8 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 320, 8 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 8, 120 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 8, 120 )
 
 [node name="Lobby" type="Control"]
 anchor_left = 0.5
@@ -19,10 +33,10 @@ __meta__ = {
 }
 
 [node name="LobbyPanel" type="Panel" parent="."]
-margin_left = 208.0
-margin_top = 134.0
-margin_right = 432.0
-margin_bottom = 244.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 232.0
+margin_bottom = 118.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 script = ExtResource( 1 )
@@ -93,10 +107,10 @@ custom_colors/font_color = Color( 1, 0, 0, 1 )
 align = 1
 
 [node name="PlayerPanel" type="Panel" parent="."]
-margin_left = 208.0
-margin_top = 280.0
-margin_right = 432.0
-margin_bottom = 368.0
+margin_left = 408.0
+margin_top = 8.0
+margin_right = 632.0
+margin_bottom = 96.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 script = ExtResource( 2 )
@@ -116,7 +130,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Player1Label" type="Label" parent="PlayerPanel"]
+[node name="PlayerLabel1" type="Label" parent="PlayerPanel"]
 margin_left = 10.0
 margin_top = 32.0
 margin_right = 216.0
@@ -126,10 +140,51 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Player2Label" type="Label" parent="PlayerPanel"]
+[node name="PlayerLabel2" type="Label" parent="PlayerPanel"]
 margin_left = 10.0
 margin_top = 64.0
 margin_right = 216.0
 margin_bottom = 80.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TestArea" type="Node2D" parent="."]
+script = ExtResource( 4 )
+
+[node name="Bounds" type="Node2D" parent="TestArea"]
+
+[node name="Top" type="StaticBody2D" parent="TestArea/Bounds"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestArea/Bounds/Top"]
+position = Vector2( 320, 136 )
+shape = SubResource( 1 )
+
+[node name="Bottom" type="StaticBody2D" parent="TestArea/Bounds"]
+position = Vector2( 0, 256 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestArea/Bounds/Bottom"]
+position = Vector2( 320, 136 )
+shape = SubResource( 2 )
+
+[node name="Left" type="StaticBody2D" parent="TestArea/Bounds"]
+position = Vector2( 8, 176 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestArea/Bounds/Left"]
+position = Vector2( 0, 88 )
+shape = SubResource( 3 )
+
+[node name="Right" type="StaticBody2D" parent="TestArea/Bounds"]
+position = Vector2( 632, 176 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestArea/Bounds/Right"]
+position = Vector2( 0, 88 )
+shape = SubResource( 4 )
+
+[node name="TestMover1" parent="TestArea" instance=ExtResource( 3 )]
+position = Vector2( 88, 216 )
+
+[node name="TestMover2" parent="TestArea" instance=ExtResource( 3 )]
+position = Vector2( 472, 216 )
 [connection signal="pressed" from="LobbyPanel/HostButton" to="LobbyPanel" method="_on_host_pressed"]
 [connection signal="pressed" from="LobbyPanel/JoinButton" to="LobbyPanel" method="_on_join_pressed"]
