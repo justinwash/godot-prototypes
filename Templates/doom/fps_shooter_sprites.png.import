@@ -3,6 +3,9 @@
 importer="texture"
 type="StreamTexture"
 path="res://.import/fps_shooter_sprites.png-dd7312ef40535d4fd3ed4f19ca35ffac.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
