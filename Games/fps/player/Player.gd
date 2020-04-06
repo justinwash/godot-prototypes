@@ -1,6 +1,6 @@
 extends KinematicBody
 
-const MOVE_SPEED = 4
+const MOVE_SPEED = 8
 const MOUSE_SENS = 0.075
 
 onready var raycast = $RayCast
