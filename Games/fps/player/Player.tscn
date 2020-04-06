@@ -16,7 +16,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 456, 416 ), Vector2( 472, 432 ) ]
+"values": [ Vector2( -40, 104 ), Vector2( -24, 120 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("HUD/Crosshair/WeaponIcon:rect_size")
@@ -78,9 +78,9 @@ __meta__ = {
 
 [node name="WeaponIcon" type="TextureRect" parent="HUD/Crosshair"]
 margin_left = -24.0
-margin_top = 144.0
+margin_top = 120.0
 margin_right = 56.0
-margin_bottom = 224.0
+margin_bottom = 200.0
 texture = ExtResource( 2 )
 expand = true
 stretch_mode = 5
