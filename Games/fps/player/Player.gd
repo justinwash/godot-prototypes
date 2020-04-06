@@ -38,6 +38,11 @@ func _physics_process(delta):
 			var coll = raycast.get_collider()
 			if raycast.is_colliding() and coll.has_method("kill"):
 				coll.kill()
+		
+		rpc_unreliable("set_pos", global_transform)
+		
+puppet func set_pos(p_pos):
+	global_transform = p_pos
 
 func kill():
 	get_tree().reload_current_scene()
