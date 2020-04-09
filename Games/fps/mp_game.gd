@@ -1,7 +1,6 @@
 extends Node
 
-onready var player1 = $Player1
-onready var player2 = $Player2
+onready var spawnpoints = $Spawnpoints
 
 func _ready():
 	var _player_connected = get_tree().connect("network_peer_connected", self, "_player_connected")
@@ -10,10 +9,16 @@ func _ready():
 		
 func _player_connected(_id):
 	if get_tree().has_network_peer() and get_tree().is_network_server():
-		player2.set_network_master(get_tree().get_network_connected_peers()[0])
+		var new_player = preload("res://player/Player.tscn").instance()
+		new_player.set_network_master(get_tree().get_network_connected_peers()[0])
+		new_player.translation = $Spawnpoints/Spawnpoint.translation
+		$Players.add_child(new_player)
 		
 	elif get_tree().has_network_peer():
-		player2.set_network_master(get_tree().get_network_unique_id())
+		var new_player = preload("res://player/Player.tscn").instance()
+		new_player.set_network_master(get_tree().get_network_unique_id())
+		new_player.translation = $Spawnpoints/Spawnpoint.translation
+		$Players.add_child(new_player)
 	
 	print("my unique id: ", get_tree().get_network_unique_id())
 		

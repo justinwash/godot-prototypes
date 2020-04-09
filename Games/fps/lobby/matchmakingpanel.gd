@@ -83,7 +83,7 @@ func _make_delete_request(route, data_to_send, use_ssl):
 	var headers = ["Content-Type: application/json"]
 	$HTTPRequest.request(matchmaking_server_url + matchmaking_server_port + route, headers, use_ssl, HTTPClient.METHOD_DELETE, query)
 
-func _on_request_completed(result, response_code, headers, body):
+func _on_request_completed(_result, _response_code, _headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())
 	print(json.result)
 	
