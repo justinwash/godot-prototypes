@@ -1,7 +1,7 @@
 extends Control
 
 const DEFAULT_PORT = 42069
-const matchmaking_server_url = 'http://localhost:3000'
+const matchmaking_server_url = 'http://192.168.1.183:3000'
 
 onready var status_ok = $StatusOk
 onready var status_fail = $StatusFail
