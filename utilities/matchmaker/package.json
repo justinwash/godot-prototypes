@@ -14,6 +14,9 @@
   "author": "justin wash",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1"
+    "@types/node": "^13.11.1",
+    "express": "^4.17.1",
+    "ts-node": "^8.8.2",
+    "typescript": "^3.8.3"
   }
 }

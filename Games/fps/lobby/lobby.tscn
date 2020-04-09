@@ -139,7 +139,7 @@ margin_right = 216.0
 margin_bottom = 84.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-text = "Go"
+text = "Cancel"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -163,6 +163,8 @@ size_flags_horizontal = 2
 size_flags_vertical = 0
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 align = 1
+
+[node name="HTTPRequest" type="HTTPRequest" parent="MatchMakingPanel"]
 
 [node name="PlayerPanel" type="Panel" parent="."]
 margin_left = 408.0
@@ -210,3 +212,4 @@ __meta__ = {
 [connection signal="pressed" from="LobbyPanel/JoinButton" to="LobbyPanel" method="_on_join_pressed"]
 [connection signal="pressed" from="MatchMakingPanel/FindButton" to="MatchMakingPanel" method="_on_FindButton_pressed"]
 [connection signal="pressed" from="MatchMakingPanel/CancelButton" to="MatchMakingPanel" method="_on_CancelButton_pressed"]
+[connection signal="request_completed" from="MatchMakingPanel/HTTPRequest" to="MatchMakingPanel" method="_on_request_completed"]

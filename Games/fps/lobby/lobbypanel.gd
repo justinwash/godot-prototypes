@@ -14,7 +14,7 @@ func _ready():
 	if !owner.online or matchmaking:
 		host_button.set_disabled(true)
 		join_button.set_disabled(true)
-		_set_status("Offline", false)
+		_set_status("Offline or Matchmaking", false)
 		return
 		
 	var _player_connected = get_tree().connect("network_peer_connected", self, "_player_connected")
