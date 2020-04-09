@@ -2,6 +2,8 @@ extends Control
 
 const DEFAULT_PORT = 42069
 
+export var matchmaking = true
+
 onready var address = $Address
 onready var host_button = $HostButton
 onready var join_button = $JoinButton
@@ -9,7 +11,7 @@ onready var status_ok = $StatusOk
 onready var status_fail = $StatusFail
 
 func _ready():
-	if !owner.online:
+	if !owner.online or matchmaking:
 		host_button.set_disabled(true)
 		join_button.set_disabled(true)
 		_set_status("Offline", false)

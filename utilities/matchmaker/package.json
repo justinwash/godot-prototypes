@@ -1,0 +1,19 @@
+{
+  "name": "godot-matchmaker",
+  "version": "1.0.0",
+  "description": "a matchmaking server for p2p games",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://www.github.com/justinwash/godot-projects/utilities/matchmaker"
+  },
+  "author": "justin wash",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
