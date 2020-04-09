@@ -107,6 +107,7 @@ script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+matchmaking_server_url = "http://192.168.1.183"
 
 [node name="MatchmakingLabel" type="Label" parent="MatchMakingPanel"]
 margin_left = 16.0

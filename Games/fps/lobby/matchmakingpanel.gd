@@ -2,7 +2,8 @@ extends Control
 
 const GAME_PORT = 42069
 const SOCKET_PORT = 1414
-const matchmaking_server_url = 'http://localhost:3000'
+export var matchmaking_server_url = 'http://localhost'
+export var matchmaking_server_port = ':3000'
 var _socket_server = WebSocketServer.new()
 var enet
 
@@ -66,21 +67,21 @@ func _on_CancelButton_pressed():
 	
 	
 func _make_get_request(route):
-	 $HTTPRequest.request(matchmaking_server_url + route)
+	 $HTTPRequest.request(matchmaking_server_url + matchmaking_server_port + route)
 	
 func _make_post_request(route, data_to_send, use_ssl):
 	# Convert data to json string:
 	var query = JSON.print(data_to_send)
 	# Add 'Content-Type' header:
 	var headers = ["Content-Type: application/json"]
-	$HTTPRequest.request(matchmaking_server_url + route, headers, use_ssl, HTTPClient.METHOD_POST, query)
+	$HTTPRequest.request(matchmaking_server_url + matchmaking_server_port + route, headers, use_ssl, HTTPClient.METHOD_POST, query)
 	
 func _make_delete_request(route, data_to_send, use_ssl):
 	# Convert data to json string:
 	var query = JSON.print(data_to_send)
 	# Add 'Content-Type' header:
 	var headers = ["Content-Type: application/json"]
-	$HTTPRequest.request(matchmaking_server_url + route, headers, use_ssl, HTTPClient.METHOD_DELETE, query)
+	$HTTPRequest.request(matchmaking_server_url + matchmaking_server_port + route, headers, use_ssl, HTTPClient.METHOD_DELETE, query)
 
 func _on_request_completed(result, response_code, headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())
@@ -108,7 +109,9 @@ func _socket_on_data(id):
 		_set_status("Waiting for player...", true)
 		
 	else:
-		var ip = data.opponent.address
+		var ip = data.opponent.address if data.opponent.address != '::1' else  matchmaking_server_url.substr(7)
+		if '::ffff:' in ip:
+			ip = ip.substr(7)
 		if not ip.is_valid_ip_address():
 			_set_status("IP address is invalid", false)
 			return
