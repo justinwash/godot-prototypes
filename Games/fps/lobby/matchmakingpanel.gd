@@ -10,6 +10,8 @@ var enet
 onready var status_ok = $StatusOk
 onready var status_fail = $StatusFail
 
+signal server_started
+
 func _ready():
 	if !owner.online:
 		_set_status("Offline", false)
@@ -90,6 +92,9 @@ func _on_request_completed(_result, _response_code, _headers, body):
 func _process(_delta):
 	_socket_server.poll()
 	
+func _socket_client_connected(arg1, arg2):
+	print(arg1, arg2)
+	
 func _socket_on_data(id):
 	var pkt = _socket_server.get_peer(id).get_packet()
 	var data = parse_json(pkt.get_string_from_utf8()).data
@@ -106,6 +111,7 @@ func _socket_on_data(id):
 			print("Server started on port " + str(GAME_PORT))
 	
 		get_tree().set_network_peer(enet)
+		emit_signal("server_started")
 		_set_status("Waiting for player...", true)
 		
 	else:

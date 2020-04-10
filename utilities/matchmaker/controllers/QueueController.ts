@@ -94,6 +94,20 @@ export default class QueueController {
             );
           });
 
+          const p2ws = new WebSocket(`ws://[${player2.address}]:1414`);
+
+          p2ws.on('open', function open() {
+            p2ws.send(
+              JSON.stringify({
+                message: 'start the game',
+                data: {
+                  player: player2,
+                  opponent: player,
+                },
+              })
+            );
+          });
+
           this.queue.splice(index, 2);
         });
       } else {
