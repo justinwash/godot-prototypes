@@ -24,12 +24,13 @@ func _matching_canceled():
 		player.queue_free()
 	
 func _player_connected(_id):
+	print('player connected: ', _id)
+	spawn_remote_player(_id)
+	
 	for player in $Players.get_children():
 		if player.net_id == 0:
 			player.set_network_master(get_tree().get_network_unique_id())
-			
-	print('player connected: ', _id)
-	spawn_remote_player(_id)
+			player.get_node("Camera").current = true
 	
 #	if get_tree().has_network_peer() and get_tree().is_network_server():
 #		var new_player = preload("res://player/Player.tscn").instance()
