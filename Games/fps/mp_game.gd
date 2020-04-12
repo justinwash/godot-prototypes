@@ -16,7 +16,6 @@ func _matching_started():
 	for player in $Players.get_children():
 		player.queue_free()
 		
-	players.append(1)
 	spawn_local_player()
 	lobby.visible = false
 
@@ -25,8 +24,11 @@ func _matching_canceled():
 		player.queue_free()
 	
 func _player_connected(_id):
+	for player in $Players.get_children():
+		if player.net_id == 0:
+			player.set_network_master(get_tree().get_network_unique_id())
+			
 	print('player connected: ', _id)
-	players.append(_id)
 	spawn_remote_player(_id)
 	
 #	if get_tree().has_network_peer() and get_tree().is_network_server():
@@ -47,10 +49,12 @@ func spawn_local_player():
 	var new_player = preload("res://player/Player.tscn").instance()
 	new_player.translation = $Spawnpoints/Spawnpoint2.translation
 	new_player.set_network_master(get_tree().get_network_unique_id())
+	new_player.net_id = 0
 	$Players.add_child(new_player)
 	
 func spawn_remote_player(id):
 	var new_player = preload("res://player/Player.tscn").instance()
 	new_player.set_network_master(id)
 	new_player.translation = $Spawnpoints/Spawnpoint.translation
+	new_player.net_id = id
 	$Players.add_child(new_player)
