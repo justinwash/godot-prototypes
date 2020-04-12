@@ -9,8 +9,12 @@ var enet
 
 onready var status_ok = $StatusOk
 onready var status_fail = $StatusFail
+onready var find_button = $FindButton
+onready var cancel_button = $CancelButton
 
 signal server_started
+signal matching_started
+signal matching_canceled
 
 func _ready():
 	if !owner.online:
@@ -59,13 +63,18 @@ func _set_status(text, isok):
 		status_fail.set_text(text)
 
 func _on_FindButton_pressed():
+	_set_status("Searching for a match...", true)
+	find_button.set_disabled(true)
 	_make_post_request('/queue', null, false)
+	emit_signal("matching_started")
 
 func _on_CancelButton_pressed():
+	find_button.set_disabled(false)
 	_make_delete_request('/queue', null, false)
 	get_tree().set_network_peer(null)
 	enet = null
 	_set_status("", false)
+	emit_signal("matching_canceled")
 	
 	
 func _make_get_request(route):
@@ -93,7 +102,7 @@ func _process(_delta):
 	_socket_server.poll()
 	
 func _socket_client_connected(arg1, arg2):
-	print(arg1, arg2)
+	print("socket connected: ", arg1, arg2)
 	
 func _socket_on_data(id):
 	var pkt = _socket_server.get_peer(id).get_packet()
