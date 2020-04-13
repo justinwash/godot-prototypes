@@ -2,8 +2,10 @@ extends Node
 
 onready var spawnpoints = $Spawnpoints
 onready var lobby = $Lobby
+onready var players = $Players
 
-var players = []
+var player1
+var player2
 
 func _ready():
 	var _player_connected = get_tree().connect("network_peer_connected", self, "_player_connected")
@@ -19,41 +21,31 @@ func _matching_started():
 func _matching_canceled():
 	# end waiting/training mode
 	pass
-	
-puppet func _player_created(id, player):
-	print('player ', id, 'created node ', player)
 
-puppet func _create_players(players):
-	$Players.add_children(players)
-	
 func _player_connected(_id):
-	if get_tree().is_network_server():
-		print('player connected: ', _id)
-		players.append(Player.new(_id, $Players, $Spawnpoints/Spawnpoint))
+	player1 = preload('res://player/player.tscn').instance()
+	player1.translation = $Spawnpoints/Spawnpoint.translation
+	player1.rotation = $Spawnpoints/Spawnpoint.rotation
+	players.add_child(player1)
 	
-		var local_exists = false
-		for player in players:
-			if player.id == get_tree().get_network_unique_id():
-				local_exists = true
-		if !local_exists:
-			players.append(Player.new(get_tree().get_network_unique_id(), $Players, $Spawnpoints/Spawnpoint2))
-			
-		rpc("_create_players", $Players.get_children())
-			
-class Player extends Node:
-	var id
-	var node
+	player2 = preload('res://player/player.tscn').instance()
+	player2.translation = $Spawnpoints/Spawnpoint2.translation
+	player2.rotation = $Spawnpoints/Spawnpoint2.rotation
+
+	if get_tree().has_network_peer() and get_tree().is_network_server():
+		player2.set_network_master(_id)
+	elif get_tree().has_network_peer():
+		player2.set_network_master(get_tree().get_network_unique_id())
 	
-	func _init(id, players_node, spawn_point):
-		id = id
-		node = create_node(id, players_node, spawn_point)
-	
-	func create_node(id, players_node, spawn_point):
-		var new_player = preload("res://player/Player.tscn").instance()
-		new_player.set_network_master(id)
-		new_player.translation = spawn_point.translation
-		players_node.add_child(new_player)
-		return new_player
+	players.add_child(player2)
+
+	print("my unique id: ", get_tree().get_network_unique_id())
+
+func _player_disconnected(_id):
+	player2.queue_free()
+
+func _server_disconnected(_id):
+	player1.queue_free()
 	
 	
 	
