@@ -50,7 +50,7 @@ func _physics_process(delta):
 			anim.play("shoot")
 			var coll = raycast.get_collider()
 			if raycast.is_colliding() and coll.has_method("kill"):
-				coll.kill()
+				rpc("kill", coll.get_network_master())
 				kills += 1
 		
 		if get_tree().has_network_peer():
@@ -59,7 +59,7 @@ func _physics_process(delta):
 puppet func set_pos(p_pos):
 	global_transform = p_pos
 
-remote func kill():
-	translation = spawn_translation
-	rotation = spawn_rotation
-	rpc_unreliable("set_pos", global_transform)
+puppet func kill(id):
+	if get_network_master() == id:
+		translation = spawn_translation
+		rotation = spawn_rotation
