@@ -5,13 +5,7 @@ const MOUSE_SENS = 0.075
 
 onready var raycast = $RayCast
 onready var anim = $AnimationPlayer
-
-var net_id
-
-func _ready():
-	if get_tree().has_network_peer() and is_network_master() or !get_tree().has_network_peer():
-		$Camera.current = true
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+onready var camera = $Camera
 
 func _input(event):
 	if get_tree().has_network_peer() and is_network_master() or !get_tree().has_network_peer():

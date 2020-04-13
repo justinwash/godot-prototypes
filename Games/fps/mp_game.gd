@@ -31,21 +31,25 @@ func _player_connected(_id):
 	player2 = preload('res://player/player.tscn').instance()
 	player2.translation = $Spawnpoints/Spawnpoint2.translation
 	player2.rotation = $Spawnpoints/Spawnpoint2.rotation
-
 	if get_tree().has_network_peer() and get_tree().is_network_server():
 		player2.set_network_master(_id)
 	elif get_tree().has_network_peer():
 		player2.set_network_master(get_tree().get_network_unique_id())
-	
 	players.add_child(player2)
-
-	print("my unique id: ", get_tree().get_network_unique_id())
+	
+	for player in players.get_children():
+		if player.get_network_master() == get_tree().get_network_unique_id():
+			player.camera.current = true
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
 
 func _player_disconnected(_id):
-	player2.queue_free()
+	if player2:
+		player2.queue_free()
 
 func _server_disconnected(_id):
-	player1.queue_free()
+	if player1:
+		player1.queue_free()
 	
 	
 	
