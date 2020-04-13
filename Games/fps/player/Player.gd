@@ -8,7 +8,15 @@ onready var anim = $AnimationPlayer
 onready var camera = $Camera
 onready var HUD = $HUD
 
+var spawn_translation
+var spawn_rotation
+
+var kills = 0
+
 func _ready():
+	spawn_translation = translation
+	spawn_rotation = rotation
+	
 	if get_tree().has_network_peer() and is_network_master():
 		for hud_element in $HUD.get_children():
 			hud_element.visible = true
@@ -43,6 +51,7 @@ func _physics_process(delta):
 			var coll = raycast.get_collider()
 			if raycast.is_colliding() and coll.has_method("kill"):
 				coll.kill()
+				kills += 1
 		
 		if get_tree().has_network_peer():
 			rpc_unreliable("set_pos", global_transform)
@@ -50,5 +59,7 @@ func _physics_process(delta):
 puppet func set_pos(p_pos):
 	global_transform = p_pos
 
-func kill():
-	queue_free()
+remote func kill():
+	translation = spawn_translation
+	rotation = spawn_rotation
+	rpc_unreliable("set_pos", global_transform)
