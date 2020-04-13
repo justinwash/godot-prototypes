@@ -60,6 +60,7 @@ puppet func set_pos(p_pos):
 	global_transform = p_pos
 
 puppet func kill(id):
-	if get_network_master() == id:
+	print("got kill order for ", id)
+	if get_tree().get_network_unique_id() == id:
 		translation = spawn_translation
 		rotation = spawn_rotation
