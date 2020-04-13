@@ -22,25 +22,30 @@ func _matching_canceled():
 	
 puppet func _player_created(id, player):
 	print('player ', id, 'created node ', player)
+
+puppet func _create_players(players):
+	$Players.add_children(players)
 	
 func _player_connected(_id):
-	print('player connected: ', _id)
-	players.append(Player.new(_id, $Players, $Spawnpoints/Spawnpoint))
-	rpc_unreliable("_player_created", get_tree().get_network_unique_id(), players[0])
+	if get_tree().is_network_server():
+		print('player connected: ', _id)
+		players.append(Player.new(_id, $Players, $Spawnpoints/Spawnpoint))
 	
-	var local_exists = false
-	for player in players:
-		if player.id == get_tree().get_network_unique_id():
-			local_exists = true
-	if !local_exists:
-		players.append(Player.new(get_tree().get_network_unique_id(), $Players, $Spawnpoints/Spawnpoint2))
-		rpc_unreliable("_player_created", get_tree().get_network_unique_id(), players[1])
+		var local_exists = false
+		for player in players:
+			if player.id == get_tree().get_network_unique_id():
+				local_exists = true
+		if !local_exists:
+			players.append(Player.new(get_tree().get_network_unique_id(), $Players, $Spawnpoints/Spawnpoint2))
+			
+		rpc("_create_players", $Players.get_children())
 			
 class Player extends Node:
 	var id
 	var node
 	
 	func _init(id, players_node, spawn_point):
+		id = id
 		node = create_node(id, players_node, spawn_point)
 	
 	func create_node(id, players_node, spawn_point):
