@@ -44,12 +44,12 @@ func _player_connected(_id):
 	
 
 func _player_disconnected(_id):
-	if player2:
-		player2.queue_free()
+	for player in players.get_children():
+		player.queue_free()
 
 func _server_disconnected(_id):
-	if player1:
-		player1.queue_free()
+	for player in players.get_children():
+		player.queue_free()
 	
 	
 	

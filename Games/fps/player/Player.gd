@@ -6,15 +6,24 @@ const MOUSE_SENS = 0.075
 onready var raycast = $RayCast
 onready var anim = $AnimationPlayer
 onready var camera = $Camera
+onready var HUD = $HUD
+
+func _ready():
+	if get_tree().has_network_peer() and is_network_master():
+		for hud_element in $HUD.get_children():
+			hud_element.visible = true
+	else:
+		for hud_element in $HUD.get_children():
+			hud_element.visible = false
 
 func _input(event):
-	if get_tree().has_network_peer() and is_network_master() or !get_tree().has_network_peer():
+	if get_tree().has_network_peer() and is_network_master():
 		if event is InputEventMouseMotion:
 			rotation_degrees.y -= MOUSE_SENS * event.relative.x
 			rotation_degrees.x -= MOUSE_SENS * event.relative.y
 
 func _physics_process(delta):
-	if get_tree().has_network_peer() and is_network_master() or !get_tree().has_network_peer():
+	if get_tree().has_network_peer() and is_network_master():
 		$Camera.current = true
 		var move_vec = Vector3()
 		if Input.is_action_pressed("move_forwards"):
@@ -42,4 +51,4 @@ puppet func set_pos(p_pos):
 	global_transform = p_pos
 
 func kill():
-	var _new_scene = get_tree().reload_current_scene()
+	queue_free()

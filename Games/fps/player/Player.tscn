@@ -4,7 +4,6 @@
 [ext_resource path="res://weapons/pistol/icon.svg" type="Texture" id=2]
 [ext_resource path="res://weapons/pistol/crosshair.svg" type="Texture" id=3]
 
-
 [sub_resource type="Animation" id=1]
 resource_name = "shoot"
 tracks/0/type = "value"
