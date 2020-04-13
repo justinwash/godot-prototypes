@@ -20,7 +20,7 @@ func _input(event):
 			rotation_degrees.x -= MOUSE_SENS * event.relative.y
 
 func _physics_process(delta):
-	if net_id == 0:
+	if get_tree().has_network_peer() and is_network_master() or !get_tree().has_network_peer():
 		$Camera.current = true
 		var move_vec = Vector3()
 		if Input.is_action_pressed("move_forwards"):

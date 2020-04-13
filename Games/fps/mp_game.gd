@@ -20,65 +20,34 @@ func _matching_canceled():
 	# end waiting/training mode
 	pass
 	
+puppet func _player_created(id, player):
+	print('player ', id, 'created node ', player)
+	
 func _player_connected(_id):
 	print('player connected: ', _id)
-	players.append(Player.new(_id))
+	players.append(Player.new(_id, $Players, $Spawnpoints/Spawnpoint))
+	rpc_unreliable("_player_created", get_tree().get_network_unique_id(), players[0])
 	
 	var local_exists = false
 	for player in players:
 		if player.id == get_tree().get_network_unique_id():
 			local_exists = true
 	if !local_exists:
-		players.append(Player.new(get_tree().get_network_unique_id()))
+		players.append(Player.new(get_tree().get_network_unique_id(), $Players, $Spawnpoints/Spawnpoint2))
+		rpc_unreliable("_player_created", get_tree().get_network_unique_id(), players[1])
 			
-#	for player in $Players.get_children():
-#		player.queue_free()
-#	spawn_remote_player(_id)
-#	spawn_local_player()
-#
-#	for player in $Players.get_children():
-#		if player.net_id == 0:
-#			player.set_network_master(get_tree().get_network_unique_id())
-#			player.get_node("Camera").current = true
-	
-#	if get_tree().has_network_peer() and get_tree().is_network_server():
-#		var new_player = preload("res://player/Player.tscn").instance()
-#		new_player.set_network_master(get_tree().get_network_connected_peers()[0])
-#		new_player.translation = $Spawnpoints/Spawnpoint.translation
-#		$Players.add_child(new_player)
-#
-#	if get_tree().has_network_peer():
-#		var new_player = preload("res://player/Player.tscn").instance()
-#		new_player.set_network_master(get_tree().get_network_unique_id())
-#		new_player.translation = $Spawnpoints/Spawnpoint2.translation
-#		$Players.add_child(new_player)
-#
-#	print("my unique id: ", get_tree().get_network_unique_id())
-		
-func spawn_local_player():
-	var new_player = preload("res://player/Player.tscn").instance()
-	new_player.translation = $Spawnpoints/Spawnpoint2.translation
-	new_player.set_network_master(get_tree().get_network_unique_id())
-	$Players.add_child(new_player)
-	
-func spawn_remote_player(id):
-	var new_player = preload("res://player/Player.tscn").instance()
-	new_player.set_network_master(id)
-	new_player.translation = $Spawnpoints/Spawnpoint.translation
-	$Players.add_child(new_player)
-	
 class Player extends Node:
 	var id
 	var node
 	
-	func _init(id):
-		id = id
-		node = create_node(id)
+	func _init(id, players_node, spawn_point):
+		node = create_node(id, players_node, spawn_point)
 	
-	func create_node(id):
+	func create_node(id, players_node, spawn_point):
 		var new_player = preload("res://player/Player.tscn").instance()
 		new_player.set_network_master(id)
-		$Players.add_child(new_player)
+		new_player.translation = spawn_point.translation
+		players_node.add_child(new_player)
 		return new_player
 	
 	
