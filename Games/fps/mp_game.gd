@@ -37,6 +37,9 @@ func _player_connected(_id):
 		player2.set_network_master(get_tree().get_network_unique_id())
 	players.add_child(player2)
 
+func _player_disconnected(_id):
+	_end_game()
+	
 func _end_game():
 	for player in players.get_children():
 		player.queue_free()
