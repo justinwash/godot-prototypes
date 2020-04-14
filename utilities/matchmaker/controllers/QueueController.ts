@@ -4,6 +4,7 @@ import axios from 'axios';
 const WebSocket = require('ws');
 
 export default class QueueController {
+  connections: any[] = [];
   queue: any[] = [];
 
   startTimer() {
@@ -12,14 +13,30 @@ export default class QueueController {
     }, 3000);
   }
 
-  getCount() {
-    return this.queue.length;
+  connect(req, res) {
+    let player: Player = {
+      id: uuid(),
+      address: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+      port: req.body.port,
+      host: false,
+    };
+
+    let connection = new WebSocket(`ws://[${player.address}]:${player.port}`);
+
+    connection.on('open', function open() {
+      connection.send('matchmaking server connected to websocket on ${player.port}');
+    });
+
+    this.connections.push(connection);
+
+    req.json('websocket connection established on port ${player.port}');
   }
 
   addPlayerToQueue(req, res) {
     var player: Player = {
       id: uuid(),
       address: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+      port: '1234',
       host: false,
     };
 
@@ -80,7 +97,7 @@ export default class QueueController {
           player.host = true;
           let player2 = this.queue[index + 1];
 
-          const p1ws = new WebSocket(`ws://[${player.address}]:1414`);
+          const p1ws = new WebSocketServer(`ws://[${player.address}]:1414`);
 
           p1ws.on('open', function open() {
             p1ws.send(

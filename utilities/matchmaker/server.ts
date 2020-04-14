@@ -7,14 +7,8 @@ const qController = new QueueController();
 
 qController.startTimer();
 
-app.get('/queue', (req, res) => res.json('There are currently ' + qController.getCount() + ' players matchmaking.'));
-
-app.post('/queue', (req, res) => {
-  var result = qController.addPlayerToQueue(req, res);
-});
-
-app.delete('/queue', (req, res) => {
-  var result = qController.removePlayerFromQueue(req, res);
+app.get('/connect', (req, res) => {
+  qController.connect(req, res);
 });
 
 app.listen(port, () => console.log(`Matchmaking server listening at http://localhost:${port}`));

@@ -2,10 +2,10 @@
 
 [ext_resource path="res://lobby/lobby.gd" type="Script" id=1]
 [ext_resource path="res://lobby/playerpanel.gd" type="Script" id=2]
-[ext_resource path="res://lobby/lobbypanel.gd" type="Script" id=3]
+[ext_resource path="res://lobby/networker.gd" type="Script" id=3]
 [ext_resource path="res://lobby/matchmakingpanel.gd" type="Script" id=4]
 
-[node name="Lobby" type="Control"]
+[node name="LobbyOverlay" type="Control"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -21,85 +21,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LobbyPanel" type="Panel" parent="."]
-margin_left = 8.0
-margin_top = 8.0
-margin_right = 232.0
-margin_bottom = 118.0
-size_flags_horizontal = 2
-size_flags_vertical = 2
+[node name="NetWorker" type="Node" parent="."]
 script = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="AddressLabel" type="Label" parent="LobbyPanel"]
-margin_left = 16.0
-margin_top = 8.0
-margin_right = 68.0
-margin_bottom = 22.0
-size_flags_horizontal = 2
-size_flags_vertical = 0
-text = "Address of server (if joining)"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Address" type="LineEdit" parent="LobbyPanel"]
-margin_left = 8.0
-margin_top = 30.0
-margin_right = 216.0
-margin_bottom = 54.0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-text = "127.0.0.1"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HostButton" type="Button" parent="LobbyPanel"]
-margin_left = 8.0
-margin_top = 60.0
-margin_right = 88.0
-margin_bottom = 80.0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-text = "Host"
-
-[node name="JoinButton" type="Button" parent="LobbyPanel"]
-margin_left = 136.0
-margin_top = 60.0
-margin_right = 216.0
-margin_bottom = 80.0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-text = "Join"
-
-[node name="StatusOk" type="Label" parent="LobbyPanel"]
-margin_left = 10.0
-margin_top = 90.0
-margin_right = 210.0
-margin_bottom = 104.0
-size_flags_horizontal = 2
-size_flags_vertical = 0
-custom_colors/font_color = Color( 0, 1, 0.015625, 1 )
-align = 1
-
-[node name="StatusFail" type="Label" parent="LobbyPanel"]
-margin_left = 10.0
-margin_top = 90.0
-margin_right = 210.0
-margin_bottom = 104.0
-size_flags_horizontal = 2
-size_flags_vertical = 0
-custom_colors/font_color = Color( 1, 0, 0, 1 )
-align = 1
-
-[node name="MatchMakingPanel" type="Panel" parent="."]
-margin_left = 8.0
-margin_top = 124.0
-margin_right = 232.0
-margin_bottom = 234.0
+[node name="MatchMakingPanel" type="Panel" parent="NetWorker"]
+margin_left = 400.0
+margin_top = 64.0
+margin_right = 624.0
+margin_bottom = 174.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 script = ExtResource( 4 )
@@ -107,7 +36,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MatchmakingLabel" type="Label" parent="MatchMakingPanel"]
+[node name="MatchmakingLabel" type="Label" parent="NetWorker/MatchMakingPanel"]
 margin_left = 16.0
 margin_top = 8.0
 margin_right = 68.0
@@ -119,7 +48,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="FindButton" type="Button" parent="MatchMakingPanel"]
+[node name="FindButton" type="Button" parent="NetWorker/MatchMakingPanel"]
 margin_left = 8.0
 margin_top = 64.0
 margin_right = 88.0
@@ -131,7 +60,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CancelButton" type="Button" parent="MatchMakingPanel"]
+[node name="CancelButton" type="Button" parent="NetWorker/MatchMakingPanel"]
 margin_left = 136.0
 margin_top = 64.0
 margin_right = 216.0
@@ -143,7 +72,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="StatusOk" type="Label" parent="MatchMakingPanel"]
+[node name="StatusOk" type="Label" parent="NetWorker/MatchMakingPanel"]
 margin_left = 10.0
 margin_top = 90.0
 margin_right = 210.0
@@ -153,7 +82,7 @@ size_flags_vertical = 0
 custom_colors/font_color = Color( 0, 1, 0.015625, 1 )
 align = 1
 
-[node name="StatusFail" type="Label" parent="MatchMakingPanel"]
+[node name="StatusFail" type="Label" parent="NetWorker/MatchMakingPanel"]
 margin_left = 10.0
 margin_top = 90.0
 margin_right = 210.0
@@ -163,13 +92,13 @@ size_flags_vertical = 0
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 align = 1
 
-[node name="HTTPRequest" type="HTTPRequest" parent="MatchMakingPanel"]
+[node name="HTTPRequest" type="HTTPRequest" parent="NetWorker/MatchMakingPanel"]
 
-[node name="PlayerPanel" type="Panel" parent="."]
-margin_left = 408.0
-margin_top = 8.0
-margin_right = 632.0
-margin_bottom = 96.0
+[node name="PlayerPanel" type="Panel" parent="NetWorker"]
+margin_left = 400.0
+margin_top = 192.0
+margin_right = 624.0
+margin_bottom = 280.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 script = ExtResource( 2 )
@@ -177,7 +106,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TitleLabel" type="Label" parent="PlayerPanel"]
+[node name="TitleLabel" type="Label" parent="NetWorker/PlayerPanel"]
 margin_left = 56.0
 margin_top = 8.0
 margin_right = 173.0
@@ -189,7 +118,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PlayerLabel1" type="Label" parent="PlayerPanel"]
+[node name="PlayerLabel1" type="Label" parent="NetWorker/PlayerPanel"]
 margin_left = 10.0
 margin_top = 32.0
 margin_right = 216.0
@@ -199,7 +128,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PlayerLabel2" type="Label" parent="PlayerPanel"]
+[node name="PlayerLabel2" type="Label" parent="NetWorker/PlayerPanel"]
 margin_left = 10.0
 margin_top = 64.0
 margin_right = 216.0
@@ -207,8 +136,30 @@ margin_bottom = 80.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="pressed" from="LobbyPanel/HostButton" to="LobbyPanel" method="_on_host_pressed"]
-[connection signal="pressed" from="LobbyPanel/JoinButton" to="LobbyPanel" method="_on_join_pressed"]
-[connection signal="pressed" from="MatchMakingPanel/FindButton" to="MatchMakingPanel" method="_on_FindButton_pressed"]
-[connection signal="pressed" from="MatchMakingPanel/CancelButton" to="MatchMakingPanel" method="_on_CancelButton_pressed"]
-[connection signal="request_completed" from="MatchMakingPanel/HTTPRequest" to="MatchMakingPanel" method="_on_request_completed"]
+
+[node name="ReadyPanel" type="Panel" parent="NetWorker"]
+margin_left = 400.0
+margin_top = 296.0
+margin_right = 624.0
+margin_bottom = 352.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ReadyButton" type="Button" parent="NetWorker/ReadyPanel"]
+margin_left = 72.0
+margin_top = 18.521
+margin_right = 152.0
+margin_bottom = 38.521
+size_flags_horizontal = 2
+size_flags_vertical = 2
+disabled = true
+text = "Ready Up"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="NetWorker/MatchMakingPanel/FindButton" to="NetWorker/MatchMakingPanel" method="_on_FindButton_pressed"]
+[connection signal="pressed" from="NetWorker/MatchMakingPanel/CancelButton" to="NetWorker/MatchMakingPanel" method="_on_CancelButton_pressed"]
+[connection signal="request_completed" from="NetWorker/MatchMakingPanel/HTTPRequest" to="NetWorker/MatchMakingPanel" method="_on_request_completed"]

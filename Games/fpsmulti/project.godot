@@ -15,8 +15,8 @@ _global_script_class_icons={
 
 [application]
 
-config/name="FPS"
-run/main_scene="res://mp_game.tscn"
+config/name="FPS Multi"
+run/main_scene="res://lobby/lobby.tscn"
 config/icon="res://icon.png"
 
 [input]
