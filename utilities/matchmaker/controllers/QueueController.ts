@@ -1,6 +1,5 @@
 import Player from '../models/Player';
 import { v4 as uuid } from 'uuid';
-import axios from 'axios';
 const WebSocket = require('ws');
 
 export default class QueueController {
@@ -17,19 +16,33 @@ export default class QueueController {
     let player: Player = {
       id: uuid(),
       address: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
-      port: req.body.port,
+      port: req.query.port,
       host: false,
     };
 
     let connection = new WebSocket(`ws://[${player.address}]:${player.port}`);
 
-    connection.on('open', function open() {
-      connection.send('matchmaking server connected to websocket on ${player.port}');
+    connection.on('open', () => {
+      connection.send(JSON.stringify({
+        type: 'confirmation',
+        data: `matchmaking server connected to websocket on ${player.port}`
+      }));
     });
+
+    connection.on('message', (message) => {
+      if (message.toString() == 'connected') {
+        console.log('connection successful', connection)
+      }
+
+      if (message.toString() == 'start matching') {
+        console.log('start matching')
+      }
+
+    })
 
     this.connections.push(connection);
 
-    req.json('websocket connection established on port ${player.port}');
+    res.json(`server reached successfully`);
   }
 
   addPlayerToQueue(req, res) {
@@ -97,7 +110,7 @@ export default class QueueController {
           player.host = true;
           let player2 = this.queue[index + 1];
 
-          const p1ws = new WebSocketServer(`ws://[${player.address}]:1414`);
+          const p1ws = new WebSocket(`ws://[${player.address}]:1414`);
 
           p1ws.on('open', function open() {
             p1ws.send(
