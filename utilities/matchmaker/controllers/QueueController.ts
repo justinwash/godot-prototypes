@@ -61,7 +61,6 @@ export default class QueueController {
     player.ws = connection;
     this.players.push(player);
 
-    console.log(this.players);
     res.json(`server reached successfully`);
   }
 
