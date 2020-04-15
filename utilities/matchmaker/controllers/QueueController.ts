@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 const WebSocket = require('ws');
 
 export default class QueueController {
-  connections: any[] = [];
+  players: any[] = [];
   queue: any[] = [];
 
   startTimer() {
@@ -17,30 +17,35 @@ export default class QueueController {
       id: uuid(),
       address: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
       port: req.query.port,
+      ws: null,
       host: false,
     };
 
     let connection = new WebSocket(`ws://[${player.address}]:${player.port}`);
 
     connection.on('open', () => {
-      connection.send(JSON.stringify({
-        type: 'confirmation',
-        data: `matchmaking server connected to websocket on ${player.port}`
-      }));
+      connection.send(
+        JSON.stringify({
+          type: 'confirmation',
+          data: `matchmaking server connected to websocket on ${player.port}`,
+        })
+      );
     });
 
     connection.on('message', (message) => {
       if (message.toString() == 'connected') {
-        console.log('connection successful', connection)
+        console.log('connection successful', connection);
       }
 
       if (message.toString() == 'start matching') {
-        console.log('start matching')
+        console.log(`start matching for player ${player.id}`);
       }
+    });
 
-    })
+    player.ws = connection;
+    this.players.push(player);
 
-    this.connections.push(connection);
+    console.log(this.players);
 
     res.json(`server reached successfully`);
   }
@@ -50,6 +55,7 @@ export default class QueueController {
       id: uuid(),
       address: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
       port: '1234',
+      ws: null,
       host: false,
     };
 
