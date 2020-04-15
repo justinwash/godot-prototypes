@@ -70,7 +70,24 @@ export default class QueueController {
       if (this.queue.length >= 2) {
         console.log('starting all available matches');
         this.queue.forEach((player, index) => {
-          // start the game
+          let player1 = player;
+          player1.host = true;
+
+          player.ws.send(
+            JSON.stringify({
+              type: 'start game',
+              data: `you should start the game now as host`,
+            })
+          );
+
+          let player2 = this.queue[index + 1];
+          player2.ws.send(
+            JSON.stringify({
+              type: 'start game',
+              data: `you should join the game now as client`,
+            })
+          );
+
           this.queue.splice(index, 2);
         });
       } else {

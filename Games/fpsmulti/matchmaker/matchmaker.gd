@@ -71,6 +71,8 @@ func _socket_on_data(id):
 	if message.type == 'confirmation':
 		print("websocket data from matchmaking server: ", "'", message.data, "'")
 		_socket_server.get_peer(id).put_packet('connected'.to_utf8())
+	if message.type == 'start game':
+		print("websocket data from matchmaking server: ", "'", message.data, "'")
 		
 func _socket_client_disconnected(_id, _data):
 	emit_signal("matchmaking_server_status", "Lost connection to matchmaking server.", false)
