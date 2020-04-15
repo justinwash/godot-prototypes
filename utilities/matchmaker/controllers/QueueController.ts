@@ -34,11 +34,27 @@ export default class QueueController {
 
     connection.on('message', (message) => {
       if (message.toString() == 'connected') {
-        console.log('connection successful', connection);
+        console.log(`connection to player ${player.id} successful`);
       }
 
       if (message.toString() == 'start matching') {
-        console.log(`start matching for player ${player.id}`);
+        var indexToAdd = this.queue.indexOf(player);
+        if (indexToAdd == -1) {
+          this.queue.push(player);
+          console.log(`player ${player.id} added to the queue`);
+        } else {
+          console.log(`player ${player.id} already in the queue`);
+        }
+      }
+
+      if (message.toString() == 'cancel matching') {
+        var indexToRemove = this.queue.indexOf(player);
+        if (indexToRemove != -1) {
+          this.queue.splice(indexToRemove);
+          console.log(`player ${player.id} removed from the queue`);
+        } else {
+          console.log(`player ${player.id} not in the queue`);
+        }
       }
     });
 
@@ -46,66 +62,7 @@ export default class QueueController {
     this.players.push(player);
 
     console.log(this.players);
-
     res.json(`server reached successfully`);
-  }
-
-  addPlayerToQueue(req, res) {
-    var player: Player = {
-      id: uuid(),
-      address: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
-      port: '1234',
-      ws: null,
-      host: false,
-    };
-
-    if (this.queue.length >= 0) {
-      var isInQueue =
-        this.queue.find((p) => {
-          return p.address == player.address;
-        }) == undefined
-          ? false
-          : true;
-    } else {
-      isInQueue = false;
-    }
-
-    if (isInQueue) {
-      console.log('player already queued.');
-      res.json({
-        message: 'Player already in queue.',
-        player: player,
-      });
-    } else {
-      console.log('adding player ' + player.id + ' to the queue.');
-      this.queue.push(player);
-      res.json({
-        message: 'Added player to the queue.',
-        player: player,
-      });
-    }
-  }
-
-  removePlayerFromQueue(req, res) {
-    let address = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-
-    let index = this.queue.findIndex((p) => {
-      return p.address == address;
-    });
-    let isInQueue = index != -1;
-
-    if (isInQueue) {
-      let player = this.queue[index];
-      console.log('removing player ' + player.id + ' from queue.');
-      this.queue.splice(index, 1);
-      res.json({
-        message: 'Removed player ' + player.id + ' from the queue.',
-        player: player,
-      });
-    } else {
-      console.log('player with address ' + address + ' not in queue.');
-      res.json('player with address ' + address + ' not in queue.');
-    }
   }
 
   startAvailableMatches() {
@@ -113,37 +70,7 @@ export default class QueueController {
       if (this.queue.length >= 2) {
         console.log('starting all available matches');
         this.queue.forEach((player, index) => {
-          player.host = true;
-          let player2 = this.queue[index + 1];
-
-          const p1ws = new WebSocket(`ws://[${player.address}]:1414`);
-
-          p1ws.on('open', function open() {
-            p1ws.send(
-              JSON.stringify({
-                message: 'start the game',
-                data: {
-                  player: player,
-                  opponent: player2,
-                },
-              })
-            );
-          });
-
-          const p2ws = new WebSocket(`ws://[${player2.address}]:1414`);
-
-          p2ws.on('open', function open() {
-            p2ws.send(
-              JSON.stringify({
-                message: 'start the game',
-                data: {
-                  player: player2,
-                  opponent: player,
-                },
-              })
-            );
-          });
-
+          // start the game
           this.queue.splice(index, 2);
         });
       } else {

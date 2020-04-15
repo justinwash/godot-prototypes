@@ -43,6 +43,7 @@ func _connect_http_signals():
 	
 func _connect_node_signals():
 	lobby.matchmaking_panel.connect("start_matching", self, "_start_matching")
+	lobby.matchmaking_panel.connect("cancel_matching", self, "_cancel_matching")
 	
 func _connect_to_matchmaking_server():
 	print("Attempting to connect to matchmaking server...")
@@ -77,3 +78,7 @@ func _socket_client_disconnected(_id, _data):
 func _start_matching():
 	print('starting matchmaking')
 	_socket_server.get_peer(_matchmaking_server_id).put_packet('start matching'.to_utf8())
+	
+func _cancel_matching():
+	print('canceling matchmaking')
+	_socket_server.get_peer(_matchmaking_server_id).put_packet('cancel matching'.to_utf8())
