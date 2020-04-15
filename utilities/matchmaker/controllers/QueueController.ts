@@ -75,7 +75,9 @@ export default class QueueController {
           player.ws.send(
             JSON.stringify({
               type: 'start game',
-              data: `you should start the game now as host`,
+              data: {
+                networking_mode: 'server',
+              },
             })
           );
 
@@ -83,7 +85,10 @@ export default class QueueController {
           player2.ws.send(
             JSON.stringify({
               type: 'start game',
-              data: `you should join the game now as client`,
+              data: {
+                networking_mode: 'client',
+                server_address: `${player.address}`,
+              },
             })
           );
 

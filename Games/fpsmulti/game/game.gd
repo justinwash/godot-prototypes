@@ -1,16 +1,23 @@
-extends Spatial
+extends Node
 
+onready var lobby = $Lobby
+onready var matchmaker = $Matchmaker
+onready var networking_mode = $NetworkingMode
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+	_connect_matchmaking_signals()
+	
+func _connect_matchmaking_signals():
+	matchmaker.connect("start_game", self, "_set_networking_mode")
+	
+func _set_networking_mode(data):
+	if data.networking_mode == 'server':
+		var server = load("res://server/server.tscn").instance()
+		networking_mode.add_child(server)
+	elif data.networking_mode == 'client':
+		var client = load("res://client/client.tscn").instance()
+		networking_mode.add_child(client)
+		client.start_client(data)
+		
+	else:
+		print("invalid networking mode")

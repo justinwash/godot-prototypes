@@ -12,6 +12,7 @@ onready var _http = $HTTPRequest
 onready var lobby = get_node("../Lobby")
 
 signal matchmaking_server_status
+signal start_game
 
 func _ready():
 	_connect_websocket_signals()
@@ -68,11 +69,15 @@ func _socket_on_data(id):
 	_matchmaking_server_id = id
 	var pkt = _socket_server.get_peer(id).get_packet()
 	var message = parse_json(pkt.get_string_from_utf8())
+	
 	if message.type == 'confirmation':
 		print("websocket data from matchmaking server: ", "'", message.data, "'")
 		_socket_server.get_peer(id).put_packet('connected'.to_utf8())
+		
 	if message.type == 'start game':
-		print("websocket data from matchmaking server: ", "'", message.data, "'")
+		print("should start game in mode: ", "'", message.data.networking_mode, "'")
+		emit_signal("start_game", message.data)
+		
 		
 func _socket_client_disconnected(_id, _data):
 	emit_signal("matchmaking_server_status", "Lost connection to matchmaking server.", false)
