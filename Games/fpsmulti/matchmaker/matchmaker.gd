@@ -3,7 +3,7 @@ extends Node
 export var matchmaking_server_url = 'http://localhost'
 export var matchmaking_server_port = ':3000'
 
-var SOCKET_PORT = 1416
+var SOCKET_PORT = 1415
 
 var _socket_server = WebSocketServer.new()
 var _matchmaking_server_id
