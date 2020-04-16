@@ -24,7 +24,7 @@ func _player_connected(_id):
 func start_client(data):
 	var ip = data.server_address
 	if '::ffff:' in ip:
-		ip = ip.substr(7) if ip.substr(7) != "::1" else get_node("../../Matchmaker").matchmaking_server_url
+		ip = ip.substr(7) if ip.substr(7) != "::1" else get_node("../../Matchmaker").matchmaking_server_url.substr(7)
 	if not ip.is_valid_ip_address():
 		return
 

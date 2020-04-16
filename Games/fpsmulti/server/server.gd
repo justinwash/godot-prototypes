@@ -21,6 +21,9 @@ func _connected_fail():
 func _player_connected(_id):
 	print("player connected: ", _id)
 	
+func _player_disconnected(_id):
+	print("player disconnected: ", _id)
+	
 func _start_server():
 	enet = NetworkedMultiplayerENet.new()
 	enet.set_compression_mode(NetworkedMultiplayerENet.COMPRESS_RANGE_CODER)
