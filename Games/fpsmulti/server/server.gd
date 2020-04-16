@@ -2,6 +2,8 @@ extends Node
 
 var enet
 
+onready var world = get_node("../../World")
+
 const GAME_PORT = 42069
 
 func _ready():
@@ -35,3 +37,7 @@ func _start_server():
 		print("Server started on port " + str(GAME_PORT))
 	
 	get_tree().set_network_peer(enet)
+	
+	# there should be another layer here for choosing map,
+	# rules, etc
+	world.load_map("test")

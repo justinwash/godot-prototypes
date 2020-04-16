@@ -2,6 +2,8 @@ extends Node
 
 const GAME_PORT = 42069
 
+onready var world = get_node('../../World')
+
 func _ready():
 	_connect_networking_signals()
 	
@@ -32,3 +34,7 @@ func start_client(data):
 	host.set_compression_mode(NetworkedMultiplayerENet.COMPRESS_RANGE_CODER)
 	host.create_client(ip, GAME_PORT)
 	get_tree().set_network_peer(host)
+	
+	# there should be another layer here for choosing map,
+	# rules, etc
+	world.load_map("test")

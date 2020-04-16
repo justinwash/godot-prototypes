@@ -29,3 +29,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 14.3432, 0.439219, 15.9166 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -18.1986, 0.439219, -13.393 )
 
 [node name="Players" type="Node" parent="."]
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 0.286817, 0.403242, 0.868983, -0.126388, 0.915093, -0.382923, -0.949612, -1.41503e-08, 0.313429, -31.5848, 18.0341, 29.8942 )
