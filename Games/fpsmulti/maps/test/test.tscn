@@ -26,9 +26,9 @@ shape = SubResource( 2 )
 [node name="Spawns" type="Node" parent="."]
 
 [node name="1" type="Position3D" parent="Spawns"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 14.3432, 0.439219, 15.9166 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 14.343, 2, 15.917 )
 
 [node name="2" type="Position3D" parent="Spawns"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -18.1986, 0.439219, -13.393 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -18.199, 2, -13.393 )
 
 [node name="Players" type="Node" parent="."]
