@@ -1,13 +1,15 @@
 extends Node
 
-signal change_state(next_state_name)
 var actor = null
 
-func enter():
-	actor = get_parent().actor
+func ready(actor):
+	pass
+	
+func enter(actor):
+	actor = actor
 
-func exit():
+func update(actor):
 	return
-
-func update(delta):
+	
+func exit():
 	return
