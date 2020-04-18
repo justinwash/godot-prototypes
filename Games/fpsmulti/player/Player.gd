@@ -2,11 +2,19 @@ extends KinematicBody
 
 const MOVE_SPEED = 8
 const MOUSE_SENS = 0.075
+# const GRAVITY = -0.98
 
 onready var raycast = $RayCast
 onready var anim = $AnimationPlayer
 onready var camera = $Camera
 
+onready var hud = $HUD
+
+func _ready():
+	if name != str(get_tree().get_network_unique_id()):
+		for element in hud.get_children():
+			element.visible = false
+	
 func _input(event):
 	if get_tree().has_network_peer() and is_network_master() or !get_tree().has_network_peer():
 		if event is InputEventMouseMotion:
@@ -25,11 +33,13 @@ func _physics_process(delta):
 			move_vec.x -= 1
 		if Input.is_action_pressed("move_right"):
 			move_vec.x += 1
+			
+		# move_vec.y = GRAVITY
 		move_vec = move_vec.normalized()
 		move_vec = move_vec.rotated(Vector3(0, 1, 0), rotation.y)
 		var _velocity = move_and_collide(move_vec * MOVE_SPEED * delta)
 	
-		if Input.is_action_pressed("shoot"):
+		if Input.is_action_just_pressed("shoot") and !anim.is_playing():
 			anim.play("shoot")
 			var coll = raycast.get_collider()
 			if raycast.is_colliding() and coll.has_method("kill"):
@@ -42,4 +52,4 @@ puppet func set_pos(p_pos):
 	global_transform = p_pos
 
 func kill():
-	var _new_scene = get_tree().reload_current_scene()
+	print('hit target. do dmg')

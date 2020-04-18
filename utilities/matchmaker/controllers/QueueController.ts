@@ -58,6 +58,16 @@ export default class QueueController {
       }
     });
 
+    connection.on('close', () => {
+      var indexToRemove = this.players.indexOf(player);
+      if (indexToRemove != -1) {
+        this.players.splice(indexToRemove);
+        console.log(`player ${player.id} disconnected`);
+      } else {
+        console.log(`player ${player.id} not connected`);
+      }
+    });
+
     player.ws = connection;
     this.players.push(player);
 

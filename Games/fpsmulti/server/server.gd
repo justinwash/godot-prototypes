@@ -1,11 +1,16 @@
 extends Node
 
+const GAME_PORT = 42069
+
 var enet
 
-const GAME_PORT = 42069
+onready var world = get_node("../../World")
+
+signal map_loaded
 
 func _ready():
 	_connect_networking_signals()
+	_connect_world_signals()
 	_start_server()
 	
 func _connect_networking_signals():
@@ -15,11 +20,16 @@ func _connect_networking_signals():
 	var _connection_failed = get_tree().connect("connection_failed", self, "_connected_fail")
 	var _server_disconnected = get_tree().connect("server_disconnected", self, "_server_disconnected")
 	
+func _connect_world_signals():
+	var _map_loaded = world.connect("map_loaded", self, "_map_loaded")
+	
 func _connected_fail():
 	get_tree().set_network_peer(null)
 	
 func _player_connected(_id):
 	print("player connected: ", _id)
+	world.spawn_player(_id)
+	world.spawn_player(get_tree().get_network_unique_id())
 	
 func _player_disconnected(_id):
 	print("player disconnected: ", _id)
@@ -35,3 +45,10 @@ func _start_server():
 		print("Server started on port " + str(GAME_PORT))
 	
 	get_tree().set_network_peer(enet)
+	
+	# there should be another layer here for choosing map,
+	# rules, etc
+	world.load_map("test")
+	
+func _map_loaded():
+	print('map loaded on server')
