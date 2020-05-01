@@ -1,6 +1,6 @@
 extends Node
 
-const GAME_PORT = 42069
+const GAME_PORT = 42090
 
 onready var world = get_node('../../World')
 
@@ -36,6 +36,8 @@ func start_client(data):
 	var ip = data.server_address
 	if '::ffff:' in ip:
 		ip = ip.substr(7) if ip.substr(7) != "::1" else get_node("../../Matchmaker").matchmaking_server_url.substr(7)
+	if ip == '::1':
+		ip = get_node("../../Matchmaker").matchmaking_server_url.substr(7)
 	if not ip.is_valid_ip_address():
 		return
 

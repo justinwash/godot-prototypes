@@ -1,12 +1,10 @@
 extends Node
 
-const GAME_PORT = 42069
+const GAME_PORT = 42090
 
 var enet
 
 onready var world = get_node("../../World")
-
-signal map_loaded
 
 func _ready():
 	_connect_networking_signals()
