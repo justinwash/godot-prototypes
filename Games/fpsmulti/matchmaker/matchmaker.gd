@@ -3,9 +3,11 @@ extends Node
 export var matchmaking_server_url = 'http://localhost'
 export var matchmaking_server_port = ':3000'
 
-var port_forwarded = false
+var socket_port_forwarded = false
+var server_port_forwarded = false
 var upnp = UPNP.new()
 var SOCKET_PORT = 1415
+var SERVER_PORT = 42069
 
 var _socket_server = WebSocketServer.new()
 var _matchmaking_server_id
@@ -29,19 +31,24 @@ func _connect_websocket_signals():
 	_socket_server.connect("client_close_request", self, "_socket_close_request")
 	_socket_server.connect("data_received", self, "_socket_on_data")
 	
-func _forward_port():
+func _forward_server_port():
 	upnp.discover()
-	print('found gateway? ', upnp.get_gateway())
-	print('external ip? ', upnp.query_external_address ())
+	while !server_port_forwarded:
+		server_port_forwarded = upnp.add_port_mapping (SERVER_PORT, 0, '', 'TCP', 0) == 0
+		print('tcp port forwarded? ', true if server_port_forwarded else false)
+		if !server_port_forwarded:
+			SERVER_PORT += 1
 	
-	while !port_forwarded:
-		port_forwarded = upnp.add_port_mapping (SOCKET_PORT, 0, '', 'TCP', 0) == 0
-		print('tcp port forwarded? ', true if port_forwarded else false)
-		if !port_forwarded:
+func _forward_socket_port():
+	upnp.discover()
+	while !socket_port_forwarded:
+		socket_port_forwarded = upnp.add_port_mapping (SOCKET_PORT, 0, '', 'TCP', 0) == 0
+		print('tcp port forwarded? ', true if socket_port_forwarded else false)
+		if !socket_port_forwarded:
 			SOCKET_PORT += 1
 		
 func _start_websocket_server():
-	_forward_port()
+	_forward_socket_port()
 	
 	var err = _socket_server.listen(SOCKET_PORT)
 	if err != OK:
@@ -59,7 +66,7 @@ func _connect_node_signals():
 func _connect_to_matchmaking_server():
 	print("Attempting to connect to matchmaking server...")
 	emit_signal("matchmaking_server_status", "Connecting to matchmaking server...", false)
-	_http.request(matchmaking_server_url + matchmaking_server_port + '/connect?port=' + str(SOCKET_PORT))
+	_http.request(matchmaking_server_url + matchmaking_server_port + '/connect?socketPort=' + str(SOCKET_PORT) + '&serverPort=' + str(SERVER_PORT))
 
 func _on_request_completed(_result, _response_code, _headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())

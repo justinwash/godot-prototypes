@@ -1,6 +1,8 @@
 extends Node
 
-const GAME_PORT = 42090
+var port_forwarded = false
+var upnp = UPNP.new()
+var GAME_PORT = 42069
 
 var enet
 
@@ -10,6 +12,7 @@ func _ready():
 	_connect_networking_signals()
 	_connect_world_signals()
 	_start_server()
+	_forward_server_port()
 	
 func _connect_networking_signals():
 	var _player_connected = get_tree().connect("network_peer_connected", self, "_player_connected")
@@ -31,6 +34,17 @@ func _player_connected(_id):
 	
 func _player_disconnected(_id):
 	print("player disconnected: ", _id)
+	
+func _forward_server_port():
+	upnp.discover()
+	print('found gateway? ', upnp.get_gateway())
+	print('external ip? ', upnp.query_external_address ())
+	
+	while !port_forwarded:
+		port_forwarded = upnp.add_port_mapping (GAME_PORT, 0, '', 'UDP', 0) == 0
+		print('server port forwarded? ', true if port_forwarded else false)
+		if !port_forwarded:
+			GAME_PORT += 1
 	
 func _start_server():
 	enet = NetworkedMultiplayerENet.new()

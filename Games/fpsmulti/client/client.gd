@@ -1,6 +1,6 @@
 extends Node
 
-const GAME_PORT = 42090
+const GAME_PORT = 42069
 
 onready var world = get_node('../../World')
 
