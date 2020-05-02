@@ -70,7 +70,13 @@ func _connect_node_signals():
 func _connect_to_matchmaking_server():
 	print("Attempting to connect to matchmaking server...")
 	emit_signal("matchmaking_server_status", "Connecting to matchmaking server...", false)
-	_http.request(matchmaking_server_url + matchmaking_server_port + '/connect?socketPort=' + str(SOCKET_PORT) + '&serverPort=' + str(SERVER_PORT) + '&serverLanAddress=' + IP.get_local_addresses()[0])
+	
+	var lan_address
+	for address in IP.get_local_addresses():
+		if '192.168.1' in address:
+			lan_address = address
+			
+	_http.request(matchmaking_server_url + matchmaking_server_port + '/connect?socketPort=' + str(SOCKET_PORT) + '&serverPort=' + str(SERVER_PORT) + '&lanAddress=' + lan_address)
 
 func _on_request_completed(_result, _response_code, _headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())
