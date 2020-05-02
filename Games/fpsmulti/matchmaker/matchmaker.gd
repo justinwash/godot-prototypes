@@ -3,6 +3,7 @@ extends Node
 export var matchmaking_server_url = 'http://localhost'
 export var matchmaking_server_port = ':3000'
 
+var upnp = UPNP.new()
 var SOCKET_PORT = 1415
 
 var _socket_server = WebSocketServer.new()
@@ -37,6 +38,10 @@ func _start_websocket_server():
 		else:
 			print('Matchmaking listener started on port ', SOCKET_PORT)
 	else:
+		upnp.discover()
+		print('found gateway? ', upnp.get_gateway())
+		print('external ip? ', upnp.query_external_address ())
+		print('tcp port forwarded? ', true if upnp.add_port_mapping (SOCKET_PORT, 0, '', 'TCP', 0) == 0 else false)
 		print('Matchmaking listener server started on port ', SOCKET_PORT)
 
 func _connect_http_signals():
@@ -53,7 +58,7 @@ func _connect_to_matchmaking_server():
 
 func _on_request_completed(_result, _response_code, _headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())
-	if !json.result:
+	if !json.result or 'connect failed' in json.result:
 		emit_signal("matchmaking_server_status", "Could not connect to matchmaking server.", false)
 	else:
 		emit_signal("matchmaking_server_status", "Connected to matchmaking server!", true)
