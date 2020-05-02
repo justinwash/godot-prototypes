@@ -35,8 +35,8 @@ func _connect_websocket_signals():
 func _forward_server_port():
 	upnp.discover()
 	while !server_port_forwarded:
-		server_port_forwarded = upnp.add_port_mapping (SERVER_PORT, 0, '', 'UDP', 0) == 0
-		print('udp port forwarded? ', true if server_port_forwarded else false)
+		server_port_forwarded = upnp.add_port_mapping (SERVER_PORT, 0, '', 'TCP', 0) == 0
+		print('server port forwarded? ', true if server_port_forwarded else false)
 		if !server_port_forwarded:
 			SERVER_PORT += 1
 	
@@ -44,7 +44,7 @@ func _forward_socket_port():
 	upnp.discover()
 	while !socket_port_forwarded:
 		socket_port_forwarded = upnp.add_port_mapping (SOCKET_PORT, 0, '', 'TCP', 0) == 0
-		print('tcp port forwarded? ', true if socket_port_forwarded else false)
+		print('socket port forwarded? ', true if socket_port_forwarded else false)
 		if !socket_port_forwarded:
 			SOCKET_PORT += 1
 		
@@ -70,7 +70,7 @@ func _connect_node_signals():
 func _connect_to_matchmaking_server():
 	print("Attempting to connect to matchmaking server...")
 	emit_signal("matchmaking_server_status", "Connecting to matchmaking server...", false)
-	_http.request(matchmaking_server_url + matchmaking_server_port + '/connect?socketPort=' + str(SOCKET_PORT) + '&serverPort=' + str(SERVER_PORT))
+	_http.request(matchmaking_server_url + matchmaking_server_port + '/connect?socketPort=' + str(SOCKET_PORT) + '&serverPort=' + str(SERVER_PORT) + '&serverLanAddress=' + IP.get_local_addresses()[0])
 
 func _on_request_completed(_result, _response_code, _headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())
@@ -97,6 +97,8 @@ func _socket_on_data(id):
 		
 	if message.type == 'start game':
 		print("should start game in mode: ", "'", message.data.networking_mode, "'")
+		message.data.server_port = SERVER_PORT
+		message.data.gateway_address = upnp.query_external_address()
 		emit_signal("start_game", message.data)
 		
 		

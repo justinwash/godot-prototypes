@@ -38,6 +38,8 @@ func start_client(data):
 		ip = ip.substr(7) if ip.substr(7) != "::1" else get_node("../../Matchmaker").matchmaking_server_url.substr(7)
 	if ip == '::1':
 		ip = get_node("../../Matchmaker").matchmaking_server_url.substr(7)
+	if ip == data.gateway_address:
+		ip = data.server_lan_address
 	if not ip.is_valid_ip_address():
 		return
 
