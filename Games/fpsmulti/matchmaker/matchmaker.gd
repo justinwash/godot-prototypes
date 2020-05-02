@@ -19,6 +19,7 @@ signal matchmaking_server_status
 signal start_game
 
 func _ready():
+	_forward_server_port()
 	_connect_websocket_signals()
 	_start_websocket_server()
 	_connect_http_signals()
@@ -34,8 +35,8 @@ func _connect_websocket_signals():
 func _forward_server_port():
 	upnp.discover()
 	while !server_port_forwarded:
-		server_port_forwarded = upnp.add_port_mapping (SERVER_PORT, 0, '', 'TCP', 0) == 0
-		print('tcp port forwarded? ', true if server_port_forwarded else false)
+		server_port_forwarded = upnp.add_port_mapping (SERVER_PORT, 0, '', 'UDP', 0) == 0
+		print('udp port forwarded? ', true if server_port_forwarded else false)
 		if !server_port_forwarded:
 			SERVER_PORT += 1
 	
@@ -50,9 +51,12 @@ func _forward_socket_port():
 func _start_websocket_server():
 	_forward_socket_port()
 	
+	while(!socket_port_forwarded):
+		null
+	
 	var err = _socket_server.listen(SOCKET_PORT)
 	if err != OK:
-		print("Unable to start server: socket in use")
+		print("Unable to start websocket server: ", err)
 	else:
 		print('Matchmaking listener server started on port ', SOCKET_PORT)
 

@@ -13,6 +13,7 @@ func _connect_matchmaking_signals():
 func _set_networking_mode(data):
 	if data.networking_mode == 'server':
 		var server = load("res://server/server.tscn").instance()
+		server.GAME_PORT = int(data.server_port)
 		networking_mode.add_child(server)
 	elif data.networking_mode == 'client':
 		var client = load("res://client/client.tscn").instance()
