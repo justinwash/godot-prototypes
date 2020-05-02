@@ -1,0 +1,3 @@
+[submodule "utilities/utilities/godot-matchmaker"]
+	path = utilities/utilities/godot-matchmaker
+	url = http://www.github.com/justinwash/godot-matchmaker
