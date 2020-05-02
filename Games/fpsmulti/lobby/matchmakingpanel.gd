@@ -5,8 +5,6 @@ onready var status_fail = $StatusFail
 onready var find_button = $FindButton
 onready var cancel_button = $CancelButton
 
-onready var matchmaker = owner.get_node(owner.matchmaker_path)
-
 signal start_matching
 signal cancel_matching
 
@@ -16,9 +14,6 @@ func _ready():
 	var _connected_to_server = get_tree().connect("connected_to_server", self, "_connected_ok")
 	var _connection_failed = get_tree().connect("connection_failed", self, "_connected_fail")
 	var _server_disconnected = get_tree().connect("server_disconnected", self, "_server_disconnected")
-	
-	if matchmaker:
-		matchmaker.connect("matchmaking_server_status", self, "_matchmaking_server_status")
 
 func _player_connected(_id):
 	_set_status("Player joined: id " + str(_id), true)
@@ -35,7 +30,7 @@ func _connected_fail():
 func _server_disconnected():
 	_set_status("Server disconnected", false)
 	
-func _matchmaking_server_status(status, isok):
+func _set_matchmaking_server_status(status, isok):
 	_set_status(status, isok)
 	
 func _set_status(text, isok):

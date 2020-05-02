@@ -3,6 +3,7 @@ extends Node
 const GAME_PORT = 42069
 
 onready var world = get_node('../../World')
+onready var lobby = get_node('../../Lobby')
 
 func _ready():
 	_connect_networking_signals()
@@ -28,20 +29,33 @@ func _player_connected(_id):
 	print("player connected: ", _id)
 	world.spawn_player(_id)
 	world.spawn_player(get_tree().get_network_unique_id())
+
+func _player_disconnected(_id):
+	print('player disconnected')
+	for player in world.players.get_children():
+		player.free()
+	lobby.show_lobby()
 	
 func _server_disconnected():
 	print('server disconnected')
+	for player in world.players.get_children():
+		player.free()
+	lobby.show_lobby()
 	
 func start_client(data):
 	var ip = data.server_address
 	if '::ffff:' in ip:
 		ip = ip.substr(7) if ip.substr(7) != "::1" else get_node("../../Matchmaker").matchmaking_server_url.substr(7)
+	if ip == '::1':
+		ip = get_node("../../Matchmaker").matchmaking_server_url.substr(7)
+	if ip == data.gateway_address:
+		ip = data.server_lan_address
 	if not ip.is_valid_ip_address():
 		return
 
 	var host = NetworkedMultiplayerENet.new()
 	host.set_compression_mode(NetworkedMultiplayerENet.COMPRESS_RANGE_CODER)
-	host.create_client(ip, GAME_PORT)
+	host.create_client(ip, int(data.server_port))
 	get_tree().set_network_peer(host)
 	
 	# there should be another layer here for choosing map,
