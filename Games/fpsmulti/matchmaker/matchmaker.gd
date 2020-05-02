@@ -3,6 +3,7 @@ extends Node
 export var matchmaking_server_url = 'http://localhost'
 export var matchmaking_server_port = ':3000'
 
+var port_forwarded = false
 var upnp = UPNP.new()
 var SOCKET_PORT = 1415
 
@@ -28,20 +29,24 @@ func _connect_websocket_signals():
 	_socket_server.connect("client_close_request", self, "_socket_close_request")
 	_socket_server.connect("data_received", self, "_socket_on_data")
 	
+func _forward_port():
+	upnp.discover()
+	print('found gateway? ', upnp.get_gateway())
+	print('external ip? ', upnp.query_external_address ())
+	
+	while !port_forwarded:
+		port_forwarded = upnp.add_port_mapping (SOCKET_PORT, 0, '', 'TCP', 0) == 0
+		print('tcp port forwarded? ', true if port_forwarded else false)
+		if !port_forwarded:
+			SOCKET_PORT += 1
+		
 func _start_websocket_server():
+	_forward_port()
+	
 	var err = _socket_server.listen(SOCKET_PORT)
 	if err != OK:
-		SOCKET_PORT = SOCKET_PORT + 1
-		err = _socket_server.listen(SOCKET_PORT)
-		if err != OK:
-			print("Unable to start server: both sockets in use")
-		else:
-			print('Matchmaking listener started on port ', SOCKET_PORT)
+		print("Unable to start server: socket in use")
 	else:
-		upnp.discover()
-		print('found gateway? ', upnp.get_gateway())
-		print('external ip? ', upnp.query_external_address ())
-		print('tcp port forwarded? ', true if upnp.add_port_mapping (SOCKET_PORT, 0, '', 'TCP', 0) == 0 else false)
 		print('Matchmaking listener server started on port ', SOCKET_PORT)
 
 func _connect_http_signals():
