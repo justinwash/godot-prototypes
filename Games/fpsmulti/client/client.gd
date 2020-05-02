@@ -45,7 +45,7 @@ func start_client(data):
 
 	var host = NetworkedMultiplayerENet.new()
 	host.set_compression_mode(NetworkedMultiplayerENet.COMPRESS_RANGE_CODER)
-	host.create_client(ip, GAME_PORT)
+	host.create_client(ip, int(data.server_port))
 	get_tree().set_network_peer(host)
 	
 	# there should be another layer here for choosing map,

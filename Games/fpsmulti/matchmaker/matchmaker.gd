@@ -103,7 +103,7 @@ func _socket_on_data(id):
 		
 	if message.type == 'start game':
 		print("should start game in mode: ", "'", message.data.networking_mode, "'")
-		message.data.server_port = SERVER_PORT
+		message.data.should_serve_port = SERVER_PORT
 		message.data.gateway_address = upnp.query_external_address()
 		emit_signal("start_game", message.data)
 		
