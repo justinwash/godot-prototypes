@@ -6,7 +6,8 @@ var GAME_PORT = 42069
 
 var enet
 
-onready var world = get_node("../../World")
+onready var world = get_node('../../World')
+onready var lobby = get_node('../../Lobby')
 
 func _ready():
 	_connect_networking_signals()
@@ -34,6 +35,9 @@ func _player_connected(_id):
 	
 func _player_disconnected(_id):
 	print("player disconnected: ", _id)
+	for player in world.players.get_children():
+		player.free()
+	lobby.show_lobby()
 	
 func _forward_server_port():
 	upnp.discover()

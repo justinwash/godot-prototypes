@@ -3,6 +3,7 @@ extends Node
 const GAME_PORT = 42069
 
 onready var world = get_node('../../World')
+onready var lobby = get_node('../../Lobby')
 
 func _ready():
 	_connect_networking_signals()
@@ -28,9 +29,18 @@ func _player_connected(_id):
 	print("player connected: ", _id)
 	world.spawn_player(_id)
 	world.spawn_player(get_tree().get_network_unique_id())
+
+func _player_disconnected(_id):
+	print('player disconnected')
+	for player in world.players.get_children():
+		player.free()
+	lobby.show_lobby()
 	
 func _server_disconnected():
 	print('server disconnected')
+	for player in world.players.get_children():
+		player.free()
+	lobby.show_lobby()
 	
 func start_client(data):
 	var ip = data.server_address

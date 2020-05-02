@@ -24,3 +24,8 @@ func _process(_delta):
 func _map_loaded():
 	visible = false
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
+func show_lobby():
+	get_tree().paused = true
+	visible = true
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
