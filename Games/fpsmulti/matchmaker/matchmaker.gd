@@ -15,7 +15,9 @@ var _matchmaking_server_id
 onready var _http = $HTTPRequest
 onready var lobby = get_node("../Lobby")
 
-signal matchmaking_server_status
+onready var game = get_parent()
+
+signal set_matchmaking_server_status
 signal start_game
 
 func _ready():
@@ -24,7 +26,7 @@ func _ready():
 	_start_websocket_server()
 	_connect_http_signals()
 	_connect_to_matchmaking_server()
-	_connect_node_signals()
+	_connect_lobby_signals()
 
 func _connect_websocket_signals():
 	_socket_server.connect("client_connected", self, "_socket_client_connected")
@@ -63,13 +65,13 @@ func _start_websocket_server():
 func _connect_http_signals():
 	_http.connect("request_completed", self, "_on_request_completed")
 	
-func _connect_node_signals():
-	lobby.matchmaking_panel.connect("start_matching", self, "_start_matching")
-	lobby.matchmaking_panel.connect("cancel_matching", self, "_cancel_matching")
+func _connect_lobby_signals():
+	game.connect("start_matching", self, "_start_matching")
+	game.connect("cancel_matching", self, "_cancel_matching")
 	
 func _connect_to_matchmaking_server():
 	print("Attempting to connect to matchmaking server...")
-	emit_signal("matchmaking_server_status", "Connecting to matchmaking server...", false)
+	emit_signal("set_matchmaking_server_status", "Connecting to matchmaking server...", false)
 	
 	var lan_address
 	for address in IP.get_local_addresses():
@@ -81,9 +83,9 @@ func _connect_to_matchmaking_server():
 func _on_request_completed(_result, _response_code, _headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())
 	if !json.result or 'connect failed' in json.result:
-		emit_signal("matchmaking_server_status", "Could not connect to matchmaking server.", false)
+		emit_signal("set_matchmaking_server_status", "Could not connect to matchmaking server.", false)
 	else:
-		emit_signal("matchmaking_server_status", "Connected to matchmaking server!", true)
+		emit_signal("set_matchmaking_server_status", "Connected to matchmaking server!", true)
 	print("message from matchmaking server: ", "'", json.result, "'")
 	
 func _process(_delta):
@@ -109,7 +111,7 @@ func _socket_on_data(id):
 		
 		
 func _socket_client_disconnected(_id, _data):
-	emit_signal("matchmaking_server_status", "Lost connection to matchmaking server.", false)
+	emit_signal("set_matchmaking_server_status", "Lost connection to matchmaking server.", false)
 	
 func _start_matching():
 	print('starting matchmaking')
