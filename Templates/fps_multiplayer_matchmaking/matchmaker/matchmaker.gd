@@ -13,7 +13,6 @@ var _socket_server = WebSocketServer.new()
 var _matchmaking_server_id
 
 onready var _http = $HTTPRequest
-onready var lobby = get_node("../Lobby")
 
 onready var game = get_parent()
 
