@@ -44,9 +44,7 @@ func _set_status(text, isok):
 func _on_FindButton_pressed():
 	emit_signal("start_matching")
 	find_button.set_disabled(true)
-	_set_status("Searching for a match...", true)
 
 func _on_CancelButton_pressed():
 	emit_signal("cancel_matching")
 	find_button.set_disabled(false)
-	_set_status("Search canceled", false)
