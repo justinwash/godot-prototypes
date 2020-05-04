@@ -4,9 +4,9 @@ export var matchmaking_server_url = 'http://localhost'
 export var matchmaking_server_port = ':3000'
 
 var socket_port_forwarded = false
-var socket_port_retries = 10
+var socket_port_retries = 3
 var server_port_forwarded = false
-var server_port_retries = 10
+var server_port_retries = 3
 var upnp = UPNP.new()
 var SOCKET_PORT = 1415
 var SERVER_PORT = 42069
@@ -55,15 +55,14 @@ func _forward_socket_port():
 		
 func _start_websocket_server():
 	_forward_socket_port()
-	if socket_port_forwarded:
-		var err = _socket_server.listen(SOCKET_PORT)
-		if err != OK:
-			print("Unable to start websocket server: ", err)
-		else:
-			print('Matchmaking listener server started on port ', SOCKET_PORT)
+	if !socket_port_forwarded:
+		print('could not forward ports via UPnP. Attempting connection anyway.')
+		
+	var err = _socket_server.listen(SOCKET_PORT)
+	if err != OK:
+		print("Unable to start websocket server: ", err)
 	else:
-		print('could not forward ports via UPnP')
-		emit_signal("set_matchmaking_server_status", "Could not forward ports via UPnP.", false)
+		print('Matchmaking listener server started on port ', SOCKET_PORT)
 
 func _connect_http_signals():
 	_http.connect("request_completed", self, "_on_request_completed")
@@ -73,26 +72,27 @@ func _connect_lobby_signals():
 	game.connect("cancel_matching", self, "_cancel_matching")
 	
 func _connect_to_matchmaking_server():
-	if socket_port_forwarded and server_port_forwarded:
-		print("Attempting to connect to matchmaking server...")
-		emit_signal("set_matchmaking_server_status", "Connecting to matchmaking server...", false)
+	print("Attempting to connect to matchmaking server...")
+	emit_signal("set_matchmaking_server_status", "Connecting to matchmaking server...", false)
 	
-		var lan_address
-		for address in IP.get_local_addresses():
-			if '192.168.1' in address:
-				lan_address = address
-			
-		_http.request(matchmaking_server_url + matchmaking_server_port + '/connect?socketPort=' + str(SOCKET_PORT) + '&serverPort=' + str(SERVER_PORT) + '&lanAddress=' + lan_address)
-	else:
-		emit_signal("set_matchmaking_server_status", "Could not forward ports via UPnP.", false)
+	var lan_address
+	for address in IP.get_local_addresses():
+		if '192.168.1' in address:
+			lan_address = address
+	
+	var mm_url = matchmaking_server_url + matchmaking_server_port + '/connect'
+	var socket_port_param = '?socketPort=' + str(SOCKET_PORT)
+	var server_port_param = '&serverPort=' + str(SERVER_PORT)
+	var lan_address_param = ('&lanAddress=' + lan_address) if lan_address else ''
+	
+	_http.request(mm_url + socket_port_param + server_port_param + lan_address_param)
 
 func _on_request_completed(_result, _response_code, _headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())
 	if !json.result or 'connect failed' in json.result:
 		emit_signal("set_matchmaking_server_status", "Could not connect to matchmaking server.", false)
 	else:
-		emit_signal("set_matchmaking_server_status", "Connected to matchmaking server!", true)
-	print("message from matchmaking server: ", "'", json.result, "'")
+		emit_signal("set_matchmaking_server_status", "Server reached. Starting connection...", true)
 	
 func _process(_delta):
 	_socket_server.poll()
@@ -120,17 +120,14 @@ func _socket_client_disconnected(_id, _data):
 	emit_signal("set_matchmaking_server_status", "Lost connection to matchmaking server.", false)
 	
 func _start_matching():
-	if socket_port_forwarded:
+	if _socket_server.is_connected():
 		print('starting matchmaking')
 		_socket_server.get_peer(_matchmaking_server_id).put_packet('start matching'.to_utf8())
 		emit_signal("set_matchmaking_server_status", "Searching for a match...", true)
 	else:
-		emit_signal("set_matchmaking_server_status", "Could not forward ports via UPnP.", false)
+		emit_signal("set_matchmaking_server_status", "Cannot get connection to server...", true)
 	
 func _cancel_matching():
-	if socket_port_forwarded:
 		print('canceling matchmaking')
 		_socket_server.get_peer(_matchmaking_server_id).put_packet('cancel matching'.to_utf8())
 		emit_signal("set_matchmaking_server_status", "Canceled matchmaking", true)
-	else:
-		emit_signal("set_matchmaking_server_status", "Could not forward ports via UPnP.", false)
