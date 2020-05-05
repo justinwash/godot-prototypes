@@ -32,7 +32,7 @@ func _process(delta):
 				udp.put_packet('ping!'.to_utf8())
 				connected = true
 				
-	if connected:
+	if udp.is_listening() && connected:
 		join_countdown += delta
 		if(join_countdown > 3.0):
 			print("Closing socket, joining...")

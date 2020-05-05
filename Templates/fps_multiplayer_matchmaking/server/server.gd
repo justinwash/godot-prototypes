@@ -23,12 +23,12 @@ func _ready():
 func _process(delta):
 	udp_ping_tick += delta
 	
-	if (udp.is_listening() and udp_ping_tick > 0.5): # ping other player
+	if udp.is_listening() && udp_ping_tick > 0.5: # ping other player
 		udp_ping_tick -= 0.5
 		print("Sending message...")
 		udp.put_packet('ping!'.to_utf8())
 		
-	if (udp.is_listening() and udp.get_available_packet_count() > 0):
+	if udp.is_listening() && udp.get_available_packet_count() > 0:
 			var response = udp.get_packet().get_string_from_utf8()
 			print(response)
 
@@ -38,7 +38,7 @@ func _process(delta):
 				udp.put_packet('pong!'.to_utf8())
 				connected = true
 			
-	if connected:
+	if udp.is_listening() && connected:
 		hosting_countdown += delta
 		if(hosting_countdown > 3.0):
 			print("Closing socket, hosting...")
@@ -86,7 +86,6 @@ func connect_to_client(match_data):
 	udp.set_dest_address(new_match_data.opponent.address, int(match_data.opponent.serverPort))
 	
 func start_server(match_data):
-	udp.close()
 	enet = NetworkedMultiplayerENet.new()
 	enet.set_compression_mode(NetworkedMultiplayerENet.COMPRESS_RANGE_CODER)
 	var err = enet.create_server(int(match_data.player.serverPort), 1)
