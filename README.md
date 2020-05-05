@@ -1,2 +1,2 @@
-# godot-projects
-Games made with Godot Engine
+# godot-prototypes
+Games starters, tools, utilities, and in-progress Godot Engine projects
