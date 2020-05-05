@@ -1,7 +1,9 @@
 extends Node
 
 onready var udp = PacketPeerUDP.new()
-var udp_ping_tick = 0.0
+onready var udp_ping_tick = 0.0
+onready var hosting_countdown = 0.0
+onready var connected = false
 
 var port_forwarded = false
 var upnp = UPNP.new()
@@ -29,13 +31,20 @@ func _process(delta):
 	if (udp.is_listening() and udp.get_available_packet_count() > 0):
 			var response = udp.get_packet().get_string_from_utf8()
 			print(response)
-			
-			if (response == "ping!"):
-				udp.put_packet('pong!'.to_utf8())
+
 			if (response == "pong!"):
 				udp.put_packet('ping!'.to_utf8())
-				udp.close()
-				start_server(new_match_data)
+			if (response == "ping!"):
+				udp.put_packet('pong!'.to_utf8())
+				connected = true
+			
+	if connected:
+		hosting_countdown += delta
+		if(hosting_countdown > 3.0):
+			print("Closing socket, hosting...")
+			udp.close()
+			start_server(new_match_data)
+				
 	
 func _connect_networking_signals():
 	var _player_connected = get_tree().connect("network_peer_connected", self, "_player_connected")
@@ -77,6 +86,7 @@ func connect_to_client(match_data):
 	udp.set_dest_address(new_match_data.opponent.address, int(match_data.opponent.serverPort))
 	
 func start_server(match_data):
+	udp.close()
 	enet = NetworkedMultiplayerENet.new()
 	enet.set_compression_mode(NetworkedMultiplayerENet.COMPRESS_RANGE_CODER)
 	var err = enet.create_server(int(match_data.player.serverPort), 1)

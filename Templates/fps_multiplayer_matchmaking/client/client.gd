@@ -1,7 +1,9 @@
 extends Node
 
 onready var udp = PacketPeerUDP.new()
-var udp_ping_tick = 0.0
+onready var udp_ping_tick = 0.0
+onready var join_countdown = 0.0
+onready var connected = false
 
 onready var world = get_node('../../World')
 onready var lobby = get_node('../../Lobby')
@@ -28,8 +30,14 @@ func _process(delta):
 				udp.put_packet('pong!'.to_utf8())
 			if (response == "pong!"):
 				udp.put_packet('ping!'.to_utf8())
-				udp.close()
-				start_client(new_match_data)
+				connected = true
+				
+	if connected:
+		join_countdown += delta
+		if(join_countdown > 3.0):
+			print("Closing socket, joining...")
+			udp.close()
+			start_client(new_match_data)
 	
 func _connect_networking_signals():
 	var _player_connected = get_tree().connect("network_peer_connected", self, "_player_connected")
