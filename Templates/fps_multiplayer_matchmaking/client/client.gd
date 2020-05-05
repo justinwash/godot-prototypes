@@ -61,6 +61,14 @@ func _server_disconnected():
 	lobby.show_lobby()
 	
 func connect_to_server(match_data):
+	var ip = match_data.opponent.address
+	if ip == match_data.player.address:
+		ip = match_data.opponent.lanAddress
+	if '::ffff:' in ip:
+		ip = ip.substr(7) if ip.substr(7) != "::1" else get_node("../../Matchmaker").matchmaking_server_url.substr(7)
+	if not ip.is_valid_ip_address():
+		return
+		
 	udp.listen(int(match_data.player.serverPort))
 	udp.set_dest_address(match_data.opponent.address, int(match_data.opponent.serverPort))
 	
@@ -70,11 +78,9 @@ func start_client(match_data):
 		ip = match_data.opponent.lanAddress
 	if '::ffff:' in ip:
 		ip = ip.substr(7) if ip.substr(7) != "::1" else get_node("../../Matchmaker").matchmaking_server_url.substr(7)
-	if ip == '::1':
-		ip = get_node("../../Matchmaker").matchmaking_server_url.substr(7)
 	if not ip.is_valid_ip_address():
 		return
-
+		
 	var host = NetworkedMultiplayerENet.new()
 	host.set_compression_mode(NetworkedMultiplayerENet.COMPRESS_RANGE_CODER)
 	host.create_client(ip, int(match_data.opponent.serverPort))
