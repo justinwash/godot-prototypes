@@ -28,6 +28,7 @@ func _set_networking_mode(match_data):
 		var server = load("res://server/server.tscn").instance()
 		server.GAME_PORT = int(match_data.player.serverPort)
 		networking_mode.add_child(server)
+		server.connect_to_client(match_data)
 	elif match_data.opponent.host:
 		var client = load("res://client/client.tscn").instance()
 		networking_mode.add_child(client)

@@ -1,5 +1,8 @@
 extends Node
 
+onready var udp = PacketPeerUDP.new()
+var udp_ping_tick = 0.0
+
 var port_forwarded = false
 var upnp = UPNP.new()
 var GAME_PORT = 42069
@@ -12,8 +15,23 @@ onready var lobby = get_node('../../Lobby')
 func _ready():
 	_connect_networking_signals()
 	_connect_world_signals()
-	_start_server()
-	_forward_server_port()
+	
+func _process(delta):
+	udp_ping_tick += delta
+	
+	if (udp.is_listening() and udp_ping_tick > 0.5): # ping other player
+		udp_ping_tick -= 0.5
+		print("Sending message...")
+		udp.put_packet('ping!'.to_utf8())
+		
+	if (udp.is_listening() and udp.get_available_packet_count() > 0):
+			var response = udp.get_packet().get_string_from_utf8()
+			print(response)
+			
+			if (response == "ping!"):
+				udp.put_packet('pong!'.to_utf8())
+			elif (response == "pong!"):
+				udp.put_packet('ping!'.to_utf8())
 	
 func _connect_networking_signals():
 	var _player_connected = get_tree().connect("network_peer_connected", self, "_player_connected")
@@ -39,18 +57,11 @@ func _player_disconnected(_id):
 		player.free()
 	lobby.show_lobby()
 	
-func _forward_server_port():
-	upnp.discover()
-	print('found gateway? ', upnp.get_gateway())
-	print('external ip? ', upnp.query_external_address ())
+func connect_to_client(match_data):
+	udp.listen(int(match_data.player.serverPort))
+	udp.set_dest_address(match_data.opponent.address, int(match_data.opponent.serverPort))
 	
-	while !port_forwarded:
-		port_forwarded = upnp.add_port_mapping (GAME_PORT, 0, '', 'UDP', 0) == 0
-		print('server port forwarded? ', true if port_forwarded else false)
-		if !port_forwarded:
-			GAME_PORT += 1
-	
-func _start_server():
+func start_server(match_data):
 	enet = NetworkedMultiplayerENet.new()
 	enet.set_compression_mode(NetworkedMultiplayerENet.COMPRESS_RANGE_CODER)
 	var err = enet.create_server(GAME_PORT, 1)

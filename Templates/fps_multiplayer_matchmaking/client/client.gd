@@ -1,6 +1,7 @@
 extends Node
 
-const GAME_PORT = 42069
+onready var udp = PacketPeerUDP.new()
+var udp_ping_tick = 0.0
 
 onready var world = get_node('../../World')
 onready var lobby = get_node('../../Lobby')
@@ -8,6 +9,23 @@ onready var lobby = get_node('../../Lobby')
 func _ready():
 	_connect_networking_signals()
 	_connect_world_signals()
+	
+func _process(delta):
+	udp_ping_tick += delta
+	
+	if (udp.is_listening() and udp_ping_tick > 0.5): # ping other player
+		udp_ping_tick -= 0.5
+		print("Sending message...")
+		udp.put_packet('ping!'.to_utf8())
+		
+	if (udp.is_listening() and udp.get_available_packet_count() > 0):
+			var response = udp.get_packet().get_string_from_utf8()
+			print(response)
+			
+			if (response == "ping!"):
+				udp.put_packet('pong!'.to_utf8())
+			elif (response == "pong!"):
+				udp.put_packet('ping!'.to_utf8())
 	
 func _connect_networking_signals():
 	var _player_connected = get_tree().connect("network_peer_connected", self, "_player_connected")
@@ -42,20 +60,24 @@ func _server_disconnected():
 		player.free()
 	lobby.show_lobby()
 	
-func start_client(data):
-	var ip = data.server_address
+func connect_to_server(match_data):
+	udp.listen(int(match_data.player.serverPort))
+	udp.set_dest_address(match_data.opponent.address, int(match_data.opponent.serverPort))
+	
+func start_client(match_data):
+	var ip = match_data.opponent.address
+	if ip == match_data.player.address:
+		ip = match_data.opponent.lanAddress
 	if '::ffff:' in ip:
 		ip = ip.substr(7) if ip.substr(7) != "::1" else get_node("../../Matchmaker").matchmaking_server_url.substr(7)
 	if ip == '::1':
 		ip = get_node("../../Matchmaker").matchmaking_server_url.substr(7)
-	if ip == data.gateway_address:
-		ip = data.server_lan_address
 	if not ip.is_valid_ip_address():
 		return
 
 	var host = NetworkedMultiplayerENet.new()
 	host.set_compression_mode(NetworkedMultiplayerENet.COMPRESS_RANGE_CODER)
-	host.create_client(ip, int(data.server_port))
+	host.create_client(ip, int(match_data.opponent.serverPort))
 	get_tree().set_network_peer(host)
 	
 	# there should be another layer here for choosing map,
