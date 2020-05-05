@@ -84,8 +84,9 @@ func _make_disconnect_request():
 	_http.request(mm_url + disconnect_endpoint + player_id_param)
 	
 func _make_ping_request():
-	var player_id_param = '?playerId=' + player_id
-	_http.request(mm_url + ping_endpoint + player_id_param)
+	if connected:
+		var player_id_param = '?playerId=' + player_id
+		_http.request(mm_url + ping_endpoint + player_id_param)
 	
 func _make_join_queue_request():
 	if connected:
@@ -96,6 +97,10 @@ func _make_exit_queue_request():
 	if connected:
 		var player_id_param = '?playerId=' + player_id
 		_http.request(mm_url + exit_queue_endpoint + player_id_param)
+		ping_timer.disconnect("timeout", self, "_make_get_queue_status_request")
+		ping_timer.connect("timeout", self, "_make_ping_request")
+		if ping_timer.is_stopped():
+			ping_timer.start()
 	
 func _make_get_queue_status_request():
 	var player_id_param = '?playerId=' + player_id
@@ -141,15 +146,20 @@ func _on_request_completed(_result, _response_code, _headers, body):
 			'exitQueue':
 				if response.success:
 					emit_signal("set_matchmaking_server_status", "Canceled search", true)
-					ping_timer.disconnect("timeout", self, "_make_get_queue_status_request")
-					ping_timer.connect("timeout", self, "_make_ping_request")
-					if ping_timer.is_stopped():
-						ping_timer.start()
 			'getQueueStatus':
 				if response.success:
 					match response.message:
 						'in queue':
 							emit_signal("set_matchmaking_server_status", "Players in queue: " + str(response.data.playersInQueue), true)
+						'match found':
+							emit_signal("set_matchmaking_server_status", "Match found! Connecting... ", true)
+							ping_timer.disconnect("timeout", self, "_make_get_queue_status_request")
+							ping_timer.connect("timeout", self, "_make_ping_request")
+							if ping_timer.is_stopped():
+								ping_timer.start()
+				else:
+					_make_exit_queue_request()
+					emit_signal("set_matchmaking_server_status", "Error finding match. Please Try again", false)
 
 func _start_matching_button_pressed():
 	_make_join_queue_request()
