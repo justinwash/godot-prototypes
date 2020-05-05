@@ -61,6 +61,8 @@ func _connect_lobby_signals():
 	game.connect("toggle_connection", self, "_toggle_connection_button_pressed")
 	
 func _make_connect_request():
+	_http.timeout = 5
+	
 	print("Attempting to connect to matchmaking server...")
 	emit_signal("set_matchmaking_server_status", "Connecting to matchmaking server...", false)
 	

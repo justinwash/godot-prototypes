@@ -17,16 +17,15 @@ func _ready():
 	_connect_world_signals()
 
 func _connect_matchmaking_signals():
-	matchmaker.connect("start_game", self, "_set_networking_mode")
+	matchmaker.connect("start_game", self, "_start_game")
 	matchmaker.connect("set_matchmaking_server_status", self, "_set_matchmaking_server_status")
 	
 func _connect_world_signals():
 	world.connect("map_loaded", self, "_map_loaded")
 	
-func _set_networking_mode(match_data):
+func _start_game(match_data):
 	if match_data.player.host:
 		var server = load("res://server/server.tscn").instance()
-		server.GAME_PORT = int(match_data.player.serverPort)
 		networking_mode.add_child(server)
 		server.connect_to_client(match_data)
 	elif match_data.opponent.host:
@@ -48,6 +47,11 @@ func _cancel_matching():
 	
 func _toggle_connection():
 	emit_signal("toggle_connection")
+
+func _start_practice():
+	world.load_map("test")
+	world.spawn_player(1)
+	world.spawn_player(0)
 	
 func _set_matchmaking_server_status(status, isok):
 	emit_signal("set_matchmaking_server_status", status, isok)

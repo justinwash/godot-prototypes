@@ -23,9 +23,9 @@ __meta__ = {
 
 [node name="MatchMakingPanel" type="Panel" parent="."]
 margin_left = 161.0
-margin_top = -96.0
+margin_top = -64.0
 margin_right = 481.0
-margin_bottom = 74.0
+margin_bottom = 80.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 script = ExtResource( 4 )
@@ -69,6 +69,26 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ToggleConnectionButton" type="Button" parent="MatchMakingPanel"]
+margin_left = 9.0
+margin_top = 115.943
+margin_right = 145.0
+margin_bottom = 135.943
+text = "Connection On/Off"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OfflineButton" type="Button" parent="MatchMakingPanel"]
+margin_left = 199.0
+margin_top = 115.943
+margin_right = 311.0
+margin_bottom = 135.943
+text = "Practice Offline"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="StatusOk" type="Label" parent="MatchMakingPanel"]
 margin_left = 10.0
 margin_top = 90.0
@@ -91,21 +111,11 @@ align = 1
 
 [node name="HTTPRequest" type="HTTPRequest" parent="MatchMakingPanel"]
 
-[node name="ToggleConnectionButton" type="Button" parent="MatchMakingPanel"]
-margin_left = 95.0
-margin_top = 144.0
-margin_right = 226.0
-margin_bottom = 164.0
-text = "Connection On/Off"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="PlayerPanel" type="Panel" parent="."]
 margin_left = 160.0
-margin_top = 92.0
+margin_top = 88.0
 margin_right = 480.0
-margin_bottom = 180.0
+margin_bottom = 184.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 script = ExtResource( 2 )
@@ -146,7 +156,7 @@ __meta__ = {
 
 [node name="ReadyPanel" type="Panel" parent="."]
 margin_left = 160.0
-margin_top = 196.0
+margin_top = 192.0
 margin_right = 480.0
 margin_bottom = 252.0
 size_flags_horizontal = 2
@@ -169,5 +179,6 @@ __meta__ = {
 }
 [connection signal="pressed" from="MatchMakingPanel/FindButton" to="MatchMakingPanel" method="_on_FindButton_pressed"]
 [connection signal="pressed" from="MatchMakingPanel/CancelButton" to="MatchMakingPanel" method="_on_CancelButton_pressed"]
-[connection signal="request_completed" from="MatchMakingPanel/HTTPRequest" to="MatchMakingPanel" method="_on_request_completed"]
 [connection signal="pressed" from="MatchMakingPanel/ToggleConnectionButton" to="MatchMakingPanel" method="_on_ToggleConnectionButton_pressed"]
+[connection signal="pressed" from="MatchMakingPanel/OfflineButton" to="MatchMakingPanel" method="_on_OfflineButton_pressed"]
+[connection signal="request_completed" from="MatchMakingPanel/HTTPRequest" to="MatchMakingPanel" method="_on_request_completed"]

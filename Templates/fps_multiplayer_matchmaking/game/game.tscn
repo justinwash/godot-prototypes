@@ -13,6 +13,10 @@ matchmaking_server_url = "http://192.168.1.54"
 
 [node name="Lobby" parent="." instance=ExtResource( 3 )]
 
+[node name="ToggleConnectionButton" parent="Lobby/MatchMakingPanel" index="3"]
+margin_left = 7.0
+margin_right = 143.0
+
 [node name="NetworkingMode" type="Node" parent="."]
 
 [node name="World" parent="." instance=ExtResource( 2 )]

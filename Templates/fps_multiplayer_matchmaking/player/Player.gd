@@ -11,7 +11,7 @@ onready var camera = $Camera
 onready var hud = $HUD
 
 func _ready():
-	if name != str(get_tree().get_network_unique_id()):
+	if $Camera.current:
 		for element in hud.get_children():
 			element.visible = false
 	
@@ -22,7 +22,8 @@ func _input(event):
 			rotation_degrees.x -= MOUSE_SENS * event.relative.y
 
 func _physics_process(delta):
-	if get_tree().has_network_peer() and is_network_master() or !get_tree().has_network_peer():
+	if (get_tree().has_network_peer() and is_network_master()) \
+	or (!get_tree().has_network_peer() and get_network_master() != 0):
 		$Camera.current = true
 		var move_vec = Vector3()
 		if Input.is_action_pressed("move_forwards"):

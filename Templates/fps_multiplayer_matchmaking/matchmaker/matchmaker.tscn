@@ -8,4 +8,4 @@ script = ExtResource( 1 )
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
 [node name="PingTimer" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 5.0
