@@ -32,7 +32,7 @@ func _set_networking_mode(match_data):
 	elif match_data.opponent.host:
 		var client = load("res://client/client.tscn").instance()
 		networking_mode.add_child(client)
-		client.start_client(match_data)
+		client.connect_to_server(match_data)
 	else:
 		print("invalid networking mode")
 		
