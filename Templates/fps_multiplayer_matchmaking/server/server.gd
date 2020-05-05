@@ -1,5 +1,10 @@
 extends Node
 
+onready var udp = PacketPeerUDP.new()
+onready var udp_ping_tick = 0.0
+onready var hosting_countdown = 0.0
+onready var connected = false
+
 var port_forwarded = false
 var upnp = UPNP.new()
 var GAME_PORT = 42069
@@ -9,11 +14,37 @@ var enet
 onready var world = get_node('../../World')
 onready var lobby = get_node('../../Lobby')
 
+var new_match_data
+
 func _ready():
 	_connect_networking_signals()
 	_connect_world_signals()
-	_start_server()
-	_forward_server_port()
+	
+func _process(delta):
+	udp_ping_tick += delta
+	
+	if udp.is_listening() && udp_ping_tick > 0.5: # ping other player
+		udp_ping_tick -= 0.5
+		print("Sending message...")
+		udp.put_packet('ping!'.to_utf8())
+		
+	if udp.is_listening() && udp.get_available_packet_count() > 0:
+			var response = udp.get_packet().get_string_from_utf8()
+			print(response)
+
+			if (response == "pong!"):
+				udp.put_packet('ping!'.to_utf8())
+			if (response == "ping!"):
+				udp.put_packet('pong!'.to_utf8())
+				connected = true
+			
+	if udp.is_listening() && connected:
+		hosting_countdown += delta
+		if(hosting_countdown > 3.0):
+			print("Closing socket, hosting...")
+			udp.close()
+			start_server(new_match_data)
+				
 	
 func _connect_networking_signals():
 	var _player_connected = get_tree().connect("network_peer_connected", self, "_player_connected")
@@ -39,26 +70,30 @@ func _player_disconnected(_id):
 		player.free()
 	lobby.show_lobby()
 	
-func _forward_server_port():
-	upnp.discover()
-	print('found gateway? ', upnp.get_gateway())
-	print('external ip? ', upnp.query_external_address ())
+func connect_to_client(match_data):
+	var ip = match_data.opponent.address
+	if ip == match_data.player.address:
+		ip = match_data.opponent.lanAddress
+	if '::ffff:' in ip:
+		ip = ip.substr(7) if ip.substr(7) != "::1" else get_node("../../Matchmaker").matchmaking_server_url.substr(7)
+	if not ip.is_valid_ip_address():
+		return
+		
+	match_data.opponent.address = ip
+	new_match_data = match_data
+		
+	udp.listen(int(match_data.player.serverPort))
+	udp.set_dest_address(new_match_data.opponent.address, int(match_data.opponent.serverPort))
 	
-	while !port_forwarded:
-		port_forwarded = upnp.add_port_mapping (GAME_PORT, 0, '', 'UDP', 0) == 0
-		print('server port forwarded? ', true if port_forwarded else false)
-		if !port_forwarded:
-			GAME_PORT += 1
-	
-func _start_server():
+func start_server(match_data):
 	enet = NetworkedMultiplayerENet.new()
 	enet.set_compression_mode(NetworkedMultiplayerENet.COMPRESS_RANGE_CODER)
-	var err = enet.create_server(GAME_PORT, 1)
+	var err = enet.create_server(int(match_data.player.serverPort), 1)
 	if err != OK:
-		print("Couldn't start server on port " + str(GAME_PORT))
+		print("Couldn't start server on port " + match_data.player.serverPort)
 		return
 	else:
-		print("Server started on port " + str(GAME_PORT))
+		print("Server started on port " + match_data.player.serverPort)
 	
 	get_tree().set_network_peer(enet)
 	
