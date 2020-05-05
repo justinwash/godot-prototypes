@@ -9,8 +9,7 @@
 script = ExtResource( 5 )
 
 [node name="Matchmaker" parent="." instance=ExtResource( 1 )]
-matchmaking_server_url = "https://godot-matchmaker.herokuapp.com"
-matchmaking_server_port = ""
+matchmaking_server_url = "http://192.168.1.54"
 
 [node name="Lobby" parent="." instance=ExtResource( 3 )]
 

@@ -7,6 +7,7 @@ onready var cancel_button = $CancelButton
 
 signal start_matching
 signal cancel_matching
+signal toggle_connection
 
 func _ready():	
 	var _player_connected = get_tree().connect("network_peer_connected", self, "_player_connected")
@@ -48,3 +49,6 @@ func _on_FindButton_pressed():
 func _on_CancelButton_pressed():
 	emit_signal("cancel_matching")
 	find_button.set_disabled(false)
+
+func _on_ToggleConnectionButton_pressed():
+	emit_signal("toggle_connection")

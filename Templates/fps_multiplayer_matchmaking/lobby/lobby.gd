@@ -20,6 +20,8 @@ func _connect_panel_signals():
 		var _start_matching = matchmaking_panel.connect("start_matching", game, "_start_matching")
 	if game.has_method("_cancel_matching"):
 		var _cancel_matching = matchmaking_panel.connect("cancel_matching", game, "_cancel_matching")
+	if game.has_method("_toggle_connection"):
+		var _toggle_connection = matchmaking_panel.connect("toggle_connection", game, "_toggle_connection")
 	
 func _process(_delta):
 	if Input.is_action_just_pressed("pause"):

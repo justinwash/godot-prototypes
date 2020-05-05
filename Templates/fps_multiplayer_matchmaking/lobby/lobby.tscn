@@ -22,9 +22,9 @@ __meta__ = {
 }
 
 [node name="MatchMakingPanel" type="Panel" parent="."]
-margin_left = 160.0
-margin_top = -36.0
-margin_right = 480.0
+margin_left = 161.0
+margin_top = -96.0
+margin_right = 481.0
 margin_bottom = 74.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
@@ -90,6 +90,16 @@ custom_colors/font_color = Color( 1, 0, 0, 1 )
 align = 1
 
 [node name="HTTPRequest" type="HTTPRequest" parent="MatchMakingPanel"]
+
+[node name="ToggleConnectionButton" type="Button" parent="MatchMakingPanel"]
+margin_left = 95.0
+margin_top = 144.0
+margin_right = 226.0
+margin_bottom = 164.0
+text = "Connection On/Off"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="PlayerPanel" type="Panel" parent="."]
 margin_left = 160.0
@@ -160,3 +170,4 @@ __meta__ = {
 [connection signal="pressed" from="MatchMakingPanel/FindButton" to="MatchMakingPanel" method="_on_FindButton_pressed"]
 [connection signal="pressed" from="MatchMakingPanel/CancelButton" to="MatchMakingPanel" method="_on_CancelButton_pressed"]
 [connection signal="request_completed" from="MatchMakingPanel/HTTPRequest" to="MatchMakingPanel" method="_on_request_completed"]
+[connection signal="pressed" from="MatchMakingPanel/ToggleConnectionButton" to="MatchMakingPanel" method="_on_ToggleConnectionButton_pressed"]

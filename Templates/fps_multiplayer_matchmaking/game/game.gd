@@ -9,6 +9,7 @@ onready var world = $World
 signal map_loaded
 signal start_matching
 signal cancel_matching
+signal toggle_connection
 signal set_matchmaking_server_status
 
 func _ready():
@@ -40,11 +41,13 @@ func _map_loaded():
 	emit_signal("map_loaded")
 	
 func _start_matching():
-	print('start matching')
 	emit_signal("start_matching")
 	
 func _cancel_matching():
 	emit_signal("cancel_matching")
+	
+func _toggle_connection():
+	emit_signal("toggle_connection")
 	
 func _set_matchmaking_server_status(status, isok):
 	emit_signal("set_matchmaking_server_status", status, isok)
