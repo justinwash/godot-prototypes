@@ -11,12 +11,14 @@ onready var camera = $Camera
 onready var hud = $HUD
 
 func _ready():
-	if $Camera.current:
+	if (get_tree().has_network_peer() and !is_network_master()) \
+	or (!get_tree().has_network_peer() and get_network_master() == 0):
 		for element in hud.get_children():
 			element.visible = false
 	
 func _input(event):
-	if get_tree().has_network_peer() and is_network_master() or !get_tree().has_network_peer():
+	if (get_tree().has_network_peer() and is_network_master()) \
+	or (!get_tree().has_network_peer() and get_network_master() != 0):
 		if event is InputEventMouseMotion:
 			rotation_degrees.y -= MOUSE_SENS * event.relative.x
 			rotation_degrees.x -= MOUSE_SENS * event.relative.y
