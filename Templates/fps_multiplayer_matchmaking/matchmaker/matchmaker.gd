@@ -84,8 +84,9 @@ func _connect_to_matchmaking_server():
 	var socket_port_param = '?socketPort=' + str(SOCKET_PORT)
 	var server_port_param = '&serverPort=' + str(SERVER_PORT)
 	var lan_address_param = ('&lanAddress=' + lan_address) if lan_address else ''
+	var game_id_param = '&gameId=' + 'fps'
 	
-	_http.request(mm_url + socket_port_param + server_port_param + lan_address_param)
+	_http.request(mm_url + socket_port_param + server_port_param + lan_address_param + game_id_param)
 
 func _on_request_completed(_result, _response_code, _headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())
