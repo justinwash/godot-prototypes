@@ -6,6 +6,8 @@ var udp_ping_tick = 0.0
 onready var world = get_node('../../World')
 onready var lobby = get_node('../../Lobby')
 
+var match_data
+
 func _ready():
 	_connect_networking_signals()
 	_connect_world_signals()
@@ -24,8 +26,8 @@ func _process(delta):
 			
 			if (response == "ping!"):
 				udp.put_packet('pong!'.to_utf8())
-			elif (response == "pong!"):
-				udp.put_packet('ping!'.to_utf8())
+				udp.close()
+				start_client(match_data)
 	
 func _connect_networking_signals():
 	var _player_connected = get_tree().connect("network_peer_connected", self, "_player_connected")
@@ -69,21 +71,16 @@ func connect_to_server(match_data):
 	if not ip.is_valid_ip_address():
 		return
 		
+	match_data.opponent.address = ip
+	self.match_data = match_data
+		
 	udp.listen(int(match_data.player.serverPort))
 	udp.set_dest_address(match_data.opponent.address, int(match_data.opponent.serverPort))
 	
 func start_client(match_data):
-	var ip = match_data.opponent.address
-	if ip == match_data.player.address:
-		ip = match_data.opponent.lanAddress
-	if '::ffff:' in ip:
-		ip = ip.substr(7) if ip.substr(7) != "::1" else get_node("../../Matchmaker").matchmaking_server_url.substr(7)
-	if not ip.is_valid_ip_address():
-		return
-		
 	var host = NetworkedMultiplayerENet.new()
 	host.set_compression_mode(NetworkedMultiplayerENet.COMPRESS_RANGE_CODER)
-	host.create_client(ip, int(match_data.opponent.serverPort))
+	host.create_client(match_data.opponent.address, int(match_data.opponent.serverPort))
 	get_tree().set_network_peer(host)
 	
 	# there should be another layer here for choosing map,
