@@ -23,15 +23,15 @@ func _connect_matchmaking_signals():
 func _connect_world_signals():
 	world.connect("map_loaded", self, "_map_loaded")
 	
-func _set_networking_mode(data):
-	if data.networking_mode == 'server':
+func _set_networking_mode(match_data):
+	if match_data.host == 'server':
 		var server = load("res://server/server.tscn").instance()
-		server.GAME_PORT = int(data.should_serve_port)
+		server.GAME_PORT = int(match_data.should_serve_port)
 		networking_mode.add_child(server)
-	elif data.networking_mode == 'client':
+	elif match_data.networking_mode == 'client':
 		var client = load("res://client/client.tscn").instance()
 		networking_mode.add_child(client)
-		client.start_client(data)
+		client.start_client(match_data)
 		
 	else:
 		print("invalid networking mode")

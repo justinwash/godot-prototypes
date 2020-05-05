@@ -157,6 +157,13 @@ func _on_request_completed(_result, _response_code, _headers, body):
 							ping_timer.connect("timeout", self, "_make_ping_request")
 							if ping_timer.is_stopped():
 								ping_timer.start()
+								
+							# start server if hosting, client otherwise
+							var match_data
+							match_data.host = response.data.player.host
+							match_data.should_serve_port = SERVER_PORT
+							match_data.gateway_address = response.data.player.address
+							emit_signal("start_game", match_data)
 				else:
 					_make_exit_queue_request()
 					emit_signal("set_matchmaking_server_status", "Error finding match. Please Try again", false)
