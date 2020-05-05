@@ -27,6 +27,7 @@ onready var game = get_parent()
 
 signal set_matchmaking_server_status
 signal start_game
+signal leave_game
 
 var player_id
 var connected
@@ -99,10 +100,7 @@ func _make_exit_queue_request():
 	if connected:
 		var player_id_param = '?playerId=' + player_id
 		_http.request(mm_url + exit_queue_endpoint + player_id_param)
-		ping_timer.disconnect("timeout", self, "_make_get_queue_status_request")
-		ping_timer.connect("timeout", self, "_make_ping_request")
-		if ping_timer.is_stopped():
-			ping_timer.start()
+		_connect_ping_timer_to_ping()
 	
 func _make_get_queue_status_request():
 	var player_id_param = '?playerId=' + player_id
@@ -121,9 +119,7 @@ func _on_request_completed(_result, _response_code, _headers, body):
 				player_id = response.data.id
 				connected = true
 				emit_signal("set_matchmaking_server_status", "Connected to matchmaking server.", true)
-				ping_timer.connect("timeout", self, "_make_ping_request")
-				if ping_timer.is_stopped():
-					ping_timer.start()
+				_connect_ping_timer_to_ping()
 			'info':
 				pass
 			'disconnect':
@@ -133,7 +129,7 @@ func _on_request_completed(_result, _response_code, _headers, body):
 					player_id = null
 			'ping':
 				if response.success:
-					print('pong', response.data.timeout)
+					print('ping', response.data.timeout)
 				else:
 					connected = false
 					player_id = null
@@ -141,10 +137,7 @@ func _on_request_completed(_result, _response_code, _headers, body):
 			'joinQueue':
 				if response.success:
 					emit_signal("set_matchmaking_server_status", "Searching for a match...", true)
-					ping_timer.disconnect("timeout", self, "_make_ping_request")
-					ping_timer.connect("timeout", self, "_make_get_queue_status_request")
-					if ping_timer.is_stopped():
-						ping_timer.start()
+					_connect_ping_timer_to_queue()
 			'exitQueue':
 				if response.success:
 					emit_signal("set_matchmaking_server_status", "Canceled search", true)
@@ -154,13 +147,10 @@ func _on_request_completed(_result, _response_code, _headers, body):
 						'in queue':
 							emit_signal("set_matchmaking_server_status", "Players in queue: " + str(response.data.playersInQueue), true)
 						'match found':
+							emit_signal("leave_game")
 							emit_signal("set_matchmaking_server_status", "Match found! Connecting... ", true)
-							ping_timer.disconnect("timeout", self, "_make_get_queue_status_request")
-							ping_timer.connect("timeout", self, "_make_ping_request")
-							if ping_timer.is_stopped():
-								ping_timer.start()
+							_connect_ping_timer_to_ping()
 								
-							# start server if hosting, client otherwise
 							var match_data = {}
 							match_data.player = response.data.player
 							match_data.opponent = response.data.opponent
@@ -181,4 +171,21 @@ func _toggle_connection_button_pressed():
 		_make_disconnect_request()
 	else:
 		_make_connect_request()
+		
+func _connect_ping_timer_to_ping():
+	if ping_timer.is_connected("timeout", self, "_make_get_queue_status_request"):
+		ping_timer.disconnect("timeout", self, "_make_get_queue_status_request")
+	if !ping_timer.is_connected("timeout", self, "_make_ping_request"):
+		ping_timer.connect("timeout", self, "_make_ping_request")
+	if ping_timer.is_stopped():
+		ping_timer.start()
+		
+	
+func _connect_ping_timer_to_queue():
+	if ping_timer.is_connected("timeout", self, "_make_ping_request"):
+		ping_timer.disconnect("timeout", self, "_make_ping_request")
+	if !ping_timer.is_connected("timeout", self, "_make_get_queue_status_request"):
+		ping_timer.connect("timeout", self, "_make_get_queue_status_request")
+	if ping_timer.is_stopped():
+		ping_timer.start()
 		

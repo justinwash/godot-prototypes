@@ -48,17 +48,17 @@ __meta__ = {
 [node name="FindButton" type="Button" parent="MatchMakingPanel"]
 margin_left = 8.0
 margin_top = 64.0
-margin_right = 88.0
+margin_right = 127.0
 margin_bottom = 84.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-text = "Go"
+text = "Find Match"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="CancelButton" type="Button" parent="MatchMakingPanel"]
-margin_left = 232.0
+margin_left = 191.0
 margin_top = 64.0
 margin_right = 312.0
 margin_bottom = 84.0

@@ -9,6 +9,7 @@ signal start_matching
 signal cancel_matching
 signal toggle_connection
 signal start_practice
+signal leave_game
 
 func _ready():	
 	var _player_connected = get_tree().connect("network_peer_connected", self, "_player_connected")
@@ -48,7 +49,10 @@ func _on_FindButton_pressed():
 	find_button.set_disabled(true)
 
 func _on_CancelButton_pressed():
-	emit_signal("cancel_matching")
+	if cancel_button.text == 'Cancel':
+		emit_signal("cancel_matching")
+	elif cancel_button.text == 'Leave Game':
+		emit_signal("leave_game")
 	find_button.set_disabled(false)
 
 func _on_ToggleConnectionButton_pressed():
