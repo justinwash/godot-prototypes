@@ -1,7 +1,7 @@
 extends Node
 
 onready var udp = PacketPeerUDP.new()
-onready var udp_ping_tick = 0.0
+onready var ping_tick = 0.0
 onready var hosting_countdown = 0.0
 onready var connected = false
 
@@ -17,10 +17,10 @@ func _ready():
 	_connect_world_signals()
 	
 func _process(delta):
-	udp_ping_tick += delta
+	ping_tick += delta
 	
-	if udp.is_listening() && udp_ping_tick > 0.5: # ping other player
-		udp_ping_tick -= 0.5
+	if udp.is_listening() && ping_tick > 0.5: # ping other player
+		ping_tick -= 0.5
 		print("Sending message...")
 		udp.put_packet('ping!'.to_utf8())
 		
@@ -40,6 +40,9 @@ func _process(delta):
 			print("Closing socket, hosting...")
 			udp.close()
 			start_server(new_match_data)
+			
+	if enet && ping_tick > 0.5:
+		enet.put_packet('ping!'.to_utf8())
 				
 	
 func _connect_networking_signals():

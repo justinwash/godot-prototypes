@@ -88,9 +88,11 @@ func connect_to_server(match_data):
 	udp.set_dest_address(new_match_data.opponent.address, int(match_data.opponent.serverPort))
 	
 func start_client(match_data):
+	var shared_port = match_data.opponent.serverPort
+	
 	var host = NetworkedMultiplayerENet.new()
 	host.set_compression_mode(NetworkedMultiplayerENet.COMPRESS_RANGE_CODER)
-	host.create_client(match_data.opponent.address, int(match_data.opponent.serverPort))
+	host.create_client(match_data.opponent.address, shared_port, 0, 0, shared_port)
 	get_tree().set_network_peer(host)
 	
 	# there should be another layer here for choosing map,
