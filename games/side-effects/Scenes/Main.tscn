@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/Main.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Box.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Counters.gd" type="Script" id=3]
+
+[node name="Main" type="Node2D"]
+script = ExtResource( 1 )
+box_path = NodePath("Box")
+
+[node name="Box" parent="." instance=ExtResource( 2 )]
+position = Vector2( 500, 290 )
+rotation = -0.78381
+
+[node name="Camera2D" type="Camera2D" parent="Box"]
+current = true
+zoom = Vector2( 1.5, 1.5 )
+process_mode = 0
+
+[node name="Counters" type="RichTextLabel" parent="."]
+margin_left = 442.0
+margin_top = 254.0
+margin_right = 552.0
+margin_bottom = 325.0
+text = "Streaks
+
+Caught:
+Missed:"
+script = ExtResource( 3 )
+
+[node name="Caught" type="RichTextLabel" parent="Counters"]
+margin_left = 68.0
+margin_top = 30.1638
+margin_right = 108.0
+margin_bottom = 70.1638
+text = "0"
+
+[node name="Missed" type="RichTextLabel" parent="Counters"]
+margin_left = 68.0
+margin_top = 45.7456
+margin_right = 108.0
+margin_bottom = 85.7456
+text = "0"

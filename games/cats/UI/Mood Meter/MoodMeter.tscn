@@ -1,0 +1,31 @@
+[gd_scene format=2]
+
+[node name="MoodMeter" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Background" type="ColorRect" parent="."]
+margin_left = 17.0
+margin_top = 15.0
+margin_right = 70.0
+margin_bottom = 235.0
+
+[node name="MoodLabel" type="RichTextLabel" parent="."]
+margin_left = 22.0
+margin_top = 21.0
+margin_right = 82.0
+margin_bottom = 49.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/default_color = Color( 1, 0, 0, 1 )
+text = "MOOD"
+
+[node name="Meter" type="Node2D" parent="."]
+position = Vector2( 32.3001, 40.8501 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Meter"]
+position = Vector2( 2.85, 1.89999 )
+color = Color( 1, 0, 0, 1 )
+polygon = PoolVector2Array( -1.24994, 0.371933, -1.24994, 178.972, 15.8501, 178.972, 15.8501, -0.578064 )

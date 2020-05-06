@@ -1,0 +1,2 @@
+extends "../Abilities/AttackBase.gd"
+
