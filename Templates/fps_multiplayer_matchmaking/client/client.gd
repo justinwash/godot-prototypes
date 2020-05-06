@@ -3,12 +3,16 @@ extends Node
 onready var udp = PacketPeerUDP.new()
 onready var udp_ping_tick = 0.0
 onready var join_countdown = 0.0
+onready var join_timeout = 0.0
 onready var connected = false
 
 onready var world = get_node('../../World')
 onready var lobby = get_node('../../Lobby')
 
+var opponent_present = false
 var new_match_data
+
+signal leave_game
 
 func _ready():
 	_connect_networking_signals()
@@ -19,7 +23,6 @@ func _process(delta):
 	
 	if (udp.is_listening() and udp_ping_tick > 0.5): # ping other player
 		udp_ping_tick -= 0.5
-		print("Sending message...")
 		udp.put_packet('ping!'.to_utf8())
 		
 	if (udp.is_listening() and udp.get_available_packet_count() > 0):
@@ -39,6 +42,11 @@ func _process(delta):
 			udp.close()
 			start_client(new_match_data)
 	
+	if (connected && !opponent_present) or !connected:
+		join_timeout += delta
+		if join_timeout > 30:
+			_connected_fail()
+	
 func _connect_networking_signals():
 	var _player_connected = get_tree().connect("network_peer_connected", self, "_player_connected")
 	var _player_disconnected = get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
@@ -48,12 +56,16 @@ func _connect_networking_signals():
 	
 func _connect_world_signals():
 	var _map_loaded = world.connect("map_loaded", self, "_map_loaded")
+	var _leave_match = connect("leave_game", world, "_leave_game")
 	
 func _connected_fail():
 	get_tree().set_network_peer(null)
+	udp.close()
+	emit_signal("leave_game")
 	
 func _connected_to_server():
 	print('connected to server')
+	opponent_present = true
 	
 func _player_connected(_id):
 	print("player connected: ", _id)

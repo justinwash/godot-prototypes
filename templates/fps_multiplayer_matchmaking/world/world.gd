@@ -28,4 +28,7 @@ func spawn_player(_id):
 	players.add_child(new_player)
 	print("spawned player for " + str(_id))
 	
-	
+func _leave_game():
+	if get_parent().has_method("leave_game"):
+		get_parent().leave_game()
+		

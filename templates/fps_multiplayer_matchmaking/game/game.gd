@@ -19,7 +19,7 @@ func _ready():
 
 func _connect_matchmaking_signals():
 	matchmaker.connect("start_game", self, "_start_game")
-	matchmaker.connect("leave_game", self, "_leave_game")
+	matchmaker.connect("leave_game", self, "leave_game")
 	matchmaker.connect("set_matchmaking_server_status", self, "_set_matchmaking_server_status")
 	
 func _connect_world_signals():
@@ -55,13 +55,15 @@ func _start_practice():
 	world.spawn_player(1)
 	world.spawn_player(0)
 	
-func _leave_game():
+func leave_game():
 	get_tree().network_peer = null
-	for player in world.players.get_children():
-		player.queue_free()
+	for node in world.players.get_children():
+		node.queue_free()
 	for node in world.get_children():
 		if node.name != 'Players':
 			node.queue_free()
+	for node in networking_mode.get_children():
+		node.queue_free()
 	
 	emit_signal("left_game")
 	

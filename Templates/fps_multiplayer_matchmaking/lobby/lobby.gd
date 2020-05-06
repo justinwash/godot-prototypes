@@ -47,6 +47,8 @@ func _map_loaded():
 func _left_game():
 	matchmaking_panel.cancel_button.text = "Cancel"
 	show_lobby()
+	matchmaking_panel._set_matchmaking_server_status("Opponent connection terminated", false)
+	matchmaking_panel.find_button.disabled = false
 	
 func show_lobby():
 	get_tree().paused = true
