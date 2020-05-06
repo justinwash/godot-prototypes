@@ -25,8 +25,8 @@ func _connect_panel_signals():
 		var _toggle_connection = matchmaking_panel.connect("toggle_connection", game, "_toggle_connection")
 	if game.has_method("_start_practice"):
 		var _toggle_connection = matchmaking_panel.connect("start_practice", game, "_start_practice")
-	if game.has_method("_leave_game"):
-		var _toggle_connection = matchmaking_panel.connect("leave_game", game, "_leave_game")
+	if game.has_method("leave_game"):
+		var _toggle_connection = matchmaking_panel.connect("leave_game", game, "leave_game")
 	
 func _process(_delta):
 	if Input.is_action_just_pressed("pause"):
