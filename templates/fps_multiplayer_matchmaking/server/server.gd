@@ -43,7 +43,6 @@ func _process(delta):
 			
 	if enet && ping_tick > 0.5:
 		enet.put_packet('ping!'.to_utf8())
-				
 	
 func _connect_networking_signals():
 	var _player_connected = get_tree().connect("network_peer_connected", self, "_player_connected")

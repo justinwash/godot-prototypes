@@ -30,20 +30,23 @@ func _connect_panel_signals():
 	
 func _process(_delta):
 	if Input.is_action_just_pressed("pause"):
-		get_tree().paused = !get_tree().paused
 		visible = !visible
 		if visible:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)  
+			get_tree().paused = true
 		else: 
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+			get_tree().paused = false
 			
 func _map_loaded():
 	visible = false
+	get_tree().paused = false
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	matchmaking_panel.cancel_button.text = "Leave Game"
 	
 func _left_game():
 	matchmaking_panel.cancel_button.text = "Cancel"
+	show_lobby()
 	
 func show_lobby():
 	get_tree().paused = true
