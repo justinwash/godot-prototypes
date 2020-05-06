@@ -13,6 +13,7 @@ var opponent_present = false
 var new_match_data
 
 signal leave_game
+signal cancel_game
 
 func _ready():
 	_connect_networking_signals()
@@ -44,7 +45,7 @@ func _process(delta):
 	
 	if (connected && !opponent_present) or !connected:
 		join_timeout += delta
-		if join_timeout > 30:
+		if join_timeout > 25:
 			_connected_fail()
 	
 func _connect_networking_signals():
@@ -56,12 +57,12 @@ func _connect_networking_signals():
 	
 func _connect_world_signals():
 	var _map_loaded = world.connect("map_loaded", self, "_map_loaded")
-	var _leave_match = connect("leave_game", world, "_leave_game")
+	var _leave_match = connect("cancel_game", world, "_cancel_game")
 	
 func _connected_fail():
 	get_tree().set_network_peer(null)
 	udp.close()
-	emit_signal("leave_game")
+	emit_signal("cancel_game")
 	
 func _connected_to_server():
 	print('connected to server')

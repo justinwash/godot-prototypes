@@ -4,6 +4,7 @@ onready var status_ok = $StatusOk
 onready var status_fail = $StatusFail
 onready var find_button = $FindButton
 onready var cancel_button = $CancelButton
+onready var practice_button = $PracticeButton
 
 signal start_matching
 signal cancel_matching
@@ -54,9 +55,12 @@ func _on_CancelButton_pressed():
 	elif cancel_button.text == 'Leave Game':
 		emit_signal("leave_game")
 	find_button.set_disabled(false)
+	practice_button.set_disabled(false)
 
 func _on_ToggleConnectionButton_pressed():
 	emit_signal("toggle_connection")
 
 func _on_OfflineButton_pressed():
+	emit_signal("leave_game")
 	emit_signal("start_practice")
+	practice_button.set_disabled(true)

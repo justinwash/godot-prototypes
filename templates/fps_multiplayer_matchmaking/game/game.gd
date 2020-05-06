@@ -67,5 +67,18 @@ func leave_game():
 	
 	emit_signal("left_game")
 	
+func cancel_game():
+	get_tree().network_peer = null
+	for node in world.players.get_children():
+		node.queue_free()
+	for node in world.get_children():
+		if node.name != 'Players':
+			node.queue_free()
+	for node in networking_mode.get_children():
+		node.queue_free()
+	
+	emit_signal("left_game")
+	_set_matchmaking_server_status("Match canceled or timed out.", false)
+	
 func _set_matchmaking_server_status(status, isok):
 	emit_signal("set_matchmaking_server_status", status, isok)

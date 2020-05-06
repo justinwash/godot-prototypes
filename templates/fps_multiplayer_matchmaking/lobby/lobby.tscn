@@ -79,7 +79,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="OfflineButton" type="Button" parent="MatchMakingPanel"]
+[node name="PracticeButton" type="Button" parent="MatchMakingPanel"]
 margin_left = 199.0
 margin_top = 115.943
 margin_right = 311.0
@@ -180,5 +180,5 @@ __meta__ = {
 [connection signal="pressed" from="MatchMakingPanel/FindButton" to="MatchMakingPanel" method="_on_FindButton_pressed"]
 [connection signal="pressed" from="MatchMakingPanel/CancelButton" to="MatchMakingPanel" method="_on_CancelButton_pressed"]
 [connection signal="pressed" from="MatchMakingPanel/ToggleConnectionButton" to="MatchMakingPanel" method="_on_ToggleConnectionButton_pressed"]
-[connection signal="pressed" from="MatchMakingPanel/OfflineButton" to="MatchMakingPanel" method="_on_OfflineButton_pressed"]
+[connection signal="pressed" from="MatchMakingPanel/PracticeButton" to="MatchMakingPanel" method="_on_OfflineButton_pressed"]
 [connection signal="request_completed" from="MatchMakingPanel/HTTPRequest" to="MatchMakingPanel" method="_on_request_completed"]

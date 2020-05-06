@@ -31,4 +31,8 @@ func spawn_player(_id):
 func _leave_game():
 	if get_parent().has_method("leave_game"):
 		get_parent().leave_game()
+
+func _cancel_game():
+	if get_parent().has_method("cancel_game"):
+		get_parent().cancel_game()
 		
