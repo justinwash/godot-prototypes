@@ -28,12 +28,13 @@ func _process(delta):
 		
 	if (udp.is_listening() and udp.get_available_packet_count() > 0):
 			var response = udp.get_packet().get_string_from_utf8()
-			print(response)
 			
 			if (response == "ping!"):
 				udp.put_packet('pong!'.to_utf8())
 			if (response == "pong!"):
 				udp.put_packet('ping!'.to_utf8())
+				if !connected:
+					print('connection established')
 				connected = true
 				
 	if udp.is_listening() && connected:
@@ -75,14 +76,12 @@ func _player_connected(_id):
 
 func _player_disconnected(_id):
 	print('player disconnected')
-	for player in world.players.get_children():
-		player.free()
+	emit_signal("cancel_game")
 	lobby.show_lobby()
 	
 func _server_disconnected():
 	print('server disconnected')
-	for player in world.players.get_children():
-		player.free()
+	emit_signal("cancel_game")
 	lobby.show_lobby()
 	
 func connect_to_server(match_data):

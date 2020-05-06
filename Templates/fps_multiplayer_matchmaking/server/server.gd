@@ -3,6 +3,7 @@ extends Node
 onready var udp = PacketPeerUDP.new()
 onready var ping_tick = 0.0
 onready var hosting_countdown = 0.0
+onready var join_timeout = 0.0
 onready var connected = false
 
 var enet
@@ -11,6 +12,9 @@ onready var world = get_node('../../World')
 onready var lobby = get_node('../../Lobby')
 
 var new_match_data
+var opponent_present = false
+
+signal cancel_game
 
 func _ready():
 	_connect_networking_signals()
@@ -21,17 +25,17 @@ func _process(delta):
 	
 	if udp.is_listening() && ping_tick > 0.5: # ping other player
 		ping_tick -= 0.5
-		print("Sending message...")
 		udp.put_packet('ping!'.to_utf8())
 		
 	if udp.is_listening() && udp.get_available_packet_count() > 0:
 			var response = udp.get_packet().get_string_from_utf8()
-			print(response)
 
 			if (response == "pong!"):
 				udp.put_packet('ping!'.to_utf8())
 			if (response == "ping!"):
 				udp.put_packet('pong!'.to_utf8())
+				if !connected:
+					print('connection established')
 				connected = true
 			
 	if udp.is_listening() && connected:
@@ -40,6 +44,11 @@ func _process(delta):
 			print("Closing socket, hosting...")
 			udp.close()
 			start_server(new_match_data)
+			
+	if (connected && !opponent_present) or !connected:
+		join_timeout += delta
+		if join_timeout > 25:
+			_connected_fail()
 			
 	if enet && ping_tick > 0.5:
 		enet.put_packet('ping!'.to_utf8())
@@ -53,9 +62,12 @@ func _connect_networking_signals():
 	
 func _connect_world_signals():
 	var _map_loaded = world.connect("map_loaded", self, "_map_loaded")
+	var _leave_match = connect("cancel_game", world, "_cancel_game")
 	
 func _connected_fail():
 	get_tree().set_network_peer(null)
+	udp.close()
+	emit_signal("cancel_game")
 	
 func _player_connected(_id):
 	print("player connected: ", _id)
@@ -64,8 +76,7 @@ func _player_connected(_id):
 	
 func _player_disconnected(_id):
 	print("player disconnected: ", _id)
-	for player in world.players.get_children():
-		player.free()
+	emit_signal("cancel_game")
 	lobby.show_lobby()
 	
 func connect_to_client(match_data):
