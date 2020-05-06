@@ -88,7 +88,7 @@ func connect_to_server(match_data):
 	udp.set_dest_address(new_match_data.opponent.address, int(match_data.opponent.serverPort))
 	
 func start_client(match_data):
-	var shared_port = match_data.opponent.serverPort
+	var shared_port = int(match_data.opponent.serverPort)
 	
 	var host = NetworkedMultiplayerENet.new()
 	host.set_compression_mode(NetworkedMultiplayerENet.COMPRESS_RANGE_CODER)
