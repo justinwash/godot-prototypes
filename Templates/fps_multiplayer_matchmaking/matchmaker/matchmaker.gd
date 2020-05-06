@@ -149,7 +149,7 @@ func _on_request_completed(_result, _response_code, _headers, body):
 						'match found':
 							emit_signal("leave_game")
 							emit_signal("set_matchmaking_server_status", "Match found! Connecting... ", true)
-							_connect_ping_timer_to_ping()
+							ping_timer.stop()
 								
 							var match_data = {}
 							match_data.player = response.data.player

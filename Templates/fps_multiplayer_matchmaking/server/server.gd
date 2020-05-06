@@ -5,10 +5,6 @@ onready var udp_ping_tick = 0.0
 onready var hosting_countdown = 0.0
 onready var connected = false
 
-var port_forwarded = false
-var upnp = UPNP.new()
-var GAME_PORT = 42069
-
 var enet
 
 onready var world = get_node('../../World')
