@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="FPS Multi"
+config/name="Multiplayer Matchmaking FPS Template"
 run/main_scene="res://game/game.tscn"
 config/icon="res://icon.png"
 
