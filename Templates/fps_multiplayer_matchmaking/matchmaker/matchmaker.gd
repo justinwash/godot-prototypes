@@ -12,12 +12,8 @@ var join_queue_endpoint = '/joinQueue'
 var exit_queue_endpoint = '/exitQueue'
 var get_queue_status_endpoint = '/getQueueStatus'
 
-var server_port_forwarded = false
-var server_port_retries = 3
-var upnp = UPNP.new()
 var SERVER_PORT = 42069
 
-var _socket_server = WebSocketServer.new()
 var _matchmaking_server_id
 
 onready var _http = $HTTPRequest
@@ -35,23 +31,10 @@ var connected
 func _ready():
 	mm_url = matchmaking_server_url + matchmaking_server_port
 	
-	_forward_server_port()
-	
 	_connect_http_signals()
 	_connect_lobby_signals()
 	
 	_make_connect_request()
-	
-func _forward_server_port():
-	upnp.discover()
-	while !server_port_forwarded and server_port_retries > 0:
-		server_port_forwarded = upnp.add_port_mapping (SERVER_PORT, 0, '', 'TCP', 0) == 0
-		print('server port forwarded? ', true if server_port_forwarded else false)
-		if !server_port_forwarded:
-			SERVER_PORT += 1
-			server_port_retries -= 1
-	if !server_port_forwarded:
-		print('server port not forwarded via UPnP, trying to connect anyway.')
 
 func _connect_http_signals():
 	_http.connect("request_completed", self, "_on_request_completed")
